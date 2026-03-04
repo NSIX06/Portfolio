@@ -1,0 +1,107 @@
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1;
+  margin-bottom: 3rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.textCol { display: flex; flex-direction: column; gap: 0; }
+
+.p {
+  color: #a8a5a0;
+  line-height: 1.85;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.highlight { color: var(--color-text); font-weight: 700; }
+.accentText { color: var(--color-accent); font-weight: 700; }
+
+.quote {
+  font-style: italic;
+  color: #444;
+  font-size: .85rem;
+  margin: 1.2rem 0 1.5rem;
+}
+
+.linkedinBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem 1.6rem;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  align-self: flex-start;
+}
+.linkedinBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+/* Stats */
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.statCard {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+.statCard:hover {
+  border-color: rgba(255, 92, 0, .3);
+  transform: translateY(-2px);
+}
+
+.statNum {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  color: var(--color-muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+@media (max-width: 800px) {
+  .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}

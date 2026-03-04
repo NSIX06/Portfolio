@@ -1,0 +1,47 @@
+:root {
+  /* Colors */
+  --color-bg:       #0a0a0a;
+  --color-surface:  #111111;
+  --color-card:     #161616;
+  --color-accent:   #ff5c00;
+  --color-accent2:  #ffd100;
+  --color-text:     #f0ede8;
+  --color-muted:    #6b6b6b;
+  --color-border:   #222222;
+
+  /* Tech badge colors */
+  --color-blue:   #4a90d9;
+  --color-green:  #4caf50;
+  --color-yellow: #ffd100;
+
+  /* Typography */
+  --font-sans: 'Syne', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* Spacing scale */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.5rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+
+  /* Border radius */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 20px;
+
+  /* Transitions */
+  --transition-fast: 0.18s ease;
+  --transition-base: 0.28s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Shadows */
+  --shadow-accent: 0 8px 24px rgba(255, 92, 0, 0.35);
+  --shadow-card:   0 4px 20px rgba(0, 0, 0, 0.4);
+
+  /* Z-index */
+  --z-nav:     100;
+  --z-overlay: 200;
+}
