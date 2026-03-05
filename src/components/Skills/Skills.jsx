@@ -30,7 +30,7 @@ export default function Skills() {
   return (
     <section id="skills" className="section section--bg" aria-labelledby="skills-heading">
       <div className="container reveal" ref={ref}>
-        <p className={styles.sectionLabel}>// 02 — stack</p>
+       <p className={styles.sectionLabel}>// 03 — stack</p>
         <h2 id="skills-heading" className={styles.sectionTitle}>Habilidades</h2>
 
         <div className={styles.categories}>
