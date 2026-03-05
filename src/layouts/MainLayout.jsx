@@ -4,10 +4,11 @@ import Hero from '../components/Hero/Hero'
 import Footer from '../components/Footer/Footer'
 
 // Lazy load below-the-fold sections
-const About    = lazy(() => import('../components/About/About'))
-const Skills   = lazy(() => import('../components/Skills/Skills'))
-const Projects = lazy(() => import('../components/Projects/Projects'))
-const Contact  = lazy(() => import('../components/Contact/Contact'))
+const About      = lazy(() => import('../components/About/About'))
+const Experience = lazy(() => import('../components/Experience/Experience'))
+const Skills     = lazy(() => import('../components/Skills/Skills'))
+const Projects   = lazy(() => import('../components/Projects/Projects'))
+const Contact    = lazy(() => import('../components/Contact/Contact'))
 
 const SectionLoader = () => (
   <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -25,6 +26,9 @@ export default function MainLayout() {
         <Hero />
         <Suspense fallback={<SectionLoader />}>
           <About />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <Experience />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <Skills />
