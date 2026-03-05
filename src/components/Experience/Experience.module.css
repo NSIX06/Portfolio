@@ -21,7 +21,6 @@
   gap: 2rem;
 }
 
-/* Card */
 .card {
   background: var(--color-card);
   border: 1px solid var(--color-border);
@@ -31,6 +30,7 @@
   overflow: hidden;
   transition: border-color var(--transition-base), transform var(--transition-base);
 }
+
 .card:hover {
   border-color: #2e2e2e;
   transform: translateY(-3px);
@@ -38,7 +38,9 @@
 
 .cardBar {
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 3px;
 }
 
@@ -84,7 +86,6 @@
   margin-bottom: 1.2rem;
 }
 
-/* Bullets */
 .bullets {
   list-style: none;
   display: flex;
@@ -110,9 +111,6 @@
   margin-top: .45rem;
 }
 
-/* Tools */
-.tools {}
-
 .toolsLabel {
   font-family: var(--font-mono);
   font-size: .7rem;
@@ -135,6 +133,7 @@
   padding: 1.2rem;
   transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
+
 .toolCard:hover {
   border-color: rgba(255,92,0,.3);
   transform: translateY(-2px);
@@ -147,7 +146,9 @@
   margin-bottom: .5rem;
 }
 
-.toolEmoji { font-size: 1.2rem; }
+.toolEmoji {
+  font-size: 1.2rem;
+}
 
 .toolName {
   font-size: .85rem;
@@ -162,6 +163,11 @@
 }
 
 @media (max-width: 768px) {
-  .toolsGrid { grid-template-columns: 1fr; }
-  .cardHead { flex-direction: column; }
+  .toolsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardHead {
+    flex-direction: column;
+  }
 }
