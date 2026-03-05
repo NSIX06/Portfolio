@@ -1,17 +1,41 @@
+import { useState, useEffect } from 'react'
 import { useReveal } from '../../hooks/useReveal'
 import styles from './About.module.css'
 
-const STATS = [
-  { num: '51',   label: 'Repositórios no GitHub' },
-  { num: '+200', label: 'Alunos impactados pela ONG' },
-  { num: 'Full', label: 'Stack Developer' },
-  { num: 'MT',   label: 'Rondonópolis — Brasil' },
-]
+function useGitHubStats(username) {
+  const [repos, setRepos] = useState(null)
+  const [stars, setStars] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-function StatCard({ num, label }) {
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const profileRes = await fetch(`https://api.github.com/users/${username}`)
+        const profile = await profileRes.json()
+        setRepos(profile.public_repos)
+
+        const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+        const reposList = await reposRes.json()
+        const totalStars = reposList.reduce((acc, r) => acc + r.stargazers_count, 0)
+        setStars(totalStars)
+      } catch (err) {
+        console.error('GitHub API error:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchStats()
+  }, [username])
+
+  return { repos, stars, loading }
+}
+
+function StatCard({ num, label, loading }) {
   return (
     <div className={styles.statCard}>
-      <span className={styles.statNum}>{num}</span>
+      <span className={styles.statNum}>
+        {loading ? <span className={styles.skeleton} aria-hidden="true" /> : num}
+      </span>
       <span className={styles.statLabel}>{label}</span>
     </div>
   )
@@ -19,6 +43,14 @@ function StatCard({ num, label }) {
 
 export default function About() {
   const ref = useReveal()
+  const { repos, stars, loading } = useGitHubStats('NSIX06')
+
+  const STATS = [
+    { label: 'Repositórios no GitHub', num: loading ? null : repos, loading },
+    { label: 'Estrelas no GitHub', num: loading ? null : `★ ${stars}`, loading },
+    { label: 'Stack Developer', num: 'Full', loading: false },
+    { label: 'Rondonópolis — Brasil', num: 'MT', loading: false },
+  ]
 
   return (
     <section className="section section--surface" aria-labelledby="about-heading">
@@ -31,13 +63,13 @@ export default function About() {
             <p className={styles.p}>
               Oi! Sou{' '}
               <strong className={styles.highlight}>Luiz Felipe Pablos Bugalho</strong>, aka{' '}
-              <strong className={styles.accentText}>NSIX06</strong> — técnico de TI,
-              desenvolvedor web freelance baseado em Rondonópolis, MT.
+              <strong className={styles.accentText}>NSIX06</strong> — técnico de TI e 
+              desenvolvedor Full Stack.
             </p>
             <p className={styles.p}>
               Trabalho com{' '}
               <strong className={styles.highlight}>HTML, CSS, PHP, MySQL e SQL Server</strong> e
-              estou sempre aprendendo como{' '}
+              estou sempre aprendendo com{' '}
               <strong className={styles.highlight}>Node.js, Vue, JavaScript e React</strong>.
               Gosto de construir tanto o front quanto o back-end.
             </p>

@@ -63,7 +63,6 @@
   transform: translateY(-2px);
 }
 
-/* Stats */
 .statsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -104,4 +103,20 @@
 
 @media (max-width: 800px) {
   .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+/* Skeleton loader enquanto busca da API */
+@keyframes shimmer {
+  0%   { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+.skeleton {
+  display: inline-block;
+  width: 60px;
+  height: 2.2rem;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1e1e1e 25%, #2a2a2a 50%, #1e1e1e 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.2s infinite;
 }
