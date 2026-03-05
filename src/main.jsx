@@ -1,8 +1,18 @@
-import { lazy, Suspense } from 'react'
-import Nav from '../components/Nav/Nav'
-import Hero from '../components/Hero/Hero'
-import Footer from '../components/Footer/Footer'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { HelmetProvider } from 'react-helmet-async'
+import App from './App.jsx'
+import './styles/globals.css'
+import './styles/variables.css'
+import './styles/animations.css'
 
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </React.StrictMode>,
+)
 const About      = lazy(() => import('../components/About/About'))
 const Experience = lazy(() => import('../components/Experience/Experience'))
 const Skills     = lazy(() => import('../components/Skills/Skills'))
