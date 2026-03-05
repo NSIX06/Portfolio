@@ -8,7 +8,7 @@ export default function Contact() {
   return (
     <section id="contato" className="section section--bg" aria-labelledby="contact-heading">
       <div className="container reveal" ref={ref}>
-        <p className={styles.sectionLabel}>// 04 — contato</p>
+       <p className={styles.sectionLabel}>// 05 — contato</p>
         <h2 id="contact-heading" className={styles.sectionTitle}>Bora conversar?</h2>
 
         <div className={styles.grid}>
