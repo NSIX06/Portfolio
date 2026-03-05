@@ -1,4 +1,4 @@
-import { socials } from '../../data/socials'
+import { socials } from '../../data/socials.jsx'
 import styles from './Footer.module.css'
 
 export default function Footer() {
