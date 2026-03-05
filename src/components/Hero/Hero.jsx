@@ -24,7 +24,7 @@ export default function Hero() {
 
           <h1 className={`${styles.name} hero-enter-2`}>
             Luiz <br />
-            Felipe <br />
+            Felipe P. <br />
             <span className={styles.nameAccent}>Bugalho</span>
           </h1>
 
