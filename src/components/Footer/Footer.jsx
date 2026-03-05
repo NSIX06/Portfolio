@@ -10,7 +10,7 @@ export default function Footer() {
         <div className={styles.brand}>
           <span className={styles.logo}>NSIX06</span>
           <p className={styles.tagline}>
-            Transformando ideias em código desde Rondonópolis&nbsp;—&nbsp;MT
+            Transformando ideias em código desde 2022
           </p>
         </div>
 
@@ -38,9 +38,6 @@ export default function Footer() {
         <p className={styles.copy}>
           © {year}{' '}
           <span className={styles.copyAccent}>Luiz Felipe Pablos Bugalho</span> — NSIX06
-        </p>
-        <p className={styles.copy}>
-          Feito com <span className={styles.copyAccent}>♥</span> em Rondonópolis&nbsp;-&nbsp;MT ☕
         </p>
       </div>
     </footer>
