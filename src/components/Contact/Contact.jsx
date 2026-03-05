@@ -1,5 +1,5 @@
 import { useReveal } from '../../hooks/useReveal'
-import { socials } from '../../data/socials'
+import { socials } from '../../data/socials.jsx'
 import styles from './Contact.module.css'
 
 export default function Contact() {
