@@ -10,7 +10,7 @@ export default function Projects() {
     <section id="projetos" className="section section--surface" aria-labelledby="projects-heading">
       <div className="container">
         <div className="reveal">
-          <p className={styles.sectionLabel}>// 03 — trabalhos</p>
+          <p className={styles.sectionLabel}>// 04 — trabalhos</p>
           <h2 id="projects-heading" className={styles.sectionTitle}>Projetos</h2>
         </div>
 
