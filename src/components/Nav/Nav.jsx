@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react'
 import styles from './Nav.module.css'
 
 const NAV_LINKS = [
-  { href: '#sobre',       label: 'Sobre' },
+  { href: '#sobre', label: 'Sobre' },
   { href: '#experiencia', label: 'Experiência' },
-  { href: '#skills',      label: 'Skills' },
-  { href: '#projetos',    label: 'Projetos' },
-  { href: '#contato',     label: 'Contato' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#projetos', label: 'Projetos' },
+  { href: '#contato', label: 'Contato' },
 ]
 
 export default function Nav() {
-  const [active, setActive]     = useState('')
+  const [active, setActive] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -22,22 +22,33 @@ export default function Nav() {
 
   useEffect(() => {
     const ids = ['sobre', 'experiencia', 'skills', 'projetos', 'contato']
+
     const obs = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id) })
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id)
+        })
       },
       { threshold: 0.35 }
     )
+
     ids.forEach((id) => {
       const el = document.getElementById(id)
       if (el) obs.observe(el)
     })
+
     return () => obs.disconnect()
   }, [])
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`} role="banner">
-      <a href="#main-content" className="skip-link">Pular para o conteúdo</a>
+    <header
+      className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}
+      role="banner"
+    >
+      <a href="#main-content" className="skip-link">
+        Pular para o conteúdo
+      </a>
+
       <nav className={styles.nav} aria-label="Navegação principal">
         <a href="#sobre" className={styles.logo} aria-label="Voltar ao topo">
           NSIX06
@@ -46,9 +57,13 @@ export default function Nav() {
         <ul className={styles.links} role="list">
           {NAV_LINKS.map(({ href, label }) => (
             <li key={href}>
-              
+              <a
                 href={href}
-                className={`${styles.link} ${active === href.slice(1) ? styles.linkActive : ''}`}
+                className={
+                  active === href.slice(1)
+                    ? `${styles.link} ${styles.linkActive}`
+                    : styles.link
+                }
                 aria-current={active === href.slice(1) ? 'page' : undefined}
               >
                 {label}
@@ -58,7 +73,11 @@ export default function Nav() {
         </ul>
 
         <button
-          className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ''}`}
+          className={
+            menuOpen
+              ? `${styles.hamburger} ${styles.hamburgerOpen}`
+              : styles.hamburger
+          }
           onClick={() => setMenuOpen((v) => !v)}
           aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={menuOpen}
@@ -74,7 +93,7 @@ export default function Nav() {
           <ul role="list">
             {NAV_LINKS.map(({ href, label }) => (
               <li key={href}>
-                
+                <a
                   href={href}
                   className={styles.drawerLink}
                   onClick={() => setMenuOpen(false)}
