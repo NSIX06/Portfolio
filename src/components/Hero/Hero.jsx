@@ -14,7 +14,6 @@ export default function Hero() {
     <section id="sobre" className={styles.hero} aria-label="Apresentação">
       <div className={styles.gridBg} aria-hidden="true" />
       <div className={styles.glow} aria-hidden="true" />
-
       <div className={`${styles.inner} container`}>
         <div className={styles.textCol}>
           <p className={`${styles.tag} hero-enter-1`}>
@@ -36,7 +35,6 @@ export default function Hero() {
               target="_blank"
               rel="noreferrer"
               className={styles.btnPrimary}
-              aria-label="Ver GitHub de Luiz Felipe Bugalho"
             >
               🐙 GitHub
             </a>
@@ -44,13 +42,15 @@ export default function Hero() {
               Ver Projetos ↓
             </a>
           </div>
-          <ul className={`${styles.badges} hero-enter-5`} aria-label="Áreas de atuação">
+          <ul
+            className={`${styles.badges} hero-enter-5`}
+            aria-label="Áreas de atuação"
+          >
             {BADGES.map((b) => (
               <li key={b} className={styles.badge}>{b}</li>
             ))}
           </ul>
         </div>
-
         <div className={`${styles.photoCol} hero-enter-3`}>
           <div className={styles.photoFrame}>
             <img
@@ -62,8 +62,10 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      <p className={`${styles.scrollHint} hero-enter-6`} aria-hidden="true">
+      <p
+        className={`${styles.scrollHint} hero-enter-6`}
+        aria-hidden="true"
+      >
         Scroll para explorar
       </p>
     </section>
