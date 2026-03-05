@@ -5,7 +5,7 @@ export default function App() {
   return (
     <>
       <Helmet>
-        <title>Luiz Felipe Pablos Bugalho | Desenvolvedor Full Stack</title>
+        <title>Luiz Felipe Bugalho | Desenvolvedor Full Stack</title>
         <meta
           name="description"
           content="Portfólio de Luiz Felipe Pablos Bugalho (NSIX06) — Desenvolvedor Full Stack baseado em Rondonópolis - MT."
