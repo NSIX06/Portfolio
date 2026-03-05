@@ -19,7 +19,7 @@ export default function Hero() {
         <div className={styles.textCol}>
           
           <p className={`${styles.tag} hero-enter-1`}>
-            • IT Technician · Web Developer · Freelancer
+            • TÉCNICO EM INFORMÁTICA · DESENVOLVEDOR FULL STACK · Freelancer
           </p>
 
           <h1 className={`${styles.name} hero-enter-2`}>
