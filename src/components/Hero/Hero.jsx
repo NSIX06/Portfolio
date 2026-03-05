@@ -51,7 +51,6 @@ export default function Hero() {
           </ul>
         </div>
 
-        {/* FOTO TRAVADA */}
         <div className={`${styles.photoCol} hero-enter-3`}>
           <div className={styles.photoFrame}>
             <img
