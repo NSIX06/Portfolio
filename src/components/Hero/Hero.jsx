@@ -31,7 +31,7 @@ export default function Hero() {
           <p className={`${styles.sub} hero-enter-3`}>
             Desenvolvedor fullstack apaixonado por tecnologia. HTML, CSS, JS,
             PHP, C#, Python e muito mais. Transformando ideias em código desde
-            Rondonópolis&nbsp;—&nbsp;MT.
+            2022.
           </p>
 
           <div className={`${styles.ctas} hero-enter-4`}>
