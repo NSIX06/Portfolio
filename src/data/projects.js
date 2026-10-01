@@ -1,8 +1,25 @@
 export const projects = [
   {
+    id: 0,
+    featured: true,
+    tag: 'Sistema Corporativo · TMG · 2026 · Lançado',
+    title: 'TMG Caronas',
+    description:
+      'Sistema corporativo de caronas entre colaboradores das bases da TMG: ofertar e solicitar caronas, gerenciar participações, avaliar viagens e acompanhar indicadores. Integrado ao Microsoft Entra ID, SQL Server, Azure e Microsoft Teams, em produção desde setembro de 2026. Selecionado como um dos quatro pilotos do programa TMG IA.',
+    tech: ['.NET 10', 'ASP.NET Core MVC', 'SQL Server', 'Entra ID', 'SignalR', 'Azure', 'Teams'],
+    techVariant: ['blue', 'blue', 'green', 'blue', 'orange', 'blue', 'orange'],
+    live: null,
+    github: null,
+    emoji: '🚗',
+    image: '/projetos/tmg-caronas-logo.webp',
+    visualSub: 'Sistema interno · TMG',
+    visualNote: 'Caronas entre colaboradores das bases da TMG',
+    stars: null,
+  },
+  {
     id: 1,
     featured: true,
-    tag: 'Projeto de Extensão · FATEC-ROO · 2025',
+    tag: 'Projeto de Extensão · FATEC/UniSENAI · 2025 · Lançado',
     title: 'Escolinha de Skate do Bob',
     description:
       'Site institucional para a ONG fundada em 2010 por Igor "Bob" Silva. Atende mais de 200 alunos/mês com aulas gratuitas de skate como ferramenta de inclusão social em Rondonópolis - MT. Orientado pelos Prof. Nailton Silva e Diego Bastos.',
@@ -11,6 +28,8 @@ export const projects = [
     live: 'https://www.escoladeskatedobob.org.br/',
     github: 'https://github.com/NSIX06',
     emoji: '🛹',
+    visualSub: 'escoladeskatedobob.org.br',
+    visualNote: 'Transformando vidas através do skate desde 2010',
     stars: null,
   },
   {

@@ -2,10 +2,11 @@ import profileImg from '../../assets/images/profile.png'
 import styles from './Hero.module.css'
 
 const BADGES = [
-  '🌐 Web Dev',
-  '🗄️ SQL Server · MySQL',
-  '🔌 Redes',
-  '💻 Freelancer',
+  '🟢 Disponível para contratação',
+  '🟡 Aberto a projetos freelance',
+  '🏢 Sistemas Corporativos',
+  '⚙️ Automação & Integrações',
+  '🗄️ SQL Server · PostgreSQL',
   '📍 Rondonópolis - MT',
 ]
 
@@ -19,7 +20,7 @@ export default function Hero() {
         <div className={styles.textCol}>
           
           <p className={`${styles.tag} hero-enter-1`}>
-            • TÉCNICO EM INFORMÁTICA · DESENVOLVEDOR FULL STACK · Freelancer
+            • DESENVOLVEDOR FULL STACK · TÉCNICO EM INFORMÁTICA · FREELANCER
           </p>
 
           <h1 className={`${styles.name} hero-enter-2`}>
@@ -29,9 +30,8 @@ export default function Hero() {
           </h1>
 
           <p className={`${styles.sub} hero-enter-3`}>
-            Desenvolvedor fullstack apaixonado por tecnologia. HTML, CSS, JS,
-            PHP, C#, Python e muito mais. Transformando ideias em código desde
-            2022.
+            Sistemas internos para o agronegócio, automação de processos e
+            integração de sistemas, da análise de requisitos à entrega.
           </p>
 
          <div className={`${styles.ctas} hero-enter-4`}>

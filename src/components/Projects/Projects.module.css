@@ -235,3 +235,10 @@
   .featuredBody { grid-template-columns: 1fr; }
   .featuredVisual { display: none; }
 }
+
+.featuredImage {
+  width: 160px;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin-bottom: .75rem;
+}

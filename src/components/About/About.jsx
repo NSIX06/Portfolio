@@ -63,20 +63,27 @@ export default function About() {
             <p className={styles.p}>
               Oi! Sou{' '}
               <strong className={styles.highlight}>Luiz Felipe Pablos Bugalho</strong>, aka{' '}
-              <strong className={styles.accentText}>NSIX06</strong> — técnico de TI e 
-              desenvolvedor Full Stack.
+              <strong className={styles.accentText}>NSIX06</strong> — desenvolvedor Full Stack e
+              técnico em informática, graduando em{' '}
+              <strong className={styles.highlight}>Análise e Desenvolvimento de Sistemas</strong> na UniSENAI MT.
             </p>
             <p className={styles.p}>
-              Trabalho com{' '}
-              <strong className={styles.highlight}>HTML, CSS, PHP, MySQL e SQL Server</strong> e
-              estou sempre aprendendo com{' '}
-              <strong className={styles.highlight}>Node.js, Vue, JavaScript e React</strong>.
-              Gosto de construir tanto o front quanto o back-end.
+              Minha experiência combina desenvolvimento de software com conhecimento de processos
+              corporativos: fui usuário-chave do{' '}
+              <strong className={styles.highlight}>TOTVS Protheus</strong> no Planejamento e Controle de
+              Manutenção (PCM) da TMG, onde também criei ferramentas internas. Isso me ajuda a transformar
+              necessidades operacionais em ferramentas digitais mais eficientes.
             </p>
             <p className={styles.p}>
-              Já entreguei projetos com impacto social real, como o site da{' '}
-              <strong className={styles.highlight}>Escolinha de Skate do Bob</strong> — uma ONG
-              que atende mais de 200 alunos por mês com aulas gratuitas de skate.
+              Já entreguei projetos em produção, como o{' '}
+              <strong className={styles.highlight}>TMG Caronas</strong>, sistema corporativo de caronas
+              entre colaboradores, e o site da{' '}
+              <strong className={styles.highlight}>Escolinha de Skate do Bob</strong> — uma ONG que atende
+              mais de 200 alunos por mês com aulas gratuitas de skate.
+            </p>
+            <p className={styles.p}>
+              Busco constantemente aprimorar meus conhecimentos em desenvolvimento web, backend, bancos de
+              dados, cloud, automação e Inteligência Artificial.
             </p>
             <p className={styles.quote}>"Patience is a virtue" 🤓</p>
             <a

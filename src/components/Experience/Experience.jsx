@@ -3,49 +3,50 @@ import styles from './Experience.module.css'
 
 const EXPERIENCES = [
   {
-    company: 'TMG — Tropical e Melhoramento Genético',
-    role: 'Suporte & Operações',
-    period: 'Novembro 2024 — Hoje',
-    description: 'Empresa de pesquisa e desenvolvimento de sementes de soja, milho e algodão, focada em melhoramento genético, biotecnologia e produtividade sustentável.',
+    company: 'Profissional Autônomo',
+    role: 'Desenvolvedor Web Freelancer · Técnico em Informática',
+    period: 'Agosto 2022 — Hoje',
+    description: 'Desenvolvimento de sistemas sob medida e suporte técnico em informática, em Rondonópolis - MT e remoto.',
     bullets: [
-      'Suporte administrativo em rotinas operacionais e documentais.',
-      'Colaboração na organização e gestão de informações e arquivos.',
-      'Participação ativa na otimização de processos internos.',
+      'Desenvolvimento de aplicações Full Stack e sistemas sob medida.',
+      'Criação de APIs e integrações entre sistemas.',
+      'Interfaces responsivas e integração com bancos de dados.',
+      'Automação de processos.',
+      'Instalação, configuração e manutenção de computadores, notebooks, sistemas operacionais, softwares e periféricos.',
+      'Diagnóstico e solução de falhas de hardware, software, redes locais e conexões de internet.',
+      'Montagem, formatação, backup e recuperação de dados, com documentação dos atendimentos.',
+    ],
+    tools: [],
+    accent: '#ffd100',
+  },
+  {
+    company: 'TMG — Tropical Melhoramento & Genética',
+    role: 'Auxiliar Administrativo — PCM',
+    period: 'Novembro 2024 — 2026',
+    description: 'Empresa de pesquisa e desenvolvimento de sementes de soja, milho e algodão, focada em melhoramento genético e biotecnologia. Atuação no Planejamento e Controle de Manutenção (PCM), conciliando atividades administrativas com o desenvolvimento de ferramentas internas.',
+    bullets: [
+      'Suporte às rotinas administrativas, operacionais e documentais do PCM.',
+      'Desenvolvimento de ferramentas internas, como o TMG Caronas e a conferência automatizada de produtos com a base do Protheus.',
+      'Tecnologias: .NET, SQL Server, Microsoft Entra ID, Power Automate e Microsoft Teams.',
     ],
     tools: [
       {
         name: 'TOTVS Protheus (SIGAMNT)',
-        desc: 'Usuário-chave no módulo de Manutenção de Ativos — planos de manutenção preventiva e preditiva, gestão de Ordens de Serviço (OS), controle de peças e materiais e relatórios gerenciais.',
+        desc: 'Usuário-chave no módulo de Manutenção de Ativos — planos preventivos e preditivos, ordens de serviço, peças, materiais e relatórios.',
         emoji: '⚙️',
       },
       {
         name: 'GLPI',
-        desc: 'Administração e operação com foco em catálogo de serviços, controle de chamados de suporte técnico, fluxo de protocolo de Notas Fiscais e gestão de solicitações de cadastro.',
+        desc: 'Catálogo de serviços, chamados de suporte, protocolo de notas fiscais e solicitações de cadastro.',
         emoji: '🎫',
       },
       {
         name: 'Astrein (SSA-CAD)',
-        desc: 'Cadastro e padronização de peças e ferramentas da oficina, garantindo qualidade e integridade das informações para manutenção e almoxarifado.',
+        desc: 'Cadastro e padronização de peças e ferramentas (também no Protheus), garantindo a integridade dos dados de manutenção e almoxarifado.',
         emoji: '🔧',
       },
     ],
     accent: '#ff5c00',
-  },
-  {
-    company: 'Técnico em Informática Autônomo',
-    role: 'Freelancer',
-    period: 'Agosto 2022 — Hoje',
-    description: 'Manutenção e suporte técnico em computadores e redes, com foco em desempenho e segurança dos sistemas.',
-    bullets: [
-      'Instalação, configuração e manutenção de hardware e software.',
-      'Suporte técnico a usuários — computadores, redes e periféricos.',
-      'Diagnóstico e resolução de falhas em sistemas operacionais.',
-      'Administração básica de redes locais (LAN) e internet.',
-      'Backup, recuperação de dados e instalação de antivírus.',
-      'Documentação de procedimentos, tickets e relatórios.',
-    ],
-    tools: [],
-    accent: '#ffd100',
   },
 ]
 

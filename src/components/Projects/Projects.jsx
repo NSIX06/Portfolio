@@ -39,10 +39,10 @@ export default function Projects() {
                 📦
               </span>
 
-              <h3 className={styles.ctaTitle}>+45 repositórios</h3>
+              <h3 className={styles.ctaTitle}>Mais no GitHub</h3>
 
               <p className={styles.ctaDesc}>
-                Veja todos os projetos no GitHub.
+                Veja todos os repositórios públicos.
               </p>
 
               <a

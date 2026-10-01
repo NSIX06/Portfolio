@@ -6,6 +6,7 @@ const NAV_LINKS = [
   { href: '#experiencia', label: 'Experiência' },
   { href: '#skills', label: 'Skills' },
   { href: '#projetos', label: 'Projetos' },
+  { href: '#formacao', label: 'Formação' },
   { href: '#contato', label: 'Contato' },
 ]
 
@@ -20,24 +21,30 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // As seções carregam sob demanda, então o item ativo é calculado na rolagem
+  // (um observer registrado no início não encontraria as seções ainda).
   useEffect(() => {
-    const ids = ['sobre', 'experiencia', 'skills', 'projetos', 'contato']
-
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id)
-        })
-      },
-      { threshold: 0.35 }
-    )
-
-    ids.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) obs.observe(el)
-    })
-
-    return () => obs.disconnect()
+    const ids = NAV_LINKS.map((l) => l.href.slice(1))
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const line = window.innerHeight * 0.35
+      let current = ''
+      ids.forEach((id) => {
+        const el = document.getElementById(id)
+        if (el && el.getBoundingClientRect().top <= line) current = id
+      })
+      setActive(current)
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   return (
