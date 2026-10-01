@@ -52,15 +52,8 @@ html.dark {
   color-scheme: dark;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/* As animações do site rodam mesmo com "reduzir movimento" (decisão do dono do site:
+   no Windows essa opção liga sozinha ao desativar "Efeitos de animação"). */
 
 body {
   background-color: var(--background);
@@ -268,13 +261,6 @@ html[data-theme-anim="1"]::view-transition-new(root) {
   color: #fff;
 }
 
-/* ScrollExpand na página de projetos: o logo é quadrado, fica inteiro sobre o azul da marca */
-.projects-intro .scroll-expand__frame {
-  background: #012b5b;
-}
-.projects-intro .scroll-expand__media {
-  object-fit: contain;
-}
 
 /* Marcador da linha do tempo aceso quando a linha vermelha chega nele */
 .timeline-dot.is-on {

@@ -14,8 +14,9 @@ function subscribeToReducedMotion(callback: () => void): () => void {
   return () => mediaQuery.removeEventListener("change", callback);
 }
 
+// As animações ficam ligadas mesmo com "reduzir movimento" (ver globals.css).
 function getReducedMotionSnapshot(): boolean {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return false;
 }
 
 function getReducedMotionServerSnapshot(): boolean {

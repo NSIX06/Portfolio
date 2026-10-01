@@ -1,4 +1,7 @@
+"use client";
+
 import {
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Brain,
@@ -10,153 +13,40 @@ import {
   Sprout,
   Terminal,
   UtensilsCrossed,
+  X,
 } from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type ReactNode,
+} from "react";
 
 import { FadeIn } from "@/components/ui/motion-primitives";
+import {
+  ALL_REPOS_URL,
+  PROJECTS,
+  type Project,
+  type ProjectIcon,
+} from "@/lib/projects";
 
-/**
- * Projetos. As capas ficam em /public/projetos (geradas a partir do nome e das
- * tecnologias de cada projeto; troque por capturas reais quando tiver).
- */
-
-type Project = {
-  id: string;
-  icon: ComponentType<{ className?: string }>;
-  iconLabel: string;
-  title: string;
-  description: string;
-  meta: string;
-  imageRatio: number;
-  image: string;
-  imageAlt: string;
-  href?: string;
+const ICONS: Record<ProjectIcon, ComponentType<{ className?: string }>> = {
+  car: Car,
+  heart: HeartHandshake,
+  cart: ShoppingCart,
+  sprout: Sprout,
+  utensils: UtensilsCrossed,
+  brain: Brain,
+  terminal: Terminal,
+  clapper: Clapperboard,
+  gauge: Gauge,
 };
 
-const RATIO = 1024 / 768;
-
-const PROJECTS: Project[] = [
-  {
-    id: "tmg-caronas",
-    icon: Car,
-    iconLabel: "TMG Caronas",
-    title:
-      "Sistema corporativo de caronas entre colaboradores das bases da TMG, em produção desde setembro de 2026.",
-    description:
-      "Ofertar e solicitar caronas, gerenciar participações, avaliar viagens e acompanhar indicadores. Integrado ao Microsoft Entra ID, SQL Server, Azure e Microsoft Teams, e selecionado como um dos quatro pilotos do programa TMG IA.",
-    meta: "Desenvolvedor · .NET 10, SQL Server, SignalR · 2026",
-    imageRatio: RATIO,
-    image: "/projetos/tmg-caronas.webp",
-    imageAlt: "Logo do TMG Caronas",
-  },
-  {
-    id: "escolinha-skate-bob",
-    icon: HeartHandshake,
-    iconLabel: "Escolinha de Skate do Bob",
-    title:
-      "Site institucional para uma ONG que atende mais de 200 alunos por mês com aulas gratuitas de skate.",
-    description:
-      'Projeto de extensão da FATEC/UniSENAI para a ONG fundada em 2010 por Igor "Bob" Silva, que usa o skate como ferramenta de inclusão social em Rondonópolis - MT. Publicado e em uso.',
-    meta: "Projeto de extensão · HTML, CSS, JavaScript · 2025",
-    imageRatio: RATIO,
-    image: "/projetos/escolinha-skate-bob.webp",
-    imageAlt: "Capa do projeto Escolinha de Skate do Bob",
-    href: "https://www.escoladeskatedobob.org.br/",
-  },
-  {
-    id: "orderly-checkout",
-    icon: ShoppingCart,
-    iconLabel: "Orderly Checkout",
-    title:
-      "Checkout e gestão de pedidos com controle de transações em tempo real.",
-    description:
-      "Sistema para otimizar o fluxo de caixa e os pagamentos, com foco na experiência do usuário.",
-    meta: "Projeto pessoal · Full stack",
-    imageRatio: RATIO,
-    image: "/projetos/orderly-checkout.webp",
-    imageAlt: "Capa do projeto Orderly Checkout",
-    href: "https://github.com/NSIX06/Orderly-Checkout-Main",
-  },
-  {
-    id: "agrodatahub",
-    icon: Sprout,
-    iconLabel: "AgroDataHub",
-    title: "Plataforma de dados para o agronegócio.",
-    description:
-      "Centraliza, organiza e visualiza informações do setor agrícola para apoiar produtores e gestores na tomada de decisão.",
-    meta: "Projeto pessoal · Dados e dashboard",
-    imageRatio: RATIO,
-    image: "/projetos/agrodatahub.webp",
-    imageAlt: "Capa do projeto AgroDataHub",
-    href: "https://github.com/NSIX06/AgroDataHub-Main",
-  },
-  {
-    id: "app-restaurant",
-    icon: UtensilsCrossed,
-    iconLabel: "App Restaurant",
-    title: "Gestão de restaurantes com mesas, pedidos e cardápio digital.",
-    description:
-      "Interface prática para um atendimento ágil, com controle de mesas, pedidos e cardápio integrados.",
-    meta: "Projeto pessoal · App",
-    imageRatio: RATIO,
-    image: "/projetos/app-restaurant.webp",
-    imageAlt: "Capa do projeto App Restaurant",
-    href: "https://github.com/NSIX06/App_Restaurant",
-  },
-  {
-    id: "braintag",
-    icon: Brain,
-    iconLabel: "BrainTag",
-    title: "Projeto integrador em C# para organizar e gerenciar informações.",
-    description:
-      "Sistema da formação acadêmica com foco em produtividade e estrutura de dados.",
-    meta: "Projeto acadêmico · C#, .NET",
-    imageRatio: RATIO,
-    image: "/projetos/braintag.webp",
-    imageAlt: "Capa do projeto BrainTag",
-    href: "https://github.com/NSIX06/BrainTag",
-  },
-  {
-    id: "devops-py",
-    icon: Terminal,
-    iconLabel: "Devops.py",
-    title: "Scripts e automações em Python para práticas de DevOps.",
-    description:
-      "Automação de tarefas repetitivas e integração entre sistemas.",
-    meta: "Projeto pessoal · Python",
-    imageRatio: RATIO,
-    image: "/projetos/devops-py.webp",
-    imageAlt: "Capa do projeto Devops.py",
-    href: "https://github.com/NSIX06/Devops.py",
-  },
-  {
-    id: "projeto-cinematic",
-    icon: Clapperboard,
-    iconLabel: "Projeto Cinematic",
-    title: "Sistema de filmes em C#, desenvolvido em colaboração.",
-    description:
-      "Fork colaborativo que mostra trabalho em equipe e colaboração via GitHub.",
-    meta: "Projeto acadêmico · C#",
-    imageRatio: RATIO,
-    image: "/projetos/projeto-cinematic.webp",
-    imageAlt: "Capa do Projeto Cinematic",
-    href: "https://github.com/NSIX06/Projeto_Cinematic",
-  },
-  {
-    id: "motos",
-    icon: Gauge,
-    iconLabel: "Motos",
-    title: "Interface web com tema de motocicletas.",
-    description: "Foco em layout visual, tipografia e composição com CSS puro.",
-    meta: "Projeto pessoal · HTML, CSS",
-    imageRatio: RATIO,
-    image: "/projetos/motos.webp",
-    imageAlt: "Capa do projeto Motos",
-    href: "https://github.com/NSIX06/Motos",
-  },
-];
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export type ProjectsProps = {
   withHeadline?: boolean;
@@ -168,25 +58,44 @@ export function Projects({
   viewMoreVisible = false,
 }: ProjectsProps): ReactNode {
   const items = viewMoreVisible ? PROJECTS.slice(0, 4) : PROJECTS;
+  const [openId, setOpenId] = useState<string | null>(null);
+  const lastTrigger = useRef<HTMLElement | null>(null);
+
+  const open = (id: string, trigger: HTMLElement): void => {
+    lastTrigger.current = trigger;
+    setOpenId(id);
+  };
+  const close = (): void => {
+    setOpenId(null);
+    lastTrigger.current?.focus({ preventScroll: true });
+  };
+
+  const current = PROJECTS.find((p) => p.id === openId) ?? null;
 
   return (
     <section className="relative w-full">
       <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
         {withHeadline ? (
           <FadeIn className="flex flex-col items-center gap-5 pt-12 pb-10 text-center sm:pt-20 sm:pb-14">
+            <p className="section-label">{"// 02 — projetos"}</p>
             <h2 className="text-foreground font-serif text-[2.5rem] leading-[1.05] font-bold tracking-tight md:text-[3rem] lg:text-[3.5rem]">
               Meus projetos
             </h2>
             <p className="text-foreground/65 max-w-[33ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
               De sistemas corporativos em produção a projetos acadêmicos e
-              pessoais, uma seleção do que já entreguei.
+              pessoais. Clique em um projeto para ver os detalhes.
             </p>
           </FadeIn>
         ) : null}
 
         <div className="columns-1 gap-6 md:columns-2 md:gap-7">
           {items.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              onOpen={open}
+            />
           ))}
         </div>
 
@@ -203,8 +112,32 @@ export function Projects({
               />
             </Link>
           </div>
-        ) : null}
+        ) : (
+          <div className="mt-10 flex justify-center">
+            <a
+              href={ALL_REPOS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-foreground/8 focus-ring group bg-background text-foreground hover:bg-foreground/5 inline-flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-medium transition-colors"
+            >
+              Todos os repositórios no GitHub
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              <span className="sr-only">(abre em nova aba)</span>
+            </a>
+          </div>
+        )}
       </div>
+
+      <AnimatePresence>
+        {current ? (
+          <ProjectPanel
+            key="panel"
+            project={current}
+            onClose={close}
+            onNavigate={setOpenId}
+          />
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }
@@ -212,79 +145,392 @@ export function Projects({
 function ProjectCard({
   project,
   index,
+  onOpen,
 }: {
   project: Project;
   index: number;
+  onOpen: (id: string, trigger: HTMLElement) => void;
 }): ReactNode {
-  const Icon = project.icon;
-  const card = (
-    <article
-      className={`project-card glow-hover flex flex-col ${project.href ? "cursor-pointer" : ""} border-foreground/8 bg-background gap-4 rounded-3xl border p-3 sm:p-3.5`}
-    >
-      <header className="flex items-center gap-2.5 px-1 pt-2">
-        <span className="border-foreground/10 bg-background inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border">
-          <Icon className="text-foreground h-3.5 w-3.5" aria-hidden="true" />
-        </span>
-        <span className="text-foreground text-sm font-medium tracking-tight">
-          {project.iconLabel}
-        </span>
-        {project.href ? (
-          <ArrowUpRight
-            className="text-foreground/40 ml-auto h-4 w-4"
-            aria-hidden="true"
-          />
-        ) : null}
-      </header>
-
-      <div
-        className="project-card__image ring-foreground/5 bg-foreground/5 relative w-full overflow-hidden rounded-2xl ring-1"
-        style={{ aspectRatio: project.imageRatio }}
-      >
-        <div className="project-card__image-inner">
-          <Image
-            src={project.image}
-            alt={project.imageAlt}
-            fill
-            sizes="(min-width: 1024px) 540px, (min-width: 768px) 45vw, 100vw"
-            className="object-cover"
-            priority={index < 2}
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-2.5 px-1 pb-1">
-        <h3 className="text-foreground text-[20px] leading-[1.2] font-medium tracking-tight sm:text-[22px]">
-          {project.title}
-        </h3>
-        <p className="text-foreground/65 text-[14px] leading-normal tracking-tight sm:text-[15px]">
-          {project.description}
-        </p>
-      </div>
-
-      <p className="text-foreground/50 px-1 pb-2 text-[12px] tracking-tight">
-        {project.meta}
-      </p>
-    </article>
-  );
+  const Icon = ICONS[project.icon];
+  const meta = [project.category, project.year].filter(Boolean).join(" · ");
 
   return (
     <FadeIn
       delay={Math.min(index * 0.06, 0.3)}
       className="mb-6 break-inside-avoid md:mb-7"
     >
-      {project.href ? (
-        <Link
-          href={project.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${project.iconLabel} (abre em nova aba)`}
-          className="focus-ring block rounded-3xl"
-        >
-          {card}
-        </Link>
-      ) : (
-        card
-      )}
+      <button
+        type="button"
+        onClick={(e) => onOpen(project.id, e.currentTarget)}
+        aria-haspopup="dialog"
+        className="focus-ring block w-full rounded-3xl text-left"
+      >
+        <article className="project-card glow-hover border-foreground/8 bg-background flex cursor-pointer flex-col gap-4 rounded-3xl border p-3 sm:p-3.5">
+          <header className="flex items-center gap-2.5 px-1 pt-2">
+            <span className="border-foreground/10 bg-background inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border">
+              <Icon className="text-accent h-3.5 w-3.5" aria-hidden="true" />
+            </span>
+            <span className="text-foreground text-sm font-medium tracking-tight">
+              {project.name}
+            </span>
+            {project.status ? (
+              <span className="ml-auto rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] tracking-wide text-emerald-600 uppercase dark:text-emerald-400">
+                {project.status}
+              </span>
+            ) : null}
+          </header>
+
+          <div
+            className="project-card__image ring-foreground/5 bg-foreground/5 relative w-full overflow-hidden rounded-2xl ring-1"
+            style={{ aspectRatio: 1024 / 768 }}
+          >
+            <div className="project-card__image-inner">
+              <Image
+                src={project.image}
+                alt={project.imageAlt}
+                fill
+                sizes="(min-width: 1024px) 540px, (min-width: 768px) 45vw, 100vw"
+                className="object-cover"
+                priority={index < 2}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2.5 px-1 pb-1">
+            <h3 className="text-foreground text-[20px] leading-[1.2] font-medium tracking-tight sm:text-[22px]">
+              {project.headline}
+            </h3>
+            <p className="text-foreground/65 text-[14px] leading-normal tracking-tight sm:text-[15px]">
+              {project.summary}
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between px-1 pb-2">
+            <span className="text-foreground/50 font-mono text-[11px] tracking-wide uppercase">
+              {meta}
+            </span>
+            <span className="text-accent inline-flex items-center gap-1 text-[13px] font-medium">
+              Ver detalhes
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </span>
+          </div>
+        </article>
+      </button>
     </FadeIn>
+  );
+}
+
+/**
+ * Aba de detalhes do projeto (inspirada na página de projeto do PortfolioPessoal do
+ * GaaraSan01): categoria e ano, título, capa, "Sobre o projeto", objetivo, destaques e
+ * uma lateral com tecnologias, ano, categoria, papel, status e links.
+ */
+function ProjectPanel({
+  project,
+  onClose,
+  onNavigate,
+}: {
+  project: Project;
+  onClose: () => void;
+  onNavigate: (id: string) => void;
+}): ReactNode {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  });
+  const index = PROJECTS.findIndex((p) => p.id === project.id);
+  const next = PROJECTS[(index + 1) % PROJECTS.length];
+  const prev = PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length];
+
+  // Trava a rolagem da página, foca o painel e fecha com Esc.
+  useEffect(() => {
+    window.dispatchEvent(new Event("lenis:stop"));
+    const html = document.documentElement;
+    const previous = html.style.overflow;
+    html.style.overflow = "hidden";
+    closeRef.current?.focus({ preventScroll: true });
+
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === "Escape") onCloseRef.current();
+      if (e.key === "Tab" && panelRef.current) {
+        const focusables = panelRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (!first || !last) return;
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      html.style.overflow = previous;
+      window.dispatchEvent(new Event("lenis:start"));
+    };
+  }, []);
+
+  // Ao trocar de projeto dentro da aba, volta ao topo dela.
+  useEffect(() => {
+    panelRef.current?.scrollTo({ top: 0 });
+  }, [project.id]);
+
+  const Icon = ICONS[project.icon];
+  const label = [project.category, project.year].filter(Boolean).join(" · ");
+  const titleId = `projeto-${project.id}-titulo`;
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[9998] flex justify-end"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+    >
+      <button
+        type="button"
+        aria-label="Fechar detalhes do projeto"
+        tabIndex={-1}
+        onClick={onClose}
+        className="absolute inset-0 cursor-default bg-black/60 backdrop-blur-[2px]"
+      />
+
+      <motion.div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        data-lenis-prevent
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ duration: 0.5, ease: EASE }}
+        className="bg-background border-foreground/10 relative h-full w-full max-w-[56rem] overflow-y-auto overscroll-contain border-l shadow-2xl"
+      >
+        <div className="bg-background/90 border-foreground/8 sticky top-0 z-10 flex items-center justify-between border-b px-5 py-3 backdrop-blur sm:px-8">
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            className="focus-ring text-foreground/70 hover:text-foreground inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm font-medium transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            Todos os projetos
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Fechar"
+            className="focus-ring border-foreground/10 text-foreground/70 hover:text-foreground inline-flex h-9 w-9 items-center justify-center rounded-xl border transition-colors"
+          >
+            <X className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+
+        <motion.div
+          key={project.id}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: EASE }}
+          className="flex flex-col gap-8 px-5 pt-8 pb-12 sm:px-8"
+        >
+          <header className="flex flex-col gap-4">
+            <p className="section-label inline-flex items-center gap-2">
+              <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+              {label}
+            </p>
+            <h2
+              id={titleId}
+              className="text-foreground font-serif text-[2rem] leading-[1.05] font-bold tracking-tight sm:text-[2.6rem]"
+            >
+              {project.name}
+            </h2>
+            <p className="text-foreground/70 max-w-[52ch] text-[17px] leading-relaxed tracking-tight sm:text-[19px]">
+              {project.headline}
+            </p>
+          </header>
+
+          <div
+            className="ring-foreground/8 relative w-full overflow-hidden rounded-3xl ring-1"
+            style={{ aspectRatio: 1024 / 768 }}
+          >
+            <Image
+              src={project.image}
+              alt={project.imageAlt}
+              fill
+              sizes="(min-width: 900px) 860px, 100vw"
+              className="object-cover"
+            />
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-[1.6fr_1fr]">
+            <div className="flex flex-col gap-6">
+              <section className="flex flex-col gap-3">
+                <h3 className="text-foreground text-[18px] font-semibold tracking-tight">
+                  Sobre o projeto
+                </h3>
+                <p className="text-foreground/75 text-[16px] leading-[1.7] tracking-tight">
+                  {project.about}
+                </p>
+              </section>
+
+              {project.objective ? (
+                <section className="flex flex-col gap-3">
+                  <h3 className="text-foreground text-[18px] font-semibold tracking-tight">
+                    Objetivo
+                  </h3>
+                  <p className="text-foreground/75 text-[16px] leading-[1.7] tracking-tight">
+                    {project.objective}
+                  </p>
+                </section>
+              ) : null}
+
+              {project.highlights?.length ? (
+                <section className="flex flex-col gap-3">
+                  <h3 className="text-foreground text-[18px] font-semibold tracking-tight">
+                    Destaques
+                  </h3>
+                  <ul className="flex flex-col gap-2.5">
+                    {project.highlights.map((h) => (
+                      <li
+                        key={h}
+                        className="text-foreground/75 flex gap-3 text-[15px] leading-relaxed tracking-tight"
+                      >
+                        <span
+                          className="bg-accent mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                          aria-hidden="true"
+                        />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+            </div>
+
+            <aside className="border-foreground/8 bg-foreground/[0.02] flex h-fit flex-col gap-5 rounded-3xl border p-5">
+              <SidebarBlock title="Tecnologias">
+                <ul className="flex flex-wrap gap-1.5">
+                  {project.tech.map((t) => (
+                    <li
+                      key={t}
+                      className="border-foreground/10 text-foreground/80 rounded-full border px-2.5 py-1 text-[12px] tracking-tight"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </SidebarBlock>
+              {project.year ? (
+                <SidebarBlock title="Ano">{project.year}</SidebarBlock>
+              ) : null}
+              <SidebarBlock title="Categoria">{project.category}</SidebarBlock>
+              <SidebarBlock title="Papel">{project.role}</SidebarBlock>
+              {project.status ? (
+                <SidebarBlock title="Status">{project.status}</SidebarBlock>
+              ) : null}
+
+              <div className="flex flex-col gap-2 pt-1">
+                {project.live ? (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus-ring bg-accent inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  >
+                    Ver projeto ao vivo
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    <span className="sr-only">(abre em nova aba)</span>
+                  </a>
+                ) : null}
+                {project.github ? (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="focus-ring border-foreground/10 text-foreground hover:bg-foreground/5 inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-colors"
+                  >
+                    Ver no GitHub
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    <span className="sr-only">(abre em nova aba)</span>
+                  </a>
+                ) : null}
+                {!project.live && !project.github ? (
+                  <p className="text-foreground/55 text-[13px] leading-relaxed">
+                    Sistema interno da empresa: código e acesso não são
+                    públicos.
+                  </p>
+                ) : null}
+              </div>
+            </aside>
+          </div>
+
+          <nav
+            aria-label="Outros projetos"
+            className="border-foreground/8 flex items-center justify-between gap-4 border-t pt-6"
+          >
+            {prev ? (
+              <button
+                type="button"
+                onClick={() => onNavigate(prev.id)}
+                className="focus-ring text-foreground/70 hover:text-foreground inline-flex items-center gap-2 rounded-lg text-left text-sm transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <span>
+                  <span className="text-foreground/45 block font-mono text-[10px] tracking-wide uppercase">
+                    Anterior
+                  </span>
+                  {prev.name}
+                </span>
+              </button>
+            ) : (
+              <span />
+            )}
+            {next ? (
+              <button
+                type="button"
+                onClick={() => onNavigate(next.id)}
+                className="focus-ring text-foreground/70 hover:text-foreground inline-flex items-center gap-2 rounded-lg text-right text-sm transition-colors"
+              >
+                <span>
+                  <span className="text-foreground/45 block font-mono text-[10px] tracking-wide uppercase">
+                    Próximo
+                  </span>
+                  {next.name}
+                </span>
+                <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+              </button>
+            ) : null}
+          </nav>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function SidebarBlock({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}): ReactNode {
+  return (
+    <div className="flex flex-col gap-2">
+      <h4 className="text-foreground/50 font-mono text-[10px] tracking-[0.16em] uppercase">
+        {title}
+      </h4>
+      <div className="text-foreground text-[15px] tracking-tight">
+        {children}
+      </div>
+    </div>
   );
 }

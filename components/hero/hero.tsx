@@ -2,17 +2,16 @@ import type { ReactNode } from "react";
 
 import { HeroCtas } from "./hero-ctas";
 import { FadeIn, ScaleUnblur } from "@/components/ui/motion-primitives";
-import { PortraitMorph } from "./portrait-morph";
+import Image from "next/image";
 import TextType from "@/components/effects/TextType";
 
+// O título já diz "Desenvolvedor Full Stack": a linha digitada mostra o resto do perfil.
 const ROLES = [
-  "Desenvolvedor Full Stack",
   "Técnico em Informática",
-  "Freelancer",
+  "Desenvolvedor Web Freelancer",
+  "Sistemas corporativos",
+  "Automação e integrações",
 ];
-
-const PORTRAIT_SRC = "/felipe.webp";
-const PORTRAIT_HOVER_SRC = "/felipe_cor.webp";
 
 export function Hero(): ReactNode {
   return (
@@ -50,15 +49,41 @@ export function Hero(): ReactNode {
             </p>
 
             <HeroCtas />
+
+            <ul
+              className="mt-1 flex flex-wrap gap-2"
+              aria-label="Disponibilidade"
+            >
+              <li className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-[11px] tracking-wide text-emerald-600 dark:text-emerald-400">
+                <span
+                  className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500"
+                  aria-hidden="true"
+                />
+                Disponível para contratação
+              </li>
+              <li className="border-accent-2/40 bg-accent-2/10 text-accent-2 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] tracking-wide">
+                <span
+                  className="bg-accent-2 h-1.5 w-1.5 rounded-full"
+                  aria-hidden="true"
+                />
+                Aberto a projetos freelance
+              </li>
+              <li className="border-foreground/10 text-foreground/65 inline-flex items-center rounded-full border px-3 py-1 font-mono text-[11px] tracking-wide">
+                Rondonópolis - MT · remoto
+              </li>
+            </ul>
           </FadeIn>
 
           <ScaleUnblur className="flex justify-stretch md:justify-end">
             <div className="border-foreground/8 bg-background relative aspect-square w-full overflow-hidden rounded-4xl border p-1.5 shadow-sm md:max-w-105">
               <div className="relative h-full w-full overflow-hidden rounded-[1.6rem]">
-                <PortraitMorph
-                  srcA={PORTRAIT_SRC}
-                  srcB={PORTRAIT_HOVER_SRC}
+                <Image
+                  src="/felipe_cor.webp"
                   alt="Foto de Felipe Bugalho"
+                  fill
+                  priority
+                  sizes="(min-width: 768px) 420px, 100vw"
+                  className="object-cover"
                 />
               </div>
             </div>

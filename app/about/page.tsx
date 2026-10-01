@@ -5,6 +5,7 @@ import {
 import { Skills } from "@/components/about/skills";
 import { Stack } from "@/components/about/stack";
 import { Stats } from "@/components/about/stats";
+import { Credentials } from "@/components/about/credentials";
 import { ContactCard } from "@/components/contact/contact-card";
 import { FadeIn } from "@/components/ui/motion-primitives";
 import { Timeline } from "@/components/trajectory/timeline";
@@ -182,6 +183,7 @@ export default function AboutPage(): ReactNode {
           <div className="flex flex-col gap-10">
             <Skills />
             <Stack icons={stackIcons} />
+            <Credentials />
           </div>
         </FadeIn>
       </section>

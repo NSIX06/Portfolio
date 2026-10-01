@@ -18,20 +18,14 @@ export function SmoothScroll({ children }: { children: ReactNode }): ReactNode {
   useEffect(() => {
     if (!features.smoothScroll) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (prefersReducedMotion) return;
-
     const lenis = new Lenis(LENIS_OPTIONS);
 
+    let rafId = 0;
     function raf(time: number): void {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
-
-    const rafId = requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     function handleAnchorClick(e: MouseEvent): void {
       const target = e.target as HTMLElement;
@@ -50,8 +44,16 @@ export function SmoothScroll({ children }: { children: ReactNode }): ReactNode {
 
     document.addEventListener("click", handleAnchorClick);
 
+    // Painéis (ex.: aba de projeto) pausam a rolagem suave enquanto estão abertos.
+    const stop = (): void => lenis.stop();
+    const start = (): void => lenis.start();
+    window.addEventListener("lenis:stop", stop);
+    window.addEventListener("lenis:start", start);
+
     return () => {
       document.removeEventListener("click", handleAnchorClick);
+      window.removeEventListener("lenis:stop", stop);
+      window.removeEventListener("lenis:start", start);
       cancelAnimationFrame(rafId);
       lenis.destroy();
     };

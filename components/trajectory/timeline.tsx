@@ -7,7 +7,6 @@ import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useRef, type ReactNode } from "react";
 
-import DotField from "@/components/effects/DotField";
 import type { Milestone } from "@/lib/trajectory";
 
 export type TimelineItem = Milestone & { iconData: IconifyIcon };
@@ -27,13 +26,6 @@ export function Timeline({ items }: { items: TimelineItem[] }): ReactNode {
     const root = rootRef.current;
     const fill = fillRef.current;
     if (!root || !fill) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(fill, { scaleY: 1 });
-      root
-        .querySelectorAll("[data-dot]")
-        .forEach((d) => d.classList.add("is-on"));
-      return;
-    }
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -64,17 +56,6 @@ export function Timeline({ items }: { items: TimelineItem[] }): ReactNode {
 
   return (
     <div className="relative overflow-x-clip">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-60"
-      >
-        <DotField
-          gradientFrom="rgba(225, 29, 29, 0.35)"
-          gradientTo="rgba(255, 209, 0, 0.12)"
-          dotSpacing={22}
-        />
-      </div>
-
       <div
         ref={rootRef}
         className="relative mx-auto w-full max-w-275 px-6 sm:px-10"

@@ -1,6 +1,5 @@
 import { ContactCard } from "@/components/contact/contact-card";
 import { Projects } from "@/components/projects/projects";
-import ScrollExpand from "@/components/effects/ScrollExpand";
 import { FadeIn } from "@/components/ui/motion-primitives";
 import { createMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
@@ -26,21 +25,6 @@ export default function ProjectsPage(): ReactNode {
             pessoais.
           </p>
         </FadeIn>
-      </section>
-      {/* Abertura do portfólio antigo: o logo do projeto principal cresce até a tela cheia */}
-      <section aria-hidden="true" className="projects-intro mb-16 sm:mb-24">
-        <ScrollExpand
-          src="/projetos/tmg-caronas.webp"
-          alt=""
-          scrollHint="Role para abrir"
-          useWindowScroll
-          startWidth={44}
-          startHeight={56}
-          mediaZoom={1.15}
-          scrollDistance={0.9}
-          holdDistance={0.15}
-          overlayScrim={0.3}
-        />
       </section>
       <Projects />
       <ContactCard />
