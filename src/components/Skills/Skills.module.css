@@ -1,32 +1,15 @@
-.sectionLabel {
-  font-family: var(--font-mono);
-  font-size: .7rem;
-  letter-spacing: .25em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-}
-.sectionTitle {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1;
-  margin-bottom: 3rem;
-}
-
 .categories {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.25rem 3rem;
 }
-
-.category {}
 
 .catLabel {
   font-family: var(--font-mono);
-  font-size: .7rem;
+  font-size: .72rem;
+  font-weight: 700;
   color: var(--color-muted);
-  letter-spacing: .2em;
+  letter-spacing: .18em;
   text-transform: uppercase;
   margin-bottom: .9rem;
 }
@@ -34,29 +17,27 @@
 .pillsRow {
   display: flex;
   flex-wrap: wrap;
-  gap: .75rem;
+  gap: .6rem;
 }
 
 .pill {
   display: flex;
   align-items: center;
-  gap: .6rem;
-  padding: .75rem 1.15rem;
+  gap: .55rem;
+  padding: .6rem 1rem;
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  font-size: .85rem;
+  font-size: .84rem;
   font-weight: 600;
   color: var(--color-text);
-  cursor: default;
   transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 .pill:hover {
-  border-color: rgba(255, 92, 0, .4);
+  border-color: rgba(225, 29, 29, .4);
   transform: translateY(-2px);
 }
 
-/* Dots */
 .dot {
   width: 6px;
   height: 6px;
@@ -67,3 +48,62 @@
 .dot--blue   { background: var(--color-blue); }
 .dot--green  { background: var(--color-green); }
 .dot--yellow { background: var(--color-yellow); }
+
+/* Metodologias */
+.methods {
+  margin-top: 4.5rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--color-border);
+  scroll-margin-top: 5rem;
+}
+
+.methodsTitle {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  margin-bottom: .5rem;
+}
+
+.methodsIntro {
+  color: var(--color-muted);
+  margin-bottom: 1.75rem;
+}
+
+.methodsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.methodCard {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+}
+
+.methodHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.methodName {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.methodDesc {
+  color: var(--color-muted);
+  font-size: .9rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 800px) {
+  .categories,
+  .methodsGrid { grid-template-columns: 1fr; }
+}

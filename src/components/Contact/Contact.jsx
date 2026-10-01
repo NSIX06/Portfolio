@@ -1,91 +1,64 @@
 import { useReveal } from '../../hooks/useReveal'
-import { socials } from '../../data/socials.jsx'
+import { contact, contactById, availability } from '../../data'
+import SectionHeader from '../ui/SectionHeader'
+import AvailabilityBadge from '../ui/AvailabilityBadge'
+import Icon from '../icons/Icon'
+import ui from '../ui/ui.module.css'
 import styles from './Contact.module.css'
 
 export default function Contact() {
   const ref = useReveal()
+  const email = contactById.email
+  const linkedin = contactById.linkedin
 
   return (
     <section id="contato" className="section section--bg" aria-labelledby="contact-heading">
       <div className="container reveal" ref={ref}>
-        <p className={styles.sectionLabel}>// 06 — contato</p>
-        <h2 id="contact-heading" className={styles.sectionTitle}>Bora conversar?</h2>
+        <SectionHeader index="08" label="contato" title="Bora conversar?" id="contact-heading" />
 
         <div className={styles.grid}>
           <div>
-            <p className={styles.intro}>
-              Aberto a freelas, oportunidades, colaborações e projetos com propósito.
-              Se quiser trocar uma ideia, é só chamar!
-            </p>
+            <p className={styles.intro}>{contact.intro}</p>
 
-            <nav aria-label="Redes sociais e contatos">
-              <ul className={styles.socialList}>
-                {socials.map((s) => (
-                  <li key={s.id}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={styles.socialLink}
-                      aria-label={s.ariaLabel}
-                    >
-                      <span className={styles.socialIcon} aria-hidden="true">
-                        {s.icon}
-                      </span>
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
-
-                <li>
+            <ul className={styles.socialList} aria-label="Contatos e redes sociais">
+              {contact.links.map((l) => (
+                <li key={l.id}>
                   <a
-                    href="https://www.escoladeskatedobob.org.br/"
-                    target="_blank"
-                    rel="noreferrer"
+                    href={l.href}
+                    {...(l.external ? { target: '_blank', rel: 'noreferrer' } : {})}
                     className={styles.socialLink}
-                    aria-label="Ver site do projeto Escolinha de Skate do Bob"
+                    aria-label={l.external ? `${l.ariaLabel} (abre em nova aba)` : l.ariaLabel}
                   >
-                    <span className={styles.socialIcon} aria-hidden="true">🛹</span>
-                    Projeto — Escolinha de Skate do Bob
+                    <span className={styles.socialIcon}>
+                      <Icon name={l.icon} />
+                    </span>
+                    {l.label}
                   </a>
                 </li>
-              </ul>
-            </nav>
+              ))}
+            </ul>
           </div>
 
-          <aside className={styles.ctaCard} aria-label="Trabalhe comigo">
-            <h3 className={styles.ctaTitle}>Trabalhe comigo</h3>
-
-            <p className={styles.ctaText}>
-              Técnico de TI e desenvolvedor freelance disponível para projetos web,
-              sistemas, banco de dados e redes. Baseado em Rondonópolis&nbsp;-&nbsp;MT,
-              atendo remotamente também.
-            </p>
+          <aside className={styles.ctaCard} aria-labelledby="contact-cta-title">
+            <AvailabilityBadge className={styles.ctaBadges} />
+            <h3 id="contact-cta-title" className={styles.ctaTitle}>
+              {availability.headline}
+            </h3>
+            <p className={styles.ctaText}>{availability.description}</p>
 
             <div className={styles.ctaBtns}>
-              <a
-                href="https://github.com/NSIX06"
-                target="_blank"
-                rel="noreferrer"
-                className={styles.btnPrimary}
-                aria-label="Ver GitHub"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '.4rem' }}>
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                GitHub
+              <a href={email.href} className={ui.btnPrimary}>
+                <Icon name="email" size={16} />
+                Enviar e-mail
               </a>
-
               <a
-                href="https://www.linkedin.com/in/felipe-bugalho-089083269/"
+                href={linkedin.href}
                 target="_blank"
                 rel="noreferrer"
-                className={styles.btnGhost}
-                aria-label="Ver LinkedIn"
+                className={ui.btnGhost}
+                aria-label={`${linkedin.ariaLabel} (abre em nova aba)`}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '.4rem' }}>
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg>
+                <Icon name="linkedin" size={16} />
                 LinkedIn
               </a>
             </div>

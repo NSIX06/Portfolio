@@ -1,0 +1,98 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-bottom: 2rem;
+}
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 1rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.filter:hover { color: var(--color-text); border-color: #333; }
+.filterActive { color: var(--color-text); border-color: var(--color-accent); }
+.filterCount { color: var(--color-muted); font-weight: 400; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.grid > li { display: flex; }
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  width: 100%;
+  text-align: left;
+  padding: 1.25rem 1.35rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+.card:hover { border-color: rgba(225, 29, 29, .4); transform: translateY(-3px); }
+
+.institution {
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.name {
+  font-size: .98rem;
+  font-weight: 700;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem;
+}
+
+.more {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: .64rem;
+  color: var(--color-muted);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.certImage {
+  width: 100%;
+  margin-top: 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.noFile {
+  margin-top: 1.5rem;
+  font-size: .82rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+}

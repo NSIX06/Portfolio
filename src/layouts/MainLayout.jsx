@@ -1,44 +1,42 @@
-import { lazy, Suspense } from 'react'
+import { useEffect } from 'react'
 import Nav from '../components/Nav/Nav'
 import Hero from '../components/Hero/Hero'
+import About from '../components/About/About'
+import Experience from '../components/Experience/Experience'
+import Education from '../components/Education/Education'
+import Skills from '../components/Skills/Skills'
+import Projects from '../components/Projects/Projects'
+import Certificates from '../components/Certificates/Certificates'
+import Availability from '../components/Availability/Availability'
+import Contact from '../components/Contact/Contact'
 import Footer from '../components/Footer/Footer'
 
-// Lazy load below-the-fold sections
-const About      = lazy(() => import('../components/About/About'))
-const Experience = lazy(() => import('../components/Experience/Experience'))
-const Skills     = lazy(() => import('../components/Skills/Skills'))
-const Projects   = lazy(() => import('../components/Projects/Projects'))
-const Contact    = lazy(() => import('../components/Contact/Contact'))
-
-const SectionLoader = () => (
-  <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <span style={{ color: 'var(--muted)', fontFamily: 'var(--font-mono)', fontSize: '.75rem', letterSpacing: '.2em' }}>
-      carregando...
-    </span>
-  </div>
-)
-
+/**
+ * Portfólio tradicional. As seções são carregadas juntas (sem lazy) para que
+ * âncoras, menu e indexação funcionem desde o primeiro carregamento.
+ * A jornada interativa (Fase 3) será a parte carregada sob demanda.
+ */
 export default function MainLayout() {
+  // O conteúdo é renderizado no cliente: o navegador não acha a âncora da URL no
+  // carregamento inicial, então rolamos até ela depois da primeira renderização.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1))
+    if (id) document.getElementById(id)?.scrollIntoView()
+  }, [])
+
   return (
     <>
       <Nav />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <Hero />
-        <Suspense fallback={<SectionLoader />}>
-          <About />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Experience />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Skills />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Projects />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Contact />
-        </Suspense>
+        <About />
+        <Experience />
+        <Education />
+        <Skills />
+        <Projects />
+        <Certificates />
+        <Availability />
+        <Contact />
       </main>
       <Footer />
     </>

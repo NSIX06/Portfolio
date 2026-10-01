@@ -1,95 +1,87 @@
 import { useReveal } from '../../hooks/useReveal'
+import { experiences, projects } from '../../data'
+import SectionHeader from '../ui/SectionHeader'
+import ui from '../ui/ui.module.css'
 import styles from './Experience.module.css'
 
-const EXPERIENCES = [
-  {
-    company: 'TMG — Tropical e Melhoramento Genético',
-    role: 'Suporte & Operações',
-    period: 'Novembro 2024 — Hoje',
-    description: 'Empresa de pesquisa e desenvolvimento de sementes de soja, milho e algodão, focada em melhoramento genético, biotecnologia e produtividade sustentável.',
-    bullets: [
-      'Suporte administrativo em rotinas operacionais e documentais.',
-      'Colaboração na organização e gestão de informações e arquivos.',
-      'Participação ativa na otimização de processos internos.',
-    ],
-    tools: [
-      {
-        name: 'TOTVS Protheus (SIGAMNT)',
-        desc: 'Usuário-chave no módulo de Manutenção de Ativos — planos de manutenção preventiva e preditiva, gestão de Ordens de Serviço (OS), controle de peças e materiais e relatórios gerenciais.',
-        emoji: '⚙️',
-      },
-      {
-        name: 'GLPI',
-        desc: 'Administração e operação com foco em catálogo de serviços, controle de chamados de suporte técnico, fluxo de protocolo de Notas Fiscais e gestão de solicitações de cadastro.',
-        emoji: '🎫',
-      },
-      {
-        name: 'Astrein (SSA-CAD)',
-        desc: 'Cadastro e padronização de peças e ferramentas da oficina, garantindo qualidade e integridade das informações para manutenção e almoxarifado.',
-        emoji: '🔧',
-      },
-    ],
-    accent: '#ff5c00',
-  },
-  {
-    company: 'Técnico em Informática Autônomo',
-    role: 'Freelancer',
-    period: 'Agosto 2022 — Hoje',
-    description: 'Manutenção e suporte técnico em computadores e redes, com foco em desempenho e segurança dos sistemas.',
-    bullets: [
-      'Instalação, configuração e manutenção de hardware e software.',
-      'Suporte técnico a usuários — computadores, redes e periféricos.',
-      'Diagnóstico e resolução de falhas em sistemas operacionais.',
-      'Administração básica de redes locais (LAN) e internet.',
-      'Backup, recuperação de dados e instalação de antivírus.',
-      'Documentação de procedimentos, tickets e relatórios.',
-    ],
-    tools: [],
-    accent: '#ffd100',
-  },
-]
+const projectTitle = Object.fromEntries(projects.map((p) => [p.id, p.title]))
 
-function ToolCard({ emoji, name, desc }) {
-  return (
-    <div className={styles.toolCard}>
-      <div className={styles.toolHeader}>
-        <span className={styles.toolEmoji} aria-hidden="true">{emoji}</span>
-        <strong className={styles.toolName}>{name}</strong>
-      </div>
-      <p className={styles.toolDesc}>{desc}</p>
-    </div>
-  )
-}
-
-function ExperienceCard({ company, role, period, description, bullets, tools, accent }) {
+function ExperienceCard({ experience }) {
   const ref = useReveal()
+  const { company, companyNote, roles, start, end, current, location, description, technologies, tools, projectIds, accent } =
+    experience
+
   return (
-    <article className={`${styles.card} reveal`} ref={ref}>
-      <div className={styles.cardBar} style={{ background: accent }} />
+    <article className={`${styles.card} ${current ? styles.cardCurrent : ''} reveal`} ref={ref}>
+      <div className={styles.cardBar} style={{ background: accent }} aria-hidden="true" />
       <div className={styles.cardHead}>
         <div>
+          {current && <p className={`${ui.chip} ${ui['chip--accent']} ${styles.currentChip}`}>⭐ Cargo atual</p>}
           <h3 className={styles.company}>{company}</h3>
-          <p className={styles.role}>{role}</p>
+          <p className={styles.role}>{roles.map((r) => r.title).join(' · ')}</p>
+          {location && <p className={styles.location}>{location}</p>}
         </div>
-        <span className={styles.period}>{period}</span>
+        <span className={styles.period}>
+          {start} — {end ?? 'Atual'}
+        </span>
       </div>
+
+      {companyNote && <p className={styles.companyNote}>{companyNote}</p>}
       <p className={styles.description}>{description}</p>
-      <ul className={styles.bullets}>
-        {bullets.map((b) => (
-          <li key={b} className={styles.bullet}>
-            <span className={styles.bulletDot} style={{ background: accent }} aria-hidden="true" />
-            {b}
-          </li>
-        ))}
-      </ul>
+
+      {roles.map((role) => (
+        <div key={role.title} className={styles.roleBlock}>
+          {roles.length > 1 && <h4 className={styles.roleTitle}>{role.title}</h4>}
+          <ul className={styles.bullets}>
+            {role.activities.map((a) => (
+              <li key={a} className={styles.bullet}>
+                <span className={styles.bulletDot} style={{ background: accent }} aria-hidden="true" />
+                {a}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
       {tools.length > 0 && (
         <div className={styles.tools}>
-          <p className={styles.toolsLabel}>🛠️ Ferramentas utilizadas</p>
+          <p className={styles.toolsLabel}>🛠️ Sistemas utilizados</p>
           <div className={styles.toolsGrid}>
             {tools.map((t) => (
-              <ToolCard key={t.name} {...t} />
+              <div key={t.name} className={styles.toolCard}>
+                <strong className={styles.toolName}>{t.name}</strong>
+                <p className={styles.toolDesc}>{t.description}</p>
+              </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {projectIds.length > 0 && (
+        <div className={styles.footerRow}>
+          <p className={styles.toolsLabel}>Projetos desenvolvidos</p>
+          <ul className={ui.tagList}>
+            {projectIds.map((id) => (
+              <li key={id}>
+                <a href={`#projeto-${id}`} className={`${ui.tag} ${styles.projectLink}`}>
+                  {projectTitle[id] ?? id} →
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {technologies.length > 0 && (
+        <div className={styles.footerRow}>
+          <p className={styles.toolsLabel}>Tecnologias</p>
+          <ul className={ui.tagList}>
+            {technologies.map((t) => (
+              <li key={t} className={ui.tag}>
+                {t}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </article>
@@ -100,11 +92,10 @@ export default function Experience() {
   return (
     <section id="experiencia" className="section section--bg" aria-labelledby="exp-heading">
       <div className="container">
-        <p className={styles.sectionLabel}>// 02 — carreira</p>
-        <h2 id="exp-heading" className={styles.sectionTitle}>Experiência</h2>
+        <SectionHeader index="02" label="carreira" title="Experiência" id="exp-heading" />
         <div className={styles.list}>
-          {EXPERIENCES.map((e) => (
-            <ExperienceCard key={e.company} {...e} />
+          {experiences.map((e) => (
+            <ExperienceCard key={e.id} experience={e} />
           ))}
         </div>
       </div>

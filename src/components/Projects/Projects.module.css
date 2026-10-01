@@ -1,18 +1,4 @@
-.sectionLabel {
-  font-family: var(--font-mono);
-  font-size: .7rem;
-  letter-spacing: .25em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-}
-.sectionTitle {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1;
-  margin-bottom: 3rem;
-}
+
 
 .grid {
   display: grid;
@@ -70,6 +56,7 @@
 
 .featuredBadge {
   display: inline-flex;
+  white-space: nowrap;
   align-items: center;
   gap: .4rem;
   padding: .3rem .85rem;
@@ -79,7 +66,6 @@
   font-family: var(--font-mono);
   font-size: .65rem;
   color: var(--color-accent2);
-  margin-bottom: 1rem;
   letter-spacing: .1em;
 }
 
@@ -104,8 +90,7 @@
 }
 .featuredEmoji { font-size: 3rem; }
 .featuredVisualTitle { font-size: 1rem; font-weight: 700; color: var(--color-accent2); }
-.featuredVisualSub   { font-size: .8rem; color: var(--color-muted); }
-.featuredVisualNote  { font-size: .72rem; color: #444; }
+.featuredVisualNote  { font-size: .78rem; color: var(--color-muted); max-width: 320px; line-height: 1.6; }
 
 /* ── Card content ──────────────────────── */
 .cardEmoji { font-size: 2rem; margin-bottom: .8rem; }
@@ -147,12 +132,10 @@
   font-family: var(--font-mono);
   font-size: .63rem;
   letter-spacing: .05em;
-  border: 1px solid;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: #c9c6c0;
 }
-.badge--orange { background: rgba(255, 92, 0, .1);    border-color: rgba(255, 92, 0, .22);    color: var(--color-accent); }
-.badge--blue   { background: rgba(74, 144, 217, .1);  border-color: rgba(74, 144, 217, .22);  color: var(--color-blue); }
-.badge--green  { background: rgba(76, 175, 80, .1);   border-color: rgba(76, 175, 80, .22);   color: var(--color-green); }
-.badge--yellow { background: rgba(255, 209, 0, .1);   border-color: rgba(255, 209, 0, .22);   color: var(--color-accent2); }
 
 .cardLinks {
   display: flex;
@@ -173,12 +156,6 @@
 }
 .cardLink:hover { color: var(--color-accent); }
 
-.stars {
-  font-family: var(--font-mono);
-  font-size: .7rem;
-  color: var(--color-accent2);
-  margin-left: auto;
-}
 
 /* ── CTA card ──────────────────────────── */
 .ctaCard {
@@ -196,7 +173,7 @@
   height: 100%;
   transition: border-color var(--transition-base);
 }
-.ctaCard:hover { border-color: rgba(255, 92, 0, .3); }
+.ctaCard:hover { border-color: rgba(225, 29, 29, .3); }
 
 .ctaTitle {
   font-size: 1.1rem;
@@ -224,6 +201,80 @@
   transition: border-color var(--transition-fast), color var(--transition-fast);
 }
 .ctaBtn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* ── Filtros ───────────────────────────── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-bottom: 2rem;
+}
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 1rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.filter:hover { color: var(--color-text); border-color: #333; }
+.filterActive { color: var(--color-text); border-color: var(--color-accent); }
+.filterCount { color: var(--color-muted); font-weight: 400; }
+
+/* ── Card clicável ─────────────────────── */
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.body, .bodyMain {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.stretched {
+  all: unset;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.stretched::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.stretched:focus-visible { outline: none; }
+.card:has(.stretched:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+.cardLink {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+.cardLinkHint {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-right: auto;
+}
+.card { cursor: pointer; }
 
 /* ── Responsive ────────────────────────── */
 @media (max-width: 1024px) {

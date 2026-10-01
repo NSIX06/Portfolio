@@ -1,0 +1,215 @@
+/* Estilos compartilhados entre seções (antes duplicados em cada módulo). */
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.sectionLead {
+  color: var(--color-muted);
+  max-width: 640px;
+  line-height: 1.75;
+  margin-bottom: 3rem;
+}
+
+.header { margin-bottom: 3rem; }
+.header .sectionLead { margin-bottom: 0; }
+.header:not(:has(.sectionLead)) .sectionTitle { margin-bottom: 0; }
+
+/* Chips / pills */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .28rem .75rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .06em;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, .04);
+  color: var(--color-muted);
+  max-width: 100%;
+}
+.chip--green  { color: var(--color-green);  border-color: rgba(76, 175, 80, .3);  background: rgba(76, 175, 80, .08); }
+.chip--yellow { color: var(--color-accent2); border-color: rgba(255, 209, 0, .3);  background: rgba(255, 209, 0, .08); }
+.chip--red    { color: #ff6b6b;             border-color: rgba(255, 107, 107, .3); background: rgba(255, 107, 107, .08); }
+.chip--accent { color: var(--color-accent); border-color: rgba(225, 29, 29, .35); background: rgba(225, 29, 29, .08); }
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+
+.tag {
+  padding: .25rem .6rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .04em;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+/* Botões */
+.btnPrimary,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .75rem 1.6rem;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+.btnPrimary {
+  background: var(--color-accent);
+  color: #fff;
+  border: 1px solid var(--color-accent);
+}
+.btnPrimary:hover { transform: translateY(-2px); box-shadow: var(--shadow-accent); }
+.btnGhost {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.btnGhost:hover { border-color: var(--color-accent); color: var(--color-accent); transform: translateY(-2px); }
+
+/* Card clicável (botão com aparência de card) */
+.cardButton {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  text-align: left;
+}
+.cardButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-md);
+}
+
+/* Modal */
+.dialog {
+  margin: auto;
+  width: min(720px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card);
+  color: var(--color-text);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .6);
+}
+.dialog::backdrop {
+  background: rgba(0, 0, 0, .72);
+  backdrop-filter: blur(4px);
+}
+.dialog[open] { animation: scaleIn .2s ease both; }
+
+.dialogInner {
+  padding: 2rem;
+  overflow-y: auto;
+  max-height: calc(100dvh - 2rem);
+}
+
+.dialogHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.dialogTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.dialogClose {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: 1.1rem;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.dialogClose:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+.detailLabel {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 1.5rem 0 .6rem;
+}
+
+.detailText {
+  color: #c9c6c0;
+  line-height: 1.75;
+  font-size: .95rem;
+}
+
+.detailList {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.detailList li {
+  display: flex;
+  gap: .7rem;
+  color: #c9c6c0;
+  font-size: .92rem;
+  line-height: 1.6;
+}
+.detailList li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  margin-top: .55rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.detailLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 1.75rem;
+}
+
+@media (max-width: 600px) {
+  .dialogInner { padding: 1.4rem; }
+  .dialogTitle { font-size: 1.25rem; }
+}

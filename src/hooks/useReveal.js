@@ -1,5 +1,11 @@
 import { useEffect, useRef } from 'react'
 
+/** Sem IntersectionObserver ou com movimento reduzido, o conteúdo aparece direto. */
+const shouldSkip = () =>
+  typeof window === 'undefined' ||
+  !('IntersectionObserver' in window) ||
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
 /**
  * useReveal — IntersectionObserver hook para animar elementos ao entrar na viewport.
  * @param {Object} options
@@ -18,6 +24,10 @@ export function useReveal({
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    if (shouldSkip()) {
+      el.classList.add('visible')
+      return
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -50,6 +60,10 @@ export function useRevealAll({ threshold = 0.1, stagger = 80 } = {}) {
     if (!container) return
 
     const elements = container.querySelectorAll('.reveal')
+    if (shouldSkip()) {
+      elements.forEach((el) => el.classList.add('visible'))
+      return
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
