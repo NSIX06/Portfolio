@@ -4,26 +4,52 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0a" />
 
-    <!-- SEO Primary -->
+    <!-- SEO (mesmos valores de src/data/seo.js) -->
     <title>Luiz Felipe Bugalho | Desenvolvedor Full Stack</title>
-    <meta name="description" content="Portfólio de Luiz Felipe Pablos Bugalho (NSIX06) — Desenvolvedor Full Stack, Técnico de TI e Freelancer baseado em Rondonópolis - MT. Especialista em HTML, CSS, JavaScript, C#, PHP e Python." />
-    <meta name="keywords" content="desenvolvedor full stack, web developer, freelancer, Rondonópolis, FATEC, C#, JavaScript, React, PHP, Python, portfólio" />
+    <meta name="description" content="Portfólio de Luiz Felipe Pablos Bugalho — Desenvolvedor Full Stack e Técnico em Informática em Rondonópolis - MT. Sistemas internos para o agronegócio, automação de processos e integração de sistemas com React, .NET, Python e SQL." />
+    <meta name="keywords" content="desenvolvedor full stack, desenvolvedor web freelancer, técnico em informática, Rondonópolis, Mato Grosso, UniSENAI, FATEC, React, Next.js, C#, .NET, Python, SQL Server, TOTVS Protheus, automação de processos, portfólio" />
     <meta name="author" content="Luiz Felipe Pablos Bugalho" />
     <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://felipebugalho.vercel.app/" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Luiz Felipe Bugalho" />
     <meta property="og:title" content="Luiz Felipe Bugalho | Desenvolvedor Full Stack" />
-    <meta property="og:description" content="Portfólio de Luiz Felipe Pablos Bugalho — desenvolvedor full stack apaixonado por tecnologia e projetos com impacto real." />
-    <meta property="og:url" content="https://nsix06.vercel.app" />
+    <meta property="og:description" content="Desenvolvedor Full Stack com experiência em sistemas internos para o agronegócio, automação de processos e integração de sistemas." />
+    <meta property="og:url" content="https://felipebugalho.vercel.app/" />
+    <meta property="og:image" content="https://felipebugalho.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Luiz Felipe Bugalho — Desenvolvedor Full Stack" />
     <meta property="og:locale" content="pt_BR" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Luiz Felipe Bugalho | Desenvolvedor Full Stack" />
-    <meta name="twitter:description" content="Portfólio full stack — React, C#, PHP, Python e muito mais." />
+    <meta name="twitter:description" content="Sistemas internos, automação e integração — React, .NET, Python e SQL." />
+    <meta name="twitter:image" content="https://felipebugalho.vercel.app/og-image.png" />
     <meta name="twitter:creator" content="@NSIXgb" />
+
+    <!-- Dados estruturados -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Luiz Felipe Pablos Bugalho",
+        "alternateName": ["Felipe Bugalho", "NSIX06"],
+        "jobTitle": "Desenvolvedor Full Stack",
+        "url": "https://felipebugalho.vercel.app/",
+        "image": "https://felipebugalho.vercel.app/og-image.png",
+        "address": { "@type": "PostalAddress", "addressLocality": "Rondonópolis", "addressRegion": "MT", "addressCountry": "BR" },
+        "alumniOf": [{ "@type": "EducationalOrganization", "name": "SENAC" }],
+        "affiliation": { "@type": "EducationalOrganization", "name": "UniSENAI MT" },
+        "knowsAbout": ["Desenvolvimento Full Stack", "React", ".NET", "Python", "SQL Server", "Automação de processos", "Integração de sistemas"],
+        "sameAs": ["https://github.com/NSIX06", "https://www.linkedin.com/in/felipe-bugalho-089083269/", "https://instagram.com/fe.bugalho"]
+      }
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,6 +57,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <noscript>
+      <p style="padding:2rem;font-family:sans-serif;color:#f0ede8;background:#0a0a0a">
+        Luiz Felipe Pablos Bugalho — Desenvolvedor Full Stack em Rondonópolis - MT.
+        Contato: felipebugalho2016@gmail.com · github.com/NSIX06 · linkedin.com/in/felipe-bugalho-089083269
+      </p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

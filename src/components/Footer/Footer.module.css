@@ -76,3 +76,18 @@
   .inner { flex-direction: column; align-items: flex-start; }
   .bottom { flex-direction: column; align-items: flex-start; gap: .3rem; }
 }
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.25rem;
+}
+.footerLinks a {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  transition: color var(--transition-fast);
+}
+.footerLinks a:hover { color: var(--color-accent); }

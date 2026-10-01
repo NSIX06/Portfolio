@@ -1,0 +1,63 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.statusCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-left-width: 3px;
+  border-radius: var(--radius-md);
+}
+.status--green  { border-left-color: var(--color-green); }
+.status--yellow { border-left-color: var(--color-accent2); }
+.status--red    { border-left-color: #ff6b6b; }
+
+.statusEmoji { font-size: 1.4rem; }
+
+.statusLabel {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.statusMessage {
+  color: var(--color-muted);
+  font-size: .88rem;
+}
+
+.current {
+  padding: 1.25rem 1.4rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+.current .blockLabel { margin-top: 0; }
+
+.currentText { font-weight: 600; }
+
+.blockLabel {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 1.5rem 0 .7rem;
+}
+.infoCol > .blockLabel:first-child { margin-top: 0; }
+
+.ctas { margin-top: 2rem; }
+
+@media (max-width: 800px) {
+  .grid { grid-template-columns: 1fr; gap: 2rem; }
+}

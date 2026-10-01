@@ -77,6 +77,13 @@ ul, ol {
   background: var(--color-border);
 }
 
+/* Compensa o menu fixo ao navegar por âncora */
+section[id], [id^="projeto-"], #metodologias {
+  scroll-margin-top: 5rem;
+}
+
+main:focus { outline: none; }
+
 /* Section base */
 .section {
   padding: var(--space-2xl) var(--space-lg);

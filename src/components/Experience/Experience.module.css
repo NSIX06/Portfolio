@@ -1,19 +1,5 @@
-.sectionLabel {
-  font-family: var(--font-mono);
-  font-size: .7rem;
-  letter-spacing: .25em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-}
 
-.sectionTitle {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1;
-  margin-bottom: 3rem;
-}
+
 
 .list {
   display: flex;
@@ -99,7 +85,7 @@
   align-items: flex-start;
   gap: .75rem;
   font-size: .9rem;
-  color: #a8a5a0;
+  color: #b8b5b0;
   line-height: 1.6;
 }
 
@@ -135,22 +121,15 @@
 }
 
 .toolCard:hover {
-  border-color: rgba(255,92,0,.3);
+  border-color: rgba(225,29,29,.35);
   transform: translateY(-2px);
 }
 
-.toolHeader {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  margin-bottom: .5rem;
-}
 
-.toolEmoji {
-  font-size: 1.2rem;
-}
 
 .toolName {
+  display: block;
+  margin-bottom: .4rem;
   font-size: .85rem;
   font-weight: 700;
   color: var(--color-text);
@@ -161,6 +140,45 @@
   color: var(--color-muted);
   line-height: 1.6;
 }
+
+.cardCurrent {
+  border-color: rgba(225, 29, 29, .35);
+}
+
+.currentChip { margin-bottom: .8rem; }
+
+.location {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--color-muted);
+  margin-top: .3rem;
+}
+
+.companyNote {
+  font-size: .82rem;
+  color: var(--color-muted);
+  font-style: italic;
+  margin-bottom: .6rem;
+}
+
+.roleBlock + .roleBlock { margin-top: .25rem; }
+
+.roleTitle {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: .6rem;
+}
+
+.tools { margin-bottom: 1.5rem; }
+
+.footerRow + .footerRow { margin-top: 1.25rem; }
+
+.projectLink {
+  display: inline-block;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.projectLink:hover { border-color: var(--color-accent); color: var(--color-accent); }
 
 @media (max-width: 768px) {
   .toolsGrid {

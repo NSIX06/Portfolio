@@ -1,118 +1,79 @@
-# 🚀 Portfólio — Luiz Felipe Pablos Bugalho (NSIX06)
+# Portfólio — Luiz Felipe Pablos Bugalho (NSIX06)
 
-Portfólio profissional desenvolvido com **React + Vite**, seguindo arquitetura escalável, CSS Modules, lazy loading e boas práticas modernas. Pronto para deploy na **Vercel**.
+Portfólio profissional em **React 18 + Vite**, com CSS Modules e deploy na **Vercel**: [felipebugalho.vercel.app](https://felipebugalho.vercel.app/).
 
----
+Em evolução para uma **Jornada Profissional Interativa** em 2D. O plano está dividido em fases com prioridade P0–P3. As Fases 1 e 2 (dados centralizados e portfólio tradicional) estão concluídas.
 
-## 🏗️ Arquitetura do Projeto
-```
-src/
-├── assets/
-│   ├── images/          # Foto de perfil (travada)
-│   └── icons/
-│
-├── components/
-│   ├── Nav/
-│   │   ├── Nav.jsx              # Navegação com active section + menu mobile
-│   │   └── Nav.module.css
-│   ├── Hero/
-│   │   ├── Hero.jsx             # Seção inicial com foto travada
-│   │   └── Hero.module.css
-│   ├── About/
-│   │   ├── About.jsx            # Sobre mim + stats ao vivo via API GitHub
-│   │   └── About.module.css
-│   ├── Experience/
-│   │   ├── Experience.jsx       # Experiências: TMG, TOTVS, GLPI, Astrein, Autônomo
-│   │   └── Experience.module.css
-│   ├── Skills/
-│   │   ├── Skills.jsx           # Habilidades por categoria
-│   │   └── Skills.module.css
-│   ├── Projects/
-│   │   ├── Projects.jsx         # Grid de projetos
-│   │   ├── ProjectCard.jsx      # Card reutilizável (React.memo)
-│   │   └── Projects.module.css
-│   ├── Contact/
-│   │   ├── Contact.jsx          # Redes sociais + CTA
-│   │   └── Contact.module.css
-│   └── Footer/
-│       ├── Footer.jsx
-│       └── Footer.module.css
-│
-├── data/
-│   ├── projects.js      # Lista de projetos
-│   ├── skills.js        # Categorias e habilidades
-│   └── socials.js       # Links sociais
-│
-├── hooks/
-│   └── useReveal.js     # Hook IntersectionObserver para animações
-│
-├── layouts/
-│   └── MainLayout.jsx   # Layout base com Suspense + lazy loading
-│
-├── styles/
-│   ├── globals.css      # Reset e utilitários globais
-│   ├── variables.css    # CSS Custom Properties (design tokens)
-│   └── animations.css   # Keyframes e classes de animação
-│
-├── App.jsx              # SEO + layout
-└── main.jsx             # Bootstrap React + HelmetProvider
-```
+## Executar
 
----
-
-## 📋 Seções do Portfólio
-
-| # | Seção | Descrição |
-|---|-------|-----------|
-| 01 | **Hero** | Apresentação com foto travada |
-| 02 | **Sobre** | Bio + stats ao vivo do GitHub |
-| 03 | **Experiência** | TMG, TOTVS Protheus, GLPI, Astrein, Autônomo |
-| 04 | **Skills** | Stack técnica categorizada |
-| 05 | **Projetos** | Cards com projetos do GitHub |
-| 06 | **Contato** | Redes sociais e CTA |
-
----
-
-## 🧠 Decisões de Arquitetura
-
-- **`data/`** — dados desacoplados dos componentes
-- **`hooks/`** — `useReveal` e `useRevealAll` com IntersectionObserver
-- **`layouts/`** — `MainLayout` gerencia composição e Suspense boundaries
-- **CSS Modules** — zero conflito de classes entre componentes
-- **Lazy Loading** — seções abaixo do fold carregadas sob demanda
-- **React.memo** — `ProjectCard` memorizado para evitar re-renders
-- **API GitHub ao vivo** — repositórios e estrelas sempre atualizados
-
----
-
-## ⚙️ Como rodar localmente
 ```bash
 npm install
-npm run dev
+npm run dev       # desenvolvimento em http://localhost:5173
+npm run build     # build de produção em dist/
+npm run preview   # serve o build localmente
+npm run lint      # ESLint + regras de acessibilidade (jsx-a11y)
+npm test          # Vitest: valida a integridade dos dados
 ```
 
-## 🚀 Deploy na Vercel
-```bash
-git add .
-git commit -m "update"
-git push
+Deploy: cada push na `main` é publicado pela Vercel. Os branches geram um preview automático.
+
+## Arquitetura
+
+```
+src/
+├── data/                 ← TODO o conteúdo profissional
+│   ├── index.js          portfolioData + exportações nomeadas
+│   ├── profile.js        nome, título, resumo, idiomas, competências
+│   ├── education.js      formação
+│   ├── experiences.js    experiências (a com current: true é o "cargo atual")
+│   ├── projects.js       projetos + origens (filtros) + status
+│   ├── certificates.js   cursos e certificados
+│   ├── technologies.js   habilidades por categoria
+│   ├── methodologies.js  Scrum e Kanban
+│   ├── availability.js   status de disponibilidade e área de contratação
+│   ├── contact.js        e-mail e redes (sem JSX)
+│   ├── navigation.js     seções do menu e ordem da jornada
+│   ├── character.js      personagem da jornada (Fases 3 e 6)
+│   └── seo.js            title, description, Open Graph
+├── components/
+│   ├── ui/               SectionHeader, Modal (<dialog>), AvailabilityBadge, estilos compartilhados
+│   ├── icons/Icon.jsx    ícones SVG (GitHub, LinkedIn, Instagram, e-mail)
+│   └── <Seção>/          Hero, About, Experience, Education, Skills (+ Metodologias),
+│                         Projects, Certificates, Availability, Contact, Nav, Footer
+├── hooks/useReveal.js    animação de entrada; respeita prefers-reduced-motion
+├── layouts/MainLayout.jsx
+└── styles/               tokens, globais e animações
 ```
 
-A Vercel detecta o Vite automaticamente e deploya. ✅
+Nenhum texto profissional fica dentro dos componentes. Um teste garante que as URLs de perfil só existem em `src/data/`.
 
----
+## Como atualizar o conteúdo
 
-## 🎨 Design Tokens
+| Quero… | Arquivo | O que fazer |
+| --- | --- | --- |
+| Adicionar um projeto | `data/projects.js` | Acrescentar um objeto. Use `origin: 'freelancer'` ou `'curso'` para cair no filtro certo; o filtro aparece sozinho quando há projetos daquela origem. `featured: true` deixa o card em destaque. |
+| Adicionar um certificado | `data/certificates.js` | `cert({ id, name, institution, ... })`. Para imagem ou PDF, coloque o arquivo em `public/certificados/` e preencha `image` ou `pdf` com o caminho. |
+| Atualizar uma experiência | `data/experiences.js` | Editar `roles`, `start`, `end` (`null` = atual) e `projectIds`. |
+| Mudar o cargo atual | `data/experiences.js` | Marcar `current: true` na experiência atual (só uma). |
+| Mudar a disponibilidade | `data/availability.js` | Editar `active`: `'hiring'`, `'projects'` e/ou `'unavailable'`. |
+| Atualizar habilidades | `data/technologies.js` | Editar `items` da categoria. |
+| Atualizar contato | `data/contact.js` | Editar `links` e `email`. |
+| Atualizar SEO | `data/seo.js` **e** `index.html` | O `index.html` repete os valores para crawlers que não executam JavaScript. |
 
-| Token | Valor | Uso |
-|-------|-------|-----|
-| `--color-bg` | `#0a0a0a` | Fundo principal |
-| `--color-surface` | `#111111` | Seções alternadas |
-| `--color-accent` | `#ff5c00` | Cor primária |
-| `--color-accent2` | `#ffd100` | Destaque |
-| `--font-sans` | Syne | Títulos e corpo |
-| `--font-mono` | Space Mono | Labels e badges |
+Depois de editar, rode `npm test`: ele aponta ids duplicados, projetos inexistentes ligados a experiências e status inválidos.
 
----
+## Decisões técnicas
 
-MIT © 2025 Luiz Felipe Pablos Bugalho
+- **Sem lazy loading nas seções**: as âncoras do menu e o link ativo passam a funcionar desde o primeiro carregamento. O custo é de +13 kB gzip. A jornada interativa será a parte carregada sob demanda.
+- **Modal em `<dialog>` nativo**: prende o foco, fecha com Esc ou clicando fora e devolve o foco ao card que abriu.
+- **Acessibilidade**: skip link, foco visível, `prefers-reduced-motion`, cor secundária com contraste AA e ESLint `jsx-a11y`.
+- **SEO**: canonical, Open Graph com imagem (`public/og-image.png`), JSON-LD `Person`, `robots.txt` e `sitemap.xml`.
+
+## Próximas fases
+
+3. MVP da jornada 2D (mapa SVG, personagem, câmera, estações lidas de `data/navigation.js`)
+4. Teclado, toque, mobile e alternância "Explorar jornada / Navegar pelo portfólio"
+5. Cargo atual e disponibilidade no mapa
+6–9. Personalização do personagem, microanimações, performance e validação final
+
+MIT © 2026 Luiz Felipe Pablos Bugalho

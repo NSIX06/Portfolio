@@ -107,7 +107,7 @@
 }
 .drawerLink:hover { color: var(--color-accent); }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav { padding: 1rem 1.5rem; }
   .links { display: none; }
   .hamburger { display: flex; }

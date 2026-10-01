@@ -6,7 +6,7 @@
   --color-accent:   #e11d1d;
   --color-accent2:  #ffd100;
   --color-text:     #f0ede8;
-  --color-muted:    #6b6b6b;
+  --color-muted:    #8c8c8c;
   --color-border:   #222222;
 
   /* Tech badge colors */
@@ -38,7 +38,7 @@
   --transition-slow: 0.5s ease;
 
   /* Shadows */
-  --shadow-accent: 0 8px 24px rgba(255, 92, 0, 0.35);
+  --shadow-accent: 0 8px 24px rgba(225, 29, 29, 0.35);
   --shadow-card:   0 4px 20px rgba(0, 0, 0, 0.4);
 
   /* Z-index */
