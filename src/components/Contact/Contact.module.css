@@ -128,17 +128,6 @@
 .statusLabel { font-weight: 700; }
 .statusMessage { color: var(--color-muted); font-size: 0.85rem; }
 
-.current {
-  margin-top: 1rem;
-  padding: 0.9rem 1.1rem;
-  border: 1px dashed var(--color-border);
-  border-radius: var(--radius-md);
-  font-weight: 600;
-}
-.current .blockLabel {
-  display: block;
-  margin: 0 0 0.3rem;
-}
 .blockLabel {
   font-family: var(--font-mono);
   font-size: 0.66rem;

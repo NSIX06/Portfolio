@@ -102,10 +102,6 @@ export default function Hero() {
             </a>
           </div>
 
-          <ul className={`${styles.badges} hero-enter-5`} aria-label="Localização">
-            <li className={styles.badge}>📍 {profile.location}</li>
-            <li className={styles.badge}>🎓 Graduando em ADS — UniSENAI MT</li>
-          </ul>
         </div>
 
       </div>

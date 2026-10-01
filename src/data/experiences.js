@@ -50,8 +50,8 @@ export const experiences = [
     end: null,
     current: true,
     location: 'Rondonópolis - MT · Remoto',
-    description:
-      'Desenvolvimento de aplicações web e soluções personalizadas para diferentes segmentos, da análise de requisitos à implementação e evolução dos sistemas, além de suporte técnico em informática.',
+    // Sem descrição: os dois papéis abaixo já detalham o trabalho.
+    description: '',
     technologies: [],
     tools: [],
     projectIds: [],
@@ -67,9 +67,6 @@ export const experiences = [
         title: 'Auxiliar Administrativo — PCM',
         activities: [
           'Suporte às rotinas administrativas, operacionais e documentais do Planejamento e Controle de Manutenção (PCM)',
-          'Usuário-chave do TOTVS Protheus (SIGAMNT): planos de manutenção preventiva e preditiva, ordens de serviço, controle de peças e materiais e relatórios gerenciais',
-          'Administração do GLPI: chamados, protocolo de notas fiscais e solicitações de cadastro',
-          'Cadastro e padronização de peças e ferramentas no Protheus e no Astrein (SSA-CAD)',
           'Desenvolvimento de ferramentas internas, como o TMG Caronas e a conferência automatizada de produtos com a base do Protheus',
         ],
       },
@@ -80,7 +77,7 @@ export const experiences = [
     location: 'Rondonópolis - MT',
     description:
       'Atuação no PCM conciliando atividades administrativas com o desenvolvimento de ferramentas internas para otimização de processos.',
-    technologies: ['TOTVS Protheus', 'GLPI', 'Astrein', '.NET', 'SQL Server', 'Microsoft Entra ID', 'Power Automate', 'Microsoft Teams'],
+    technologies: ['.NET', 'SQL Server', 'Microsoft Entra ID', 'Power Automate', 'Microsoft Teams'],
     tools: [
       {
         name: 'TOTVS Protheus (SIGAMNT)',
@@ -95,7 +92,7 @@ export const experiences = [
       {
         name: 'Astrein (SSA-CAD)',
         description:
-          'Cadastro e padronização de peças e ferramentas, garantindo a integridade dos dados de manutenção e almoxarifado.',
+          'Cadastro e padronização de peças e ferramentas (também no Protheus), garantindo a integridade dos dados de manutenção e almoxarifado.',
       },
     ],
     projectIds: ['tmg-caronas'],

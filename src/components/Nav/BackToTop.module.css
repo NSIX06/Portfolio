@@ -26,24 +26,6 @@
 .btn:hover {
   border-color: var(--color-accent);
 }
-.btn svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-.track {
-  fill: none;
-  stroke: #2a2a2a;
-  stroke-width: 2;
-}
-.bar {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 2;
-  stroke-linecap: round;
-}
 .arrow {
   position: relative;
   font-size: 1.05rem;

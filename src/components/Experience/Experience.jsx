@@ -27,7 +27,7 @@ function ExperienceCard({ experience }) {
       </div>
 
       {companyNote && <p className={styles.companyNote}>{companyNote}</p>}
-      <p className={styles.description}>{description}</p>
+      {description && <p className={styles.description}>{description}</p>}
 
       {roles.map((role) => (
         <div key={role.title} className={styles.roleBlock}>

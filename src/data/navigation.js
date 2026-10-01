@@ -1,23 +1,23 @@
 /**
  * Seções do portfólio tradicional e estações da jornada.
  *
- * `sections` define a ORDEM da página, o menu (inNav), o índice lateral (inRail)
+ * `sections` define a ORDEM da página, o menu (inNav)
  * e a numeração "// 01 — ..." (numbered). Reordenar aqui reordena tudo.
  * Seções com `parent` ficam dentro de outra (o menu destaca a seção-mãe).
  */
 
-/** @type {{id: string, label: string, inNav: boolean, inRail: boolean, numbered: boolean, parent?: string}[]} */
+/** @type {{id: string, label: string, inNav: boolean, numbered: boolean, parent?: string}[]} */
 export const sections = [
-  { id: 'inicio', label: 'Início', inNav: false, inRail: true, numbered: false },
-  { id: 'sobre', label: 'Sobre', inNav: true, inRail: true, numbered: true },
-  { id: 'projetos', label: 'Projetos', inNav: true, inRail: true, numbered: true },
-  { id: 'experiencia', label: 'Experiência', inNav: true, inRail: true, numbered: true },
-  { id: 'habilidades', label: 'Habilidades', inNav: true, inRail: true, numbered: true },
-  { id: 'metodologias', label: 'Metodologias', inNav: false, inRail: false, numbered: false, parent: 'habilidades' },
-  { id: 'formacao', label: 'Formação', inNav: true, inRail: true, numbered: true },
-  { id: 'certificados', label: 'Certificados', inNav: false, inRail: true, numbered: false, parent: 'formacao' },
-  { id: 'contato', label: 'Contato', inNav: false, inRail: true, numbered: true },
-  { id: 'disponibilidade', label: 'Disponibilidade', inNav: false, inRail: false, numbered: false, parent: 'contato' },
+  { id: 'inicio', label: 'Início', inNav: false, numbered: false },
+  { id: 'sobre', label: 'Sobre', inNav: true, numbered: true },
+  { id: 'projetos', label: 'Projetos', inNav: true, numbered: true },
+  { id: 'experiencia', label: 'Experiência', inNav: true, numbered: true },
+  { id: 'habilidades', label: 'Habilidades', inNav: true, numbered: true },
+  { id: 'metodologias', label: 'Metodologias', inNav: false, numbered: false, parent: 'habilidades' },
+  { id: 'formacao', label: 'Formação', inNav: true, numbered: true },
+  { id: 'certificados', label: 'Certificados', inNav: false, numbered: false, parent: 'formacao' },
+  { id: 'contato', label: 'Contato', inNav: false, numbered: true },
+  { id: 'disponibilidade', label: 'Disponibilidade', inNav: false, numbered: false, parent: 'contato' },
 ]
 
 /** Número "01", "02"... de uma seção, calculado pela ordem acima. */

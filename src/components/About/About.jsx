@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useReveal } from '../../hooks/useReveal'
-import { profile, contactById } from '../../data'
+import { profile } from '../../data'
 import SectionHeader from '../ui/SectionHeader'
-import Icon from '../icons/Icon'
 import ui from '../ui/ui.module.css'
 import styles from './About.module.css'
 
@@ -49,7 +48,6 @@ function StatCard({ num, label, loading }) {
 export default function About() {
   const ref = useReveal()
   const { repos, stars, loading, error } = useGitHubStats(profile.stats.github)
-  const linkedin = contactById.linkedin
 
   const stats = [
     ...(error
@@ -83,16 +81,6 @@ export default function About() {
               ))}
             </ul>
 
-            <a
-              href={linkedin.href}
-              target="_blank"
-              rel="noreferrer"
-              className={`${ui.btnGhost} ${styles.linkedinBtn}`}
-              aria-label={`${linkedin.ariaLabel} (abre em nova aba)`}
-            >
-              <Icon name="linkedin" size={16} />
-              LinkedIn
-            </a>
           </div>
 
           <div>

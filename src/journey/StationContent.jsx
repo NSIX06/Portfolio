@@ -211,7 +211,7 @@ export default function StationContent({ stationId, focusItem, onGo }) {
         <>
           <p className={`${ui.chip} ${ui['chip--accent']}`}>⭐ Experiência atual</p>
           <ExperienceBlock e={currentExperience} />
-          <p className={ui.detailText}>{currentExperience.description}</p>
+          {currentExperience.description && <p className={ui.detailText}>{currentExperience.description}</p>}
         </>
       ) : (
         <p className={ui.detailText}>Sem experiência atual cadastrada.</p>

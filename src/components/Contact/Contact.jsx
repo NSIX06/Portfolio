@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { useReveal } from '../../hooks/useReveal'
-import { contact, contactById, availability, activeAvailability, currentExperience, profile } from '../../data'
+import { contact, contactById, availability, activeAvailability, profile } from '../../data'
 import SectionHeader from '../ui/SectionHeader'
 import Icon from '../icons/Icon'
 import DotField from '../effects/DotField'
@@ -17,13 +17,12 @@ export default function Contact() {
   const ref = useReveal()
   const email = contactById.email
   const linkedin = contactById.linkedin
-  const role = currentExperience?.roles[0]?.title
 
   return (
     <section id="contato" className={`section section--surface ${styles.section}`} aria-labelledby="contact-heading">
       <DotField gradientFrom="rgba(225, 29, 29, 0.28)" gradientTo="rgba(255, 209, 0, 0.12)" />
       <div className={`container reveal ${styles.inner}`} ref={ref}>
-        <SectionHeader section="contato" label="contato" title="Bora conversar?" id="contact-heading" lead={contact.intro} />
+        <SectionHeader section="contato" label="contato" title="Contato" id="contact-heading" />
 
         <div className={styles.grid}>
           {/* Cartão de perfil (antes no Hero): fecha a página com o rosto de quem atende */}
@@ -33,9 +32,7 @@ export default function Contact() {
               name={profile.shortName}
               title={profile.title}
               handle={profile.handle}
-              status={activeAvailability[0]?.label ?? profile.location}
-              contactText="E-mail"
-              contactHref={email.href}
+              status={profile.location}
             />
           </div>
 
@@ -69,7 +66,7 @@ export default function Contact() {
               </div>
               <ul className={styles.socialRow} aria-label="Outros contatos">
                 {contact.links
-                  .filter((l) => l.id !== 'linkedin')
+                  .filter((l) => l.id !== 'linkedin' && l.id !== 'email')
                   .map((l) => (
                     <li key={l.id}>
                       <a
@@ -109,13 +106,6 @@ export default function Contact() {
                 </li>
               ))}
             </ul>
-            {currentExperience && (
-              <p className={styles.current}>
-                <span className={styles.blockLabel}>Situação atual</span>
-                {currentExperience.company}
-                {role ? ` — ${role}` : ''}, desde {currentExperience.start}
-              </p>
-            )}
             </div>
             <div>
             <p className={`${styles.blockLabel} ${styles.firstLabel}`}>Especialidades</p>
@@ -129,14 +119,6 @@ export default function Contact() {
             <p className={styles.blockLabel}>Tipo de oportunidade</p>
             <ul className={ui.tagList}>
               {availability.opportunityTypes.map((s) => (
-                <li key={s} className={ui.tag}>
-                  {s}
-                </li>
-              ))}
-            </ul>
-            <p className={styles.blockLabel}>Tecnologias de interesse</p>
-            <ul className={ui.tagList}>
-              {availability.interests.map((s) => (
                 <li key={s} className={ui.tag}>
                   {s}
                 </li>
