@@ -1,13 +1,10 @@
 "use client";
 
-import { ArrowUpRight, Award, ChevronLeft, ChevronRight, Github, Globe, Pause, Play } from "lucide-react";
+import { Award, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-import { ProjectVisual } from "@/components/projects/projects";
 import { CERTIFICATES } from "@/lib/certificates";
-import { PROJECTS } from "@/lib/projects";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -42,7 +39,6 @@ const SOFT_SKILLS = [
 ];
 
 const TABS = [
-  { id: "projetos", label: "Projetos", count: PROJECTS.length },
   { id: "certificacoes", label: "Certificações", count: CERTIFICATES.length },
   { id: "competencias", label: "Competências", count: AREAS.length + SOFT_SKILLS.length },
   { id: "idiomas", label: "Idiomas", count: LANGUAGES.length },
@@ -50,11 +46,11 @@ const TABS = [
 type TabId = (typeof TABS)[number]["id"];
 
 /**
- * "Passion Corner" (referência: antonio-bastos.com): abas com projetos, certificações em
- * carrossel/acordeão automático, competências e idiomas.
+ * "Passion Corner" (referência: antonio-bastos.com): abas com certificações em
+ * carrossel/acordeão automático, competências e idiomas (os projetos têm seção própria).
  */
 export function PassionCorner(): ReactNode {
-  const [tab, setTab] = useState<TabId>("projetos");
+  const [tab, setTab] = useState<TabId>("certificacoes");
 
   return (
     <div className="flex flex-col gap-8">
@@ -107,7 +103,6 @@ export function PassionCorner(): ReactNode {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.3, ease: EASE }}
           >
-            {tab === "projetos" ? <ProjectsTab /> : null}
             {tab === "certificacoes" ? <CertificatesTab /> : null}
             {tab === "competencias" ? <SkillsTab /> : null}
             {tab === "idiomas" ? <LanguagesTab /> : null}
@@ -115,69 +110,6 @@ export function PassionCorner(): ReactNode {
         </AnimatePresence>
       </div>
     </div>
-  );
-}
-
-function hostOf(url: string): string {
-  return url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/.*$/, "");
-}
-
-function ProjectsTab(): ReactNode {
-  return (
-    <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4">
-      {PROJECTS.map((p, i) => {
-        const link = p.live ?? p.github;
-        return (
-          <motion.li
-            key={p.id}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: EASE, delay: Math.min(i, 6) * 0.05 }}
-            className="glow-hover group border-foreground/8 bg-background flex flex-col overflow-hidden rounded-3xl border"
-          >
-            <div className="relative aspect-[16/9] overflow-hidden">
-              <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
-                <ProjectVisual project={p} sizes="(min-width: 640px) 50vw, 100vw" />
-              </div>
-              {p.status ? (
-                <span className="bg-accent absolute top-3 right-3 rounded-full px-2.5 py-1 font-mono text-[10px] tracking-[0.12em] text-white uppercase shadow">
-                  {p.status}
-                </span>
-              ) : null}
-            </div>
-            <div className="flex flex-1 flex-col gap-2 p-4">
-              <span className="text-foreground/45 font-mono text-[10px] tracking-[0.14em] uppercase">{p.category}</span>
-              <h3 className="text-foreground text-[17px] font-semibold tracking-tight">{p.name}</h3>
-              <p className="text-foreground/60 line-clamp-2 text-[13px] leading-relaxed">{p.headline}</p>
-              <div className="border-foreground/8 mt-auto flex items-center gap-2 border-t pt-3">
-                {link ? (
-                  <a
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="focus-ring text-foreground/60 hover:text-accent inline-flex min-w-0 items-center gap-1.5 text-[12px] transition-colors"
-                  >
-                    {p.live ? <Globe className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /> : <Github className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
-                    <span className="truncate">{p.live ? hostOf(p.live) : "GitHub"}</span>
-                    <span className="sr-only">(abre em nova aba)</span>
-                  </a>
-                ) : (
-                  <span className="text-foreground/45 text-[12px]">Privado</span>
-                )}
-                {p.year ? <span className="text-foreground/40 ml-auto font-mono text-[11px]">{p.year}</span> : null}
-                <Link
-                  href="/projects"
-                  className={`focus-ring bg-foreground text-background hover:bg-accent inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors hover:text-white ${p.year ? "" : "ml-auto"}`}
-                >
-                  Detalhes
-                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </Link>
-              </div>
-            </div>
-          </motion.li>
-        );
-      })}
-    </ul>
   );
 }
 

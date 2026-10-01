@@ -1,5 +1,6 @@
 import { Nav } from "@/components/layout/nav";
 import { PageBackdrop } from "@/components/layout/page-backdrop";
+import { ScrollBackdrop } from "@/components/layout/scroll-backdrop";
 import { Providers } from "@/components/layout/providers";
 import { SkipToContent } from "@/components/layout/skip-to-content";
 import { SiteEffects } from "@/components/effects/site-effects";
@@ -114,6 +115,7 @@ export default function RootLayout({
             />
           </svg>
           <SkipToContent />
+          <ScrollBackdrop />
           <PageBackdrop />
           <Nav />
           {children}

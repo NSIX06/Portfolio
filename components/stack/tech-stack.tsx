@@ -47,7 +47,7 @@ export function TechStack({
         transition={{ duration: 0.6, ease: EASE }}
         className="flex flex-col items-center gap-4 text-center"
       >
-        <p className="section-label">{"// 03 — stack"}</p>
+        <p className="section-label">{"// 04 — stack"}</p>
         <h2
           id="stack-title"
           className="text-foreground font-serif text-[2.4rem] leading-[1.05] font-extrabold tracking-tight md:text-[3rem] lg:text-[3.5rem]"

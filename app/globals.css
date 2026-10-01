@@ -324,3 +324,20 @@ html[data-theme-anim="1"]::view-transition-new(root) {
   0%, 100% { transform: translateY(0) rotate(-3deg); }
   50% { transform: translateY(-10px) rotate(3deg); }
 }
+
+/* ---------- Landing page: degradê vermelho/preto + fundos por seção ---------- */
+.backdrop-gradient {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 0% 100%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 100% 60%, color-mix(in srgb, #7a0a0a 30%, transparent), transparent 70%),
+    linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--background) 55%, transparent) 100%);
+}
+.backdrop-layer--glitch > * {
+  opacity: 0.22;
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 25%, black 85%);
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 25%, black 85%);
+}
+html:not(.dark) .backdrop-layer > * {
+  opacity: 0.35;
+}

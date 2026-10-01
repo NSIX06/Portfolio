@@ -3,8 +3,6 @@
 import { Moon, Sun } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   useEffect,
   useLayoutEffect,
@@ -19,11 +17,56 @@ type NavItem = {
   href: string;
 };
 
+/** Landing page única: cada item leva a uma seção (rolagem suave pelo Lenis). */
 const NAV_ITEMS: readonly NavItem[] = [
-  { label: "Início", href: "/" },
-  { label: "Projetos", href: "/projects" },
-  { label: "Sobre", href: "/about" },
+  { label: "Início", href: "#inicio" },
+  { label: "Sobre", href: "#sobre" },
+  { label: "Projetos", href: "#projetos" },
+  { label: "Stack", href: "#stack" },
+  { label: "Contato", href: "#contato" },
 ];
+
+/** Seção sob o meio da tela → índice do item do menu (scroll spy). */
+const SPY: { id: string; item: number }[] = [
+  { id: "inicio", item: 0 },
+  { id: "sobre", item: 1 },
+  { id: "trajetoria", item: 1 },
+  { id: "projetos", item: 2 },
+  { id: "stack", item: 3 },
+  { id: "habilidades", item: 3 },
+  { id: "metodologias", item: 3 },
+  { id: "vitrine", item: 3 },
+  { id: "contato", item: 4 },
+];
+
+function useActiveSection(): number {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    let raf = 0;
+    const measure = (): void => {
+      raf = 0;
+      const mid = window.innerHeight * 0.45;
+      let next = 0;
+      for (const { id, item } of SPY) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= mid) next = item;
+      }
+      setActive(next);
+    };
+    const onScroll = (): void => {
+      if (!raf) raf = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+  return active;
+}
 
 function useIsMounted(): boolean {
   return useSyncExternalStore(
@@ -112,7 +155,6 @@ function NavThemeToggle(): ReactNode {
 }
 
 export function Nav(): ReactNode {
-  const pathname = usePathname();
   const listRef = useRef<HTMLUListElement>(null);
   const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
   const [pillRect, setPillRect] = useState<{
@@ -121,11 +163,7 @@ export function Nav(): ReactNode {
   } | null>(null);
   const [hasMeasured, setHasMeasured] = useState(false);
 
-  const activeIndex = NAV_ITEMS.findIndex((item) =>
-    item.href === "/"
-      ? pathname === "/"
-      : pathname === item.href || pathname.startsWith(`${item.href}/`)
-  );
+  const activeIndex = useActiveSection();
 
   useLayoutEffect(() => {
     const list = listRef.current;
@@ -142,7 +180,7 @@ export function Nav(): ReactNode {
       x: itemRect.left - listRect.left,
       width: itemRect.width,
     });
-  }, [activeIndex, pathname]);
+  }, [activeIndex]);
 
   useEffect(() => {
     if (!pillRect) return;
@@ -153,9 +191,9 @@ export function Nav(): ReactNode {
   return (
     <nav
       aria-label="Navegação principal"
-      className="fixed top-6 left-1/2 z-50 -translate-x-1/2"
+      className="fixed top-4 left-1/2 z-50 max-w-[calc(100vw-1rem)] -translate-x-1/2 sm:top-6"
     >
-      <div className="bg-background border-foreground/8 flex items-center gap-1 rounded-full border p-1.5 shadow-sm">
+      <div className="bg-background/80 border-foreground/8 flex items-center gap-0.5 rounded-full border p-1 shadow-sm backdrop-blur-md sm:gap-1 sm:p-1.5">
         <ul ref={listRef} className="relative flex items-center gap-1">
           {pillRect && (
             <motion.span
@@ -181,10 +219,10 @@ export function Nav(): ReactNode {
                 }}
                 className="relative"
               >
-                <Link
+                <a
                   href={item.href}
-                  aria-current={isActive ? "page" : undefined}
-                  className="focus-ring relative inline-flex cursor-pointer items-center justify-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-300"
+                  aria-current={isActive ? "location" : undefined}
+                  className="focus-ring relative inline-flex cursor-pointer items-center justify-center rounded-full px-2.5 py-1.5 text-[13px] font-medium transition-colors duration-300 sm:px-4 sm:text-sm"
                 >
                   <span
                     className={
@@ -195,7 +233,7 @@ export function Nav(): ReactNode {
                   >
                     {item.label}
                   </span>
-                </Link>
+                </a>
               </li>
             );
           })}
