@@ -35,11 +35,12 @@ export default function Modal({ open, onClose, title, eyebrow, children }) {
     return () => dialog.removeEventListener('close', handleClose)
   }, [onClose])
 
+  // Clique no fundo fecha; um link para outra seção da página também fecha o painel.
   const handleBackdropClick = (e) => {
-    if (e.target === ref.current) ref.current.close()
+    if (e.target === ref.current || e.target.closest?.('a[href^="#"]')) ref.current.close()
   }
 
-  // Clique no fundo fecha; pelo teclado, o Esc nativo do <dialog> faz o mesmo.
+  // Pelo teclado, o Esc nativo do <dialog> fecha o painel.
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <dialog

@@ -47,6 +47,8 @@ export default function ProjectDetails({ project }) {
         ))}
       </ul>
 
+      {project.image && <img src={project.image} alt={`Logo do ${project.title}`} className={ui.detailImage} loading="lazy" />}
+
       {(links.live || links.github) && (
         <div className={ui.detailLinks}>
           {links.live && (

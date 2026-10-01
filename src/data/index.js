@@ -13,7 +13,7 @@ import { methodologies, methodologiesIntro } from './methodologies'
 import { availability, availabilityStates, activeAvailability } from './availability'
 import { contact, contactById } from './contact'
 import { character } from './character'
-import { sections, journey } from './navigation'
+import { sections, journey, sectionNumber, navSectionFor } from './navigation'
 import { seo } from './seo'
 
 // Exportações nomeadas para os componentes (import { projects } from '../../data').
@@ -39,6 +39,8 @@ export {
   character,
   sections,
   journey,
+  sectionNumber,
+  navSectionFor,
   seo,
 }
 

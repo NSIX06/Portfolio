@@ -7,9 +7,9 @@ import styles from './Education.module.css'
 export default function Education() {
   const ref = useReveal()
   return (
-    <section id="formacao" className="section section--surface" aria-labelledby="education-heading">
+    <section id="formacao" className="section section--bg" aria-labelledby="education-heading">
       <div className="container reveal" ref={ref}>
-        <SectionHeader index="03" label="formação" title="Formação" id="education-heading" />
+        <SectionHeader section="formacao" label="formação" title="Formação" id="education-heading" />
         <ol className={styles.timeline}>
           {education.map((e) => (
             <li key={e.id} className={styles.item}>

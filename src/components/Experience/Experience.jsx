@@ -27,7 +27,7 @@ function ExperienceCard({ experience }) {
       </div>
 
       {companyNote && <p className={styles.companyNote}>{companyNote}</p>}
-      <p className={styles.description}>{description}</p>
+      {description && <p className={styles.description}>{description}</p>}
 
       {roles.map((role) => (
         <div key={role.title} className={styles.roleBlock}>
@@ -92,7 +92,7 @@ export default function Experience() {
   return (
     <section id="experiencia" className="section section--bg" aria-labelledby="exp-heading">
       <div className="container">
-        <SectionHeader index="02" label="carreira" title="Experiência" id="exp-heading" />
+        <SectionHeader section="experiencia" label="carreira" title="Experiência" id="exp-heading" />
         <div className={styles.list}>
           {experiences.map((e) => (
             <ExperienceCard key={e.id} experience={e} />

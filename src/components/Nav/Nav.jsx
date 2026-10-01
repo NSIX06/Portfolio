@@ -1,46 +1,24 @@
 import { useState, useEffect, useRef } from 'react'
-import { sections, profile } from '../../data'
+import { sections, navSectionFor, sectionNumber, profile, activeAvailability } from '../../data'
 import { useJourneyMode, loadJourney } from '../../journey/journeyContext'
+import { useActiveSection, useScrollProgress } from '../../hooks/useScrollNav'
 import styles from './Nav.module.css'
 
 const NAV_LINKS = sections.filter((s) => s.inNav)
+const ALL_IDS = sections.map((s) => s.id)
+const DRAWER_LINKS = sections.filter((s) => s.inNav || s.id === 'contato')
 
 export default function Nav() {
-  const [active, setActive] = useState('')
-  const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const buttonRef = useRef(null)
   const drawerRef = useRef(null)
   const { open: openJourney } = useJourneyMode()
+  const active = navSectionFor(useActiveSection(ALL_IDS))
+  const { progress, scrolled } = useScrollProgress()
 
+  // Menu mobile: foco no primeiro link ao abrir, Esc fecha e devolve o foco, sem rolagem do fundo.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  // Destaca o link da seção que ocupa o meio da tela.
-  useEffect(() => {
-    if (!('IntersectionObserver' in window)) return
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id)
-        })
-      },
-      { rootMargin: '-45% 0px -50% 0px' }
-    )
-    sections.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (el) obs.observe(el)
-    })
-    return () => obs.disconnect()
-  }, [])
-
-  // Menu mobile: Esc fecha e devolve o foco ao botão; foco vai para o primeiro link ao abrir.
-  useEffect(() => {
-    if (!menuOpen) return
+    if (!menuOpen) return undefined
     drawerRef.current?.querySelector('a')?.focus()
     const onKey = (e) => {
       if (e.key === 'Escape') {
@@ -49,11 +27,15 @@ export default function Nav() {
       }
     }
     document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prev
+    }
   }, [menuOpen])
 
-  // A seção Metodologias fica dentro de Habilidades, e Disponibilidade junto de Contato.
-  const navActive = active === 'metodologias' ? 'habilidades' : active === 'disponibilidade' ? 'contato' : active
+  const closeMenu = () => setMenuOpen(false)
 
   return (
     <header className={`${styles.header} ${scrolled || menuOpen ? styles.scrolled : ''}`}>
@@ -71,8 +53,8 @@ export default function Nav() {
             <li key={id}>
               <a
                 href={`#${id}`}
-                className={navActive === id ? `${styles.link} ${styles.linkActive}` : styles.link}
-                aria-current={navActive === id ? 'location' : undefined}
+                className={active === id ? `${styles.link} ${styles.linkActive}` : styles.link}
+                aria-current={active === id ? 'location' : undefined}
               >
                 {label}
               </a>
@@ -80,15 +62,28 @@ export default function Nav() {
           ))}
         </ul>
 
-        <button
-          type="button"
-          className={styles.journeyBtn}
-          onClick={openJourney}
-          onPointerEnter={loadJourney}
-          onFocus={loadJourney}
-        >
-          🗺️ <span className={styles.journeyText}>Explorar jornada</span>
-        </button>
+        <div className={styles.actions}>
+          <button
+            type="button"
+            className={styles.journeyBtn}
+            onClick={openJourney}
+            onPointerEnter={loadJourney}
+            onFocus={loadJourney}
+            aria-label="Explorar jornada interativa"
+            title="Explorar jornada interativa"
+          >
+            <span aria-hidden="true">🗺️</span>
+            <span className={styles.journeyText}>Jornada</span>
+          </button>
+          <a
+            href="#contato"
+            className={`${styles.contactBtn} ${active === 'contato' ? styles.contactBtnActive : ''}`}
+            aria-current={active === 'contato' ? 'location' : undefined}
+          >
+            {activeAvailability[0] && <span className={styles.liveDot} aria-hidden="true" />}
+            Contato
+          </a>
+        </div>
 
         <button
           ref={buttonRef}
@@ -105,17 +100,38 @@ export default function Nav() {
         </button>
       </nav>
 
+      {/* Progresso de leitura */}
+      <div className={styles.progress} aria-hidden="true">
+        <span style={{ transform: `scaleX(${progress})` }} />
+      </div>
+
       {menuOpen && (
         <div id="menu-mobile" ref={drawerRef} className={styles.drawer}>
-          <ul>
-            {NAV_LINKS.map(({ id, label }) => (
+          <ol className={styles.drawerList}>
+            {DRAWER_LINKS.map(({ id, label }) => (
               <li key={id}>
-                <a href={`#${id}`} className={styles.drawerLink} onClick={() => setMenuOpen(false)}>
+                <a
+                  href={`#${id}`}
+                  className={`${styles.drawerLink} ${active === id ? styles.drawerLinkActive : ''}`}
+                  aria-current={active === id ? 'location' : undefined}
+                  onClick={closeMenu}
+                >
+                  <span className={styles.drawerNum}>{sectionNumber(id) || '★'}</span>
                   {label}
                 </a>
               </li>
             ))}
-          </ul>
+          </ol>
+          <button
+            type="button"
+            className={styles.drawerJourney}
+            onClick={() => {
+              closeMenu()
+              openJourney()
+            }}
+          >
+            🗺️ Explorar a jornada interativa
+          </button>
         </div>
       )}
     </header>

@@ -89,6 +89,12 @@
   text-align: center;
 }
 .featuredEmoji { font-size: 3rem; }
+.featuredImage {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  border-radius: var(--radius-md);
+}
 .featuredVisualTitle { font-size: 1rem; font-weight: 700; color: var(--color-accent2); }
 .featuredVisualNote  { font-size: .78rem; color: var(--color-muted); max-width: 320px; line-height: 1.6; }
 
@@ -201,6 +207,23 @@
   transition: border-color var(--transition-fast), color var(--transition-fast);
 }
 .ctaBtn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* ── Ver mais ─────────────────────────── */
+.moreCard {
+  width: 100%;
+  cursor: pointer;
+  color: var(--color-text);
+  font: inherit;
+  border-style: solid;
+  border-color: rgba(225, 29, 29, .35);
+}
+.moreCard:hover { border-color: var(--color-accent); }
+.moreCount {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  line-height: 1;
+}
 
 /* ── Filtros ───────────────────────────── */
 .filters {

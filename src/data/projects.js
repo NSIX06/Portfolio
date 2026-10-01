@@ -3,7 +3,7 @@
  * ele aparece sozinho na seção Projetos (e, na Fase 3, na jornada).
  *
  * @typedef {'profissional'|'freelancer'|'academico'|'pessoal'|'curso'} ProjectOrigin
- * @typedef {'producao'|'concluido'|'em-desenvolvimento'|null} ProjectStatus
+ * @typedef {'producao'|'concluido'|'em-desenvolvimento'|null} ProjectStatus  'producao' aparece como "Lançado"
  *
  * @typedef {Object} Project
  * @property {string} id
@@ -34,7 +34,7 @@ export const projectOrigins = {
 }
 
 export const projectStatusLabels = {
-  producao: 'Em produção',
+  producao: 'Lançado',
   concluido: 'Concluído',
   'em-desenvolvimento': 'Em desenvolvimento',
 }
@@ -46,66 +46,24 @@ export const projects = [
     title: 'TMG Caronas',
     emoji: '🚗',
     origin: 'profissional',
-    tag: 'Plataforma corporativa · TMG · 2026',
+    tag: 'Sistema corporativo · TMG · 2026',
     summary:
-      'Plataforma corporativa de compartilhamento de viagens entre colaboradores da TMG, conectando motoristas e passageiros.',
+      'Sistema corporativo de caronas entre colaboradores das bases da TMG, integrado ao Microsoft Entra ID, SQL Server, Azure e Microsoft Teams.',
     description:
-      'Concepção e desenvolvimento de uma plataforma corporativa de compartilhamento de viagens entre colaboradores: criação de caronas, gestão de reservas e notificações automáticas. O sistema foi implantado em produção em setembro de 2026.',
+      'Concepção e desenvolvimento de um sistema para ofertar e solicitar caronas, gerenciar participações, avaliar viagens, acompanhar indicadores gerenciais e administrar acessos. Construído sobre o template corporativo da TMG em .NET 10 e implantado em produção em setembro de 2026.',
     objective:
-      'Facilitar a conexão entre motoristas e passageiros e otimizar o deslocamento dos colaboradores.',
+      'Facilitar a organização de caronas entre colaboradores, reduzindo custos e emissões e fortalecendo a integração entre as bases.',
     highlights: [
       'Selecionado como um dos quatro pilotos do programa TMG IA, iniciativa da área de TI voltada a soluções com Inteligência Artificial',
       'Implantado em produção em setembro de 2026',
-      'Notificações automatizadas integradas a Power Automate e Microsoft Teams',
+      'Arquitetura em camadas (Web, Application, Infrastructure, Shared), tempo real com SignalR e PWA instalável',
     ],
-    tech: ['React', 'Vite', 'TypeScript', 'Supabase', 'Power Automate', 'Microsoft Teams'],
+    tech: ['.NET 10', 'ASP.NET Core MVC', 'Dapper', 'SQL Server', 'Microsoft Entra ID', 'SignalR', 'Azure Blob Storage', 'Microsoft Teams'],
     links: { live: null, github: null },
-    image: null,
+    image: '/projetos/tmg-caronas-logo.webp',
     status: 'producao',
     date: '2026',
     featured: true,
-    experienceId: 'tmg',
-  },
-  {
-    id: 'consulta-produtos',
-    title: 'Consulta de Produtos Cadastrados',
-    emoji: '🔎',
-    origin: 'profissional',
-    tag: 'Ferramenta interna · Suprimentos · TMG',
-    summary:
-      'Automatiza a conferência de itens de orçamentos e cotações com a base de produtos do ERP Protheus.',
-    description:
-      'Ferramenta interna desenvolvida para automatizar a conferência de produtos usados em orçamentos e cotações com a base de produtos cadastrados no ERP Protheus, apoiando o setor de Suprimentos.',
-    objective:
-      'Reduzir tarefas manuais, agilizar as conferências e melhorar a consulta de produtos no processo de Suprimentos.',
-    highlights: ['Primeira versão em React + Supabase; versão atual em ASP.NET Core com SQL Server'],
-    tech: ['ASP.NET Core', '.NET', 'SQL Server', 'Dapper', 'Azure'],
-    links: { live: null, github: null },
-    image: null,
-    status: null,
-    date: '2026',
-    featured: false,
-    experienceId: 'tmg',
-  },
-  {
-    id: 'catalogo-pecas',
-    title: 'Catálogo de Peças Industriais',
-    emoji: '⚙️',
-    origin: 'profissional',
-    tag: 'Dados mestres · PCM · TMG',
-    summary:
-      'Cadastro e padronização do catálogo de peças e ferramentas industriais no TOTVS Protheus e no Astrein.',
-    description:
-      'Atuação no cadastro e na padronização do catálogo de peças industriais usado pela manutenção e pelo almoxarifado.',
-    objective:
-      'Melhorar a organização, a padronização e a qualidade dos dados usados nos processos internos.',
-    highlights: [],
-    tech: ['TOTVS Protheus', 'Astrein (SSA-CAD)'],
-    links: { live: null, github: null },
-    image: null,
-    status: null,
-    date: null,
-    featured: false,
     experienceId: 'tmg',
   },
   {

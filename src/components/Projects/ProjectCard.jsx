@@ -6,10 +6,10 @@ import styles from './Projects.module.css'
 
 /** Card de projeto. O título é um botão que cobre o card (abre os detalhes); os links ficam acima dele. */
 const ProjectCard = memo(function ProjectCard({ project, onOpen }) {
-  const { id, tag, title, summary, tech, links, emoji, featured, status, highlights, origin } = project
+  const { id, tag, title, summary, tech, links, emoji, featured, status, highlights, origin, image } = project
 
   return (
-    <article id={`projeto-${id}`} className={`${styles.card} ${featured ? styles.cardFeatured : ''}`}>
+    <article id={`projeto-${id}`} className={`${styles.card} ${featured ? styles.cardFeatured : ''} cursor-target`}>
       <div className={styles.cardTopBar} aria-hidden="true" />
 
       <div className={styles.cardMeta}>
@@ -72,8 +72,14 @@ const ProjectCard = memo(function ProjectCard({ project, onOpen }) {
 
         {featured && (
           <div className={styles.featuredVisual} aria-hidden="true">
-            <span className={`${styles.featuredEmoji} float`}>{emoji}</span>
-            <p className={styles.featuredVisualTitle}>{title}</p>
+            {image ? (
+              <img src={image} alt="" className={styles.featuredImage} loading="lazy" width="320" height="332" />
+            ) : (
+              <>
+                <span className={`${styles.featuredEmoji} float`}>{emoji}</span>
+                <p className={styles.featuredVisualTitle}>{title}</p>
+              </>
+            )}
             {highlights?.[0] && <p className={styles.featuredVisualNote}>{highlights[0]}</p>}
           </div>
         )}

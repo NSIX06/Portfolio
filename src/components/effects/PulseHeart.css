@@ -1,0 +1,53 @@
+.pulse-heart {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  -webkit-tap-highlight-color: transparent;
+}
+.pulse-heart:focus-visible .pulse-heart__pill {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.pulse-heart__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  height: var(--ph-size);
+  padding: 0 1rem 0 0.65rem;
+  border-radius: 999px;
+  background: var(--ph-pill);
+  border: 1px solid var(--color-border);
+  color: var(--ph-text);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transition: border-color 0.2s ease;
+  will-change: transform;
+}
+.pulse-heart:hover .pulse-heart__pill {
+  border-color: rgba(225, 29, 29, 0.5);
+}
+
+.pulse-heart__heart {
+  display: inline-flex;
+  width: calc(var(--ph-size) * 0.55);
+  height: calc(var(--ph-size) * 0.55);
+}
+.pulse-heart__heart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.pulse-heart__heart path {
+  fill: transparent;
+  stroke: var(--ph-idle);
+  stroke-width: var(--ph-stroke);
+  stroke-linejoin: round;
+  transition: fill 0.15s ease, stroke 0.15s ease;
+}
+.pulse-heart[data-liked='true'] .pulse-heart__heart path {
+  fill: var(--ph-liked);
+  stroke: var(--ph-liked);
+}

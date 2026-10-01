@@ -1,82 +1,124 @@
-
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
+.section {
+  position: relative;
+  background: var(--color-surface);
+}
+/* Âncora #contato cai com o painel já aberto (o trecho de abertura fica acima) */
+.section:has(:global(.scroll-expand):not(:global(.scroll-expand--static))) {
+  scroll-margin-top: -72vh;
 }
 
-.intro {
-  color: var(--color-muted);
-  line-height: 1.8;
-  margin-bottom: 2rem;
-  font-size: .95rem;
+/* ── Painel aberto pelo ScrollExpand ───────────────────── */
+.opened {
+  align-self: center;
+  padding: 5.5rem var(--space-lg) 2rem;
 }
-
-.socialList {
+.decrypt {
+  min-height: 330px;
+}
+.cta {
   display: flex;
   flex-direction: column;
-  gap: .75rem;
+  gap: 1.1rem;
+  max-width: 640px;
+  padding: 2rem 0;
 }
-
-.socialLink {
+.ctaTitle {
+  font-size: clamp(1.7rem, 3.6vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.ctaText {
+  color: #c9c6c0;
+  line-height: 1.7;
+  max-width: 520px;
+}
+.ctaBtns {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.socialRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  margin-top: 0.4rem;
+}
+.socialLink {
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
-  padding: .95rem 1.2rem;
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  color: var(--color-text);
-  font-size: .9rem;
-  transition: border-color var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #c9c6c0;
+  transition: color var(--transition-fast);
 }
 .socialLink:hover {
-  border-color: var(--color-accent);
-  transform: translateX(4px);
   color: var(--color-accent);
 }
 
-.socialIcon {
-  width: 2rem;
-  display: inline-flex;
+/* ── Cartão de perfil + disponibilidade ────────────────── */
+.inner {
+  position: relative;
+  padding: var(--space-2xl) var(--space-lg);
+}
+.grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.profileCol {
+  display: flex;
   justify-content: center;
-  flex-shrink: 0;
 }
-
-/* CTA card */
-.ctaCard {
-  background: linear-gradient(135deg, #161616 0%, #1c0808 100%);
-  border: 1px solid rgba(225, 29, 29, .3);
-  border-radius: var(--radius-md);
-  padding: 2.5rem;
+.availability {
+  scroll-margin-top: 5rem;
 }
-
-.ctaBadges { margin-bottom: 1.25rem; }
-
-.ctaTitle {
-  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
-  line-height: 1.2;
-  font-weight: 700;
+.blockTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
   margin-bottom: 1rem;
 }
-
-.ctaText {
-  color: var(--color-muted);
-  line-height: 1.75;
-  margin-bottom: 1.8rem;
-  font-size: .95rem;
-}
-
-.ctaBtns {
+.statusList {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-left-width: 3px;
+  border-radius: var(--radius-md);
+}
+.status > span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+.status--green { border-left-color: var(--color-green); }
+.status--yellow { border-left-color: var(--color-accent2); }
+.status--red { border-left-color: #ff6b6b; }
+.statusEmoji { font-size: 1.2rem; }
+.statusLabel { font-weight: 700; }
+.statusMessage { color: var(--color-muted); font-size: 0.85rem; }
+
+.blockLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 1.4rem 0 0.6rem;
 }
 
-
-
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .opened { padding: 4.5rem 1.5rem 1.5rem; }
+  .inner { padding: var(--space-xl) 1.5rem; }
+  .decrypt { min-height: 360px; }
 }

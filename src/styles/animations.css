@@ -40,7 +40,7 @@
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.6s var(--transition-slow), transform 0.6s var(--transition-slow);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .reveal.visible {
