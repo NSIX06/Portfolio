@@ -345,3 +345,9 @@ html:not(.dark) .backdrop-layer > * {
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 35%);
   mask-image: linear-gradient(to bottom, transparent, black 35%);
 }
+/* Cartões de cursos em destaque na linha do tempo */
+.course-card {
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    var(--background);
+}

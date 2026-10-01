@@ -96,7 +96,7 @@ export default function HomePage(): ReactNode {
             A estrada até <span className="text-accent">aqui</span>
           </h2>
           <p className="text-foreground/65 max-w-[36ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
-            Carreira e formação. Clique em um card para ver os detalhes.
+            Carreira, formação e cursos, do que está em andamento ao início. Clique em um card para ver os detalhes.
           </p>
         </FadeIn>
         <div className="mt-6 sm:mt-10">
@@ -146,7 +146,7 @@ export default function HomePage(): ReactNode {
         aria-labelledby="vitrine-title"
         className="mx-auto w-full max-w-275 scroll-mt-24 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
       >
-        <SectionHead label="// 07 — vitrine" id="vitrine-title" sub="Certificações, competências e idiomas em um só lugar.">
+        <SectionHead label="// 07 — vitrine" id="vitrine-title" sub="Competências e idiomas.">
           Meu canto de <span className="text-accent">paixões</span>
         </SectionHead>
         <div className="mt-10">
