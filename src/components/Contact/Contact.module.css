@@ -1,65 +1,29 @@
 .section {
   position: relative;
-  overflow: hidden;
+  background: var(--color-surface);
 }
-.inner {
-  position: relative;
-  z-index: 1;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 2.5rem;
-  align-items: stretch;
-}
-.profileCol {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Âncora #contato cai com o painel já aberto (o trecho de abertura fica acima) */
+.section:has(:global(.scroll-expand):not(:global(.scroll-expand--static))) {
+  scroll-margin-top: -72vh;
 }
 
-.availabilityWrap {
-  margin-top: 3rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--color-border);
+/* ── Painel aberto pelo ScrollExpand ───────────────────── */
+.opened {
+  align-self: center;
+  padding: 5.5rem var(--space-lg) 2rem;
 }
-.availCols {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 2.5rem;
-  align-items: start;
+.decrypt {
+  min-height: 330px;
 }
-.firstLabel { margin-top: 0; }
-
-/* ── Cartão de chamada ─────────────────────────────────── */
-.ctaCard {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(225, 29, 29, 0.35);
-  min-height: 420px;
-  height: 100%;
-  display: flex;
-}
-.ctaBg {
-  position: absolute;
-  inset: 0;
-  opacity: 0.55;
-}
-.ctaContent {
-  position: relative;
-  z-index: 1;
+.cta {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   gap: 1.1rem;
-  padding: 2.5rem;
-  width: 100%;
-  background: linear-gradient(180deg, rgba(10, 10, 10, 0.15) 0%, rgba(10, 10, 10, 0.92) 55%);
+  max-width: 640px;
+  padding: 2rem 0;
 }
 .ctaTitle {
-  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  font-size: clamp(1.7rem, 3.6vw, 2.8rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -93,7 +57,21 @@
   color: var(--color-accent);
 }
 
-/* ── Disponibilidade ───────────────────────────────────── */
+/* ── Cartão de perfil + disponibilidade ────────────────── */
+.inner {
+  position: relative;
+  padding: var(--space-2xl) var(--space-lg);
+}
+.grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.profileCol {
+  display: flex;
+  justify-content: center;
+}
 .availability {
   scroll-margin-top: 5rem;
 }
@@ -139,9 +117,8 @@
 }
 
 @media (max-width: 900px) {
-  .grid { grid-template-columns: 1fr; }
-  .availCols { grid-template-columns: 1fr; gap: 0.5rem; }
-  .firstLabel { margin-top: 1.4rem; }
-  .ctaCard { min-height: 380px; }
-  .ctaContent { padding: 1.75rem; }
+  .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .opened { padding: 4.5rem 1.5rem 1.5rem; }
+  .inner { padding: var(--space-xl) 1.5rem; }
+  .decrypt { min-height: 360px; }
 }
