@@ -2,7 +2,12 @@
 
 Portfólio profissional em **React 18 + Vite**, com CSS Modules e deploy na **Vercel**: [felipebugalho.vercel.app](https://felipebugalho.vercel.app/).
 
-Em evolução para uma **Jornada Profissional Interativa** em 2D. O plano está dividido em fases com prioridade P0–P3. As Fases 1 e 2 (dados centralizados e portfólio tradicional) estão concluídas.
+O site tem dois modos, com o mesmo conteúdo:
+
+- **Navegar pelo portfólio** (padrão): seções tradicionais, indexáveis pelo Google.
+- **Explorar jornada** (`?modo=jornada`): mapa 2D em que um personagem percorre a trajetória profissional, estação por estação.
+
+Fases concluídas: 1 (dados), 2 (portfólio tradicional), 3 (MVP da jornada), 4 (teclado, toque, mobile, movimento reduzido) e 5 (cargo atual e disponibilidade no mapa).
 
 ## Executar
 
@@ -40,6 +45,12 @@ src/
 │   ├── icons/Icon.jsx    ícones SVG (GitHub, LinkedIn, Instagram, e-mail)
 │   └── <Seção>/          Hero, About, Experience, Education, Skills (+ Metodologias),
 │                         Projects, Certificates, Availability, Contact, Nav, Footer
+├── journey/              Jornada interativa (carregada sob demanda, ~8 kB gzip)
+│   ├── Journey.jsx       mapa SVG, câmera, controles, painel
+│   ├── layout.js         posições das estações e caminho (calculados dos dados)
+│   ├── Character.jsx     personagem em camadas (roupa e acessórios por props)
+│   ├── StationContent.jsx conteúdo de cada estação, lido de src/data
+│   └── JourneyMode.jsx   alterna os modos pela URL (?modo=jornada)
 ├── hooks/useReveal.js    animação de entrada; respeita prefers-reduced-motion
 ├── layouts/MainLayout.jsx
 └── styles/               tokens, globais e animações
@@ -69,11 +80,20 @@ Depois de editar, rode `npm test`: ele aponta ids duplicados, projetos inexisten
 - **Acessibilidade**: skip link, foco visível, `prefers-reduced-motion`, cor secundária com contraste AA e ESLint `jsx-a11y`.
 - **SEO**: canonical, Open Graph com imagem (`public/og-image.png`), JSON-LD `Person`, `robots.txt` e `sitemap.xml`.
 
+## Jornada interativa
+
+- **Mapa**: SVG no DOM, sem engine de jogo nem Canvas. As estações seguem a ordem de `journey` em `data/navigation.js` e são posicionadas em serpentina por `journey/layout.js`; uma estação nova entra no mapa sozinha. Cada projeto de `data/projects.js` vira um marcador em volta da estação Projetos (os em destaque ficam com borda dourada).
+- **Personagem**: anda sobre o caminho (não é mundo aberto) e para ao lado da estação. Estados: parado, andando e interagindo. Roupa e acessórios vêm de `data/character.js`.
+- **Câmera**: segue o personagem com suavização e desloca o mapa para não ficar atrás do painel.
+- **Controles**: setas ou WASD, Home/End, Enter abre e Esc fecha o painel; botões Anterior/Próxima; deslizar o dedo no celular; lista de estações para ir direto.
+- **Acessibilidade**: o portfólio de fundo fica `inert`, há anúncio da estação atual para leitores de tela, e com `prefers-reduced-motion` o personagem e a câmera saltam direto, sem animação.
+- **Sair**: "Navegar pelo portfólio" volta à seção equivalente à estação atual; o botão Voltar do navegador também funciona.
+
 ## Próximas fases
 
-3. MVP da jornada 2D (mapa SVG, personagem, câmera, estações lidas de `data/navigation.js`)
-4. Teclado, toque, mobile e alternância "Explorar jornada / Navegar pelo portfólio"
-5. Cargo atual e disponibilidade no mapa
-6–9. Personalização do personagem, microanimações, performance e validação final
+6. Personalização do personagem (roupas e acessórios — os dados e o desenho já aceitam)
+7. Microanimações e refinamento visual
+8. Auditoria de performance e SEO
+9. Validação final
 
 MIT © 2026 Luiz Felipe Pablos Bugalho

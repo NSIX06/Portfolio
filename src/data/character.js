@@ -3,11 +3,11 @@
  * Já definido aqui para que a personalização leia só os dados.
  */
 export const character = {
-  default: { outfit: 'camiseta', accessories: [], skin: '#c68a5e', hair: '#1a1a1a' },
+  default: { outfit: 'polo', accessories: ['oculos'], skin: '#d9a47e', hair: '#3b2a1e' },
   outfits: [
     { id: 'camiseta', label: 'Camiseta', color: 'var(--color-accent)' },
     { id: 'camisa', label: 'Camisa', color: '#e8e4dc' },
-    { id: 'polo', label: 'Polo', color: 'var(--color-blue)' },
+    { id: 'polo', label: 'Polo', color: '#2b4466' },
     { id: 'social', label: 'Roupa social', color: '#2b2b2b' },
   ],
   accessories: [

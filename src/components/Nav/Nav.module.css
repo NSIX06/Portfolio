@@ -34,7 +34,8 @@
 
 .links {
   display: flex;
-  gap: 2rem;
+  gap: 1.6rem;
+  margin-left: auto;
   align-items: center;
 }
 
@@ -62,6 +63,26 @@
 .link:hover::after,
 .linkActive::after { transform: scaleX(1); }
 .linkActive { color: var(--color-text); }
+
+/* Botão do modo jornada */
+.journeyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-left: 1.5rem;
+  padding: .45rem .9rem;
+  background: transparent;
+  border: 1px solid rgba(225, 29, 29, .5);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.journeyBtn:hover { background: rgba(225, 29, 29, .12); border-color: var(--color-accent); }
 
 /* Hamburger */
 .hamburger {
@@ -111,4 +132,9 @@
   .nav { padding: 1rem 1.5rem; }
   .links { display: none; }
   .hamburger { display: flex; }
+  .journeyBtn { margin-left: auto; margin-right: .75rem; }
+}
+
+@media (max-width: 420px) {
+  .journeyText { display: none; }
 }
