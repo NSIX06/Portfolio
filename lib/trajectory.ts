@@ -34,12 +34,11 @@ export const MILESTONES: Milestone[] = [
     kind: "profissional",
     year: "2022",
     period: "Ago/2022 – Atual",
-    badge: "Atual",
+    badge: "Autônomo",
     current: true,
-    title: "Profissional Autônomo",
-    subtitle: "Desenvolvedor Web Freelancer · Técnico em Informática",
+    title: "Desenvolvimento web e suporte técnico",
     place: "Rondonópolis - MT · Remoto",
-    text: "Desenvolvimento de aplicações web e soluções personalizadas para diferentes segmentos, da análise de requisitos à implementação e evolução dos sistemas, além de suporte técnico em informática.",
+    text: "Duas frentes de trabalho: aplicações web sob medida para diferentes segmentos e manutenção e suporte em informática.",
     roles: [
       {
         title: "Desenvolvedor Web Freelancer",
@@ -70,14 +69,10 @@ export const MILESTONES: Milestone[] = [
     title: "TMG — Tropical Melhoramento & Genética",
     subtitle: "Auxiliar Administrativo — PCM",
     place: "Rondonópolis - MT",
-    note: "Empresa de pesquisa e desenvolvimento de sementes de soja, milho e algodão, focada em melhoramento genético e biotecnologia.",
-    text: "Atuação no PCM conciliando atividades administrativas com o desenvolvimento de ferramentas internas para otimização de processos.",
+    text: "Empresa de pesquisa em sementes de soja, milho e algodão. No Planejamento e Controle de Manutenção (PCM), conciliei as rotinas administrativas com o desenvolvimento de ferramentas internas.",
     activities: [
-      "Suporte às rotinas administrativas, operacionais e documentais do Planejamento e Controle de Manutenção (PCM)",
-      "Usuário-chave do TOTVS Protheus (SIGAMNT): planos de manutenção preventiva e preditiva, ordens de serviço, controle de peças e materiais e relatórios gerenciais",
-      "Administração do GLPI: chamados, protocolo de notas fiscais e solicitações de cadastro",
-      "Cadastro e padronização de peças e ferramentas no Protheus e no Astrein (SSA-CAD)",
-      "Desenvolvimento de ferramentas internas para otimização de processos",
+      "Suporte às rotinas administrativas, operacionais e documentais do PCM",
+      "Usuário-chave e administrador dos sistemas abaixo",
     ],
     systems: [
       {
@@ -145,7 +140,7 @@ export const MILESTONES: Milestone[] = [
     year: "2022",
     period: "2022 – 2024",
     badge: "Concluído",
-    title: "Técnico em Informática",
+    title: "Curso Técnico em Informática",
     place: "SENAC · Santos, SP",
     text: "Base em hardware, redes, sistemas operacionais e suporte técnico.",
     tech: ["Hardware", "Redes", "Sistemas operacionais", "Suporte técnico"],

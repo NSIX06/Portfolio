@@ -14,8 +14,8 @@ export function ShapeGrid({
   direction = "diagonal",
   speed = 0.35,
   size = 38,
-  borderColor = "rgba(255, 70, 70, 0.32)",
-  hoverColor = "rgba(225, 29, 29, 0.55)",
+  borderColor = "rgba(200, 40, 40, 0.2)",
+  hoverColor = "rgba(225, 29, 29, 0.32)",
   trail = 8,
 }: {
   shape?: "square" | "hexagon";

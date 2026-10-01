@@ -6,12 +6,7 @@ import Image from "next/image";
 import TextType from "@/components/effects/TextType";
 
 // O título já diz "Desenvolvedor Full Stack": a linha digitada mostra o resto do perfil.
-const ROLES = [
-  "Técnico em Informática",
-  "Desenvolvedor Web Freelancer",
-  "Sistemas corporativos",
-  "Automação e integrações",
-];
+const ROLES = ["Técnico em Informática", "Graduando em ADS", "Desenvolvedor Web Freelancer"];
 
 export function Hero(): ReactNode {
   return (
@@ -60,13 +55,6 @@ export function Hero(): ReactNode {
                   aria-hidden="true"
                 />
                 Disponível para contratação
-              </li>
-              <li className="border-accent-2/40 bg-accent-2/10 text-accent-2 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] tracking-wide">
-                <span
-                  className="bg-accent-2 h-1.5 w-1.5 rounded-full"
-                  aria-hidden="true"
-                />
-                Aberto a projetos freelance
               </li>
               <li className="border-foreground/10 text-foreground/65 inline-flex items-center rounded-full border px-3 py-1 font-mono text-[11px] tracking-wide">
                 Rondonópolis - MT · remoto

@@ -170,45 +170,54 @@ function TimelineEntry({
         whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
         viewport={{ once: true, margin: "-10% 0px" }}
         transition={{ duration: 0.7, ease: EASE }}
-        className={`glow-hover border-foreground/8 bg-background flex flex-col gap-3 overflow-hidden rounded-3xl border p-5 sm:p-6 md:row-start-1 ${
+        className={`glow-hover border-foreground/8 bg-background hover:border-accent/30 flex flex-col gap-3 overflow-hidden rounded-3xl border p-5 transition-colors sm:p-6 md:row-start-1 ${
           left ? "md:col-start-1 md:mr-6" : "md:col-start-3 md:ml-6"
         } ${item.current ? "ring-accent/30 ring-1" : ""}`}
       >
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-accent font-serif text-[2rem] leading-none font-extrabold tracking-tight">
-            {item.year}
+        {/* O cartão inteiro (resumo) é o botão que expande os detalhes */}
+        <button
+          type="button"
+          onClick={hasDetails ? onToggle : undefined}
+          aria-expanded={hasDetails ? open : undefined}
+          aria-controls={hasDetails ? detailsId : undefined}
+          disabled={!hasDetails}
+          className="focus-ring group/card -m-2 flex flex-col gap-3 rounded-2xl p-2 text-left enabled:cursor-pointer"
+        >
+          <span className="flex w-full flex-wrap items-center gap-3">
+            <span className="text-accent font-serif text-[2rem] leading-none font-extrabold tracking-tight">
+              {item.year}
+            </span>
+            <span className="border-accent/40 text-accent rounded-full border px-2.5 py-0.5 font-mono text-[10px] tracking-[0.16em] uppercase">
+              {item.badge}
+            </span>
+            <span className="text-foreground/45 ml-auto font-mono text-[11px] tracking-wide">{item.period}</span>
+            {hasDetails ? (
+              <motion.span
+                aria-hidden="true"
+                animate={{ rotate: open ? 180 : 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="border-foreground/10 text-foreground/60 group-hover/card:border-accent/50 group-hover/card:text-accent inline-flex h-7 w-7 items-center justify-center rounded-full border transition-colors"
+              >
+                <ChevronDown className="h-4 w-4" />
+              </motion.span>
+            ) : null}
           </span>
-          <span className="border-accent/40 text-accent rounded-full border px-2.5 py-0.5 font-mono text-[10px] tracking-[0.16em] uppercase">
-            {item.badge}
-          </span>
-          <span className="text-foreground/45 ml-auto font-mono text-[11px] tracking-wide">{item.period}</span>
-        </div>
 
-        <div>
-          <h3 className="text-foreground text-[19px] font-semibold tracking-tight sm:text-[20px]">{item.title}</h3>
-          {item.subtitle ? (
-            <p className="text-accent mt-1 font-mono text-[11px] tracking-[0.1em] uppercase">{item.subtitle}</p>
+          <span className="block">
+            <span className="text-foreground group-hover/card:text-accent block text-[19px] font-semibold tracking-tight transition-colors sm:text-[20px]">
+              {item.title}
+            </span>
+            {item.subtitle ? (
+              <span className="text-accent mt-1 block font-mono text-[11px] tracking-[0.1em] uppercase">{item.subtitle}</span>
+            ) : null}
+            <span className="text-foreground/55 mt-1 block font-mono text-[11px] tracking-[0.08em] uppercase">{item.place}</span>
+          </span>
+
+          <span className="text-foreground/75 block text-[15px] leading-relaxed tracking-tight">{item.text}</span>
+          {hasDetails && !open ? (
+            <span className="sr-only">Clique para ver os detalhes</span>
           ) : null}
-          <p className="text-foreground/55 mt-1 font-mono text-[11px] tracking-[0.08em] uppercase">{item.place}</p>
-        </div>
-
-        {item.note ? <p className="text-foreground/55 text-[14px] italic">{item.note}</p> : null}
-        <p className="text-foreground/75 text-[15px] leading-relaxed tracking-tight">{item.text}</p>
-
-        {hasDetails ? (
-          <button
-            type="button"
-            onClick={onToggle}
-            aria-expanded={open}
-            aria-controls={detailsId}
-            className="focus-ring text-foreground hover:text-accent inline-flex w-fit items-center gap-1.5 rounded-lg text-[14px] font-medium transition-colors"
-          >
-            {open ? "Ocultar detalhes" : "Ver detalhes"}
-            <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.25 }} className="inline-flex">
-              <ChevronDown className="h-4 w-4" aria-hidden="true" />
-            </motion.span>
-          </button>
-        ) : null}
+        </button>
 
         <AnimatePresence initial={false}>
           {open ? (
@@ -221,7 +230,7 @@ function TimelineEntry({
               transition={{ duration: 0.45, ease: EASE }}
               className="overflow-hidden"
             >
-              <div className="border-foreground/8 flex flex-col gap-5 border-t pt-4">
+              <div className="border-foreground/8 mt-2 flex flex-col gap-5 border-t pt-4">
                 {item.roles?.map((r) => (
                   <div key={r.title} className="flex flex-col gap-2">
                     <h4 className="text-foreground text-[15px] font-semibold tracking-tight">{r.title}</h4>

@@ -17,7 +17,7 @@ function hexToRgb(hex: string): Rgb {
 }
 
 export function LetterGlitch({
-  colors = ["#2a0606", "#5c0c0c", "#e11d1d", "#ffd100"],
+  colors = ["#1a0404", "#2e0707", "#4d0b0b", "#7a1111"],
   speed = 60,
   className = "",
 }: {

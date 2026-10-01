@@ -5,7 +5,7 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import { ShaderFlow } from "@/components/shaders/shader-flow";
 
-const Galaxy = dynamic(() => import("@/components/backgrounds/galaxy").then((m) => m.Galaxy), { ssr: false });
+const DotField = dynamic(() => import("@/components/effects/DotField"), { ssr: false });
 const ShapeGrid = dynamic(() => import("@/components/backgrounds/shape-grid").then((m) => m.ShapeGrid), {
   ssr: false,
 });
@@ -13,14 +13,14 @@ const LetterGlitch = dynamic(() => import("@/components/backgrounds/letter-glitc
   ssr: false,
 });
 
-export type BackdropKind = "flow" | "galaxy" | "grid" | "glitch";
-const KINDS: BackdropKind[] = ["galaxy", "grid", "glitch"];
+export type BackdropKind = "flow" | "grid" | "glitch" | "dots";
+const KINDS: BackdropKind[] = ["grid", "glitch", "dots"];
 const FADE_MS = 900;
 
 /**
  * Fundo fixo da landing page: o degradê vermelho/preto (shader) corre o site inteiro e,
  * por cima dele, cada seção marcada com `data-bg` acende sua versão de fundo
- * (Galaxy, Shape Grid ou Letter Glitch), com troca suave durante a rolagem.
+ * (Shape Grid, Letter Glitch ou o DotField do final), com troca suave durante a rolagem.
  * Só os fundos visíveis (ou saindo) ficam montados, para poupar GPU.
  */
 export function ScrollBackdrop(): ReactNode {
@@ -68,11 +68,11 @@ export function ScrollBackdrop(): ReactNode {
       <div className="absolute inset-0 opacity-60 dark:opacity-100">
         <ShaderFlow
           className="absolute inset-0 h-full w-full"
-          brightness={2.2}
+          brightness={1.7}
           iterations={10}
-          flowSpeed={[0, 0.08]}
-          colorLowA={[0.08, 0.01, 0.01]}
-          colorHighA={[0.55, 0.08, 0.06]}
+          flowSpeed={[0, 0.06]}
+          colorLowA={[0.06, 0.008, 0.008]}
+          colorHighA={[0.42, 0.06, 0.05]}
           fadeCx={0.5}
           fadeCy={0}
           fadeRx={1.5}
@@ -102,7 +102,15 @@ function Layer({ kind, on }: { kind: BackdropKind; on: boolean }): ReactNode {
       className={`backdrop-layer backdrop-layer--${kind} absolute inset-0 transition-opacity ease-out`}
       style={{ opacity: ready && on ? 1 : 0, transitionDuration: `${FADE_MS}ms` }}
     >
-      {kind === "galaxy" ? <Galaxy /> : null}
+      {kind === "dots" ? (
+        <DotField
+          dotRadius={1.5}
+          dotSpacing={18}
+          gradientFrom="rgba(225, 29, 29, 0.38)"
+          gradientTo="rgba(140, 16, 16, 0.3)"
+          glowColor="rgba(225, 29, 29, 0.25)"
+        />
+      ) : null}
       {kind === "grid" ? <ShapeGrid /> : null}
       {kind === "glitch" ? <LetterGlitch /> : null}
     </div>
