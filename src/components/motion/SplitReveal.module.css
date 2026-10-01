@@ -1,0 +1,21 @@
+.mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: .08em;
+  margin-bottom: -.08em;
+}
+.word {
+  display: inline-block;
+  transform: translate3d(0, 105%, 0);
+  opacity: 0;
+  transition: transform .8s cubic-bezier(.2, .7, .1, 1), opacity .6s ease;
+}
+.in .word {
+  transform: none;
+  opacity: 1;
+}
+.accent { color: var(--color-accent); }
+@media (prefers-reduced-motion: reduce) {
+  .word { transform: none; opacity: 1; transition: none; }
+}

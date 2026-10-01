@@ -1,5 +1,5 @@
 import { useScrollProgress } from '../../hooks/useScrollNav'
-import { prefersReducedMotion } from '../effects/motion'
+import { scrollToTop } from '../motion/smoothScroll'
 import styles from './BackToTop.module.css'
 
 /** Botão "voltar ao topo" que aparece depois da primeira tela. */
@@ -7,7 +7,7 @@ export default function BackToTop() {
   const { pastHero } = useScrollProgress()
 
   const goTop = () => {
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
+    scrollToTop()
     document.getElementById('main-content')?.focus({ preventScroll: true })
   }
 
