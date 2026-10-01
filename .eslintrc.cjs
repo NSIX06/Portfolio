@@ -14,6 +14,8 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react/prop-types': 'off',
+    // o mapa da jornada é um widget controlado por teclado (role="application")
+    'jsx-a11y/no-noninteractive-tabindex': ['error', { roles: ['tabpanel', 'application'] }],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
   },
 }

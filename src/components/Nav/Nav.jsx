@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { sections, profile } from '../../data'
+import { useJourneyMode, loadJourney } from '../../journey/journeyContext'
 import styles from './Nav.module.css'
 
 const NAV_LINKS = sections.filter((s) => s.inNav)
@@ -10,6 +11,7 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const buttonRef = useRef(null)
   const drawerRef = useRef(null)
+  const { open: openJourney } = useJourneyMode()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -77,6 +79,16 @@ export default function Nav() {
             </li>
           ))}
         </ul>
+
+        <button
+          type="button"
+          className={styles.journeyBtn}
+          onClick={openJourney}
+          onPointerEnter={loadJourney}
+          onFocus={loadJourney}
+        >
+          🗺️ <span className={styles.journeyText}>Explorar jornada</span>
+        </button>
 
         <button
           ref={buttonRef}

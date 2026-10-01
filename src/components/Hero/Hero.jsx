@@ -1,6 +1,7 @@
 import profileImg from '../../assets/images/profile.png'
 import { profile, currentExperience, contactById } from '../../data'
 import Icon from '../icons/Icon'
+import { useJourneyMode, loadJourney } from '../../journey/journeyContext'
 import AvailabilityBadge from '../ui/AvailabilityBadge'
 import ui from '../ui/ui.module.css'
 import styles from './Hero.module.css'
@@ -11,6 +12,7 @@ export default function Hero() {
   const middle = rest.map((n, i) => (i === 0 ? n : `${n[0]}.`)).join(' ')
   const github = contactById.github
   const currentRole = currentExperience?.roles[0]?.title
+  const { open } = useJourneyMode()
 
   return (
     <section id="inicio" className={styles.hero} aria-labelledby="hero-name">
@@ -40,7 +42,16 @@ export default function Hero() {
           <AvailabilityBadge className={`${styles.availability} hero-enter-4`} />
 
           <div className={`${styles.ctas} hero-enter-4`}>
-            <a href="#projetos" className={ui.btnPrimary}>
+            <button
+              type="button"
+              className={ui.btnPrimary}
+              onClick={open}
+              onPointerEnter={loadJourney}
+              onFocus={loadJourney}
+            >
+              🗺️ Explorar jornada
+            </button>
+            <a href="#projetos" className={ui.btnGhost}>
               Ver projetos ↓
             </a>
             <a href="#contato" className={ui.btnGhost}>
