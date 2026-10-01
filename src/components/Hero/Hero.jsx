@@ -1,25 +1,40 @@
 import profileImg from '../../assets/images/profile.png'
+import DotField from '../effects/DotField'
+import TextType from '../effects/TextType'
 import styles from './Hero.module.css'
 
+const ROLES = ['Desenvolvedor Full Stack', 'Técnico em Informática', 'Freelancer']
+
 const BADGES = [
-  '🌐 Web Dev',
-  '🗄️ SQL Server · MySQL',
-  '🔌 Redes',
-  '💻 Freelancer',
+  '🟢 Disponível para contratação',
+  '🟡 Aberto a projetos freelance',
+  '🏢 Sistemas Corporativos',
+  '⚙️ Automação & Integrações',
+  '🗄️ SQL Server · PostgreSQL',
   '📍 Rondonópolis - MT',
 ]
 
 export default function Hero() {
   return (
     <section id="sobre" className={styles.hero} aria-label="Apresentação">
-      <div className={styles.gridBg} aria-hidden="true" />
+      <DotField />
       <div className={styles.glow} aria-hidden="true" />
 
       <div className={`${styles.inner} container`}>
         <div className={styles.textCol}>
           
           <p className={`${styles.tag} hero-enter-1`}>
-            • TÉCNICO EM INFORMÁTICA · DESENVOLVEDOR FULL STACK · Freelancer
+            <span aria-hidden="true">• </span>
+            <TextType
+              as="span"
+              text={ROLES}
+              typingSpeed={60}
+              deletingSpeed={30}
+              pauseDuration={2200}
+              initialDelay={700}
+              cursorCharacter="_"
+              srText={ROLES.join(', ')}
+            />
           </p>
 
           <h1 className={`${styles.name} hero-enter-2`}>
@@ -29,9 +44,8 @@ export default function Hero() {
           </h1>
 
           <p className={`${styles.sub} hero-enter-3`}>
-            Desenvolvedor fullstack apaixonado por tecnologia. HTML, CSS, JS,
-            PHP, C#, Python e muito mais. Transformando ideias em código desde
-            2022.
+            Sistemas internos para o agronegócio, automação de processos e
+            integração de sistemas, da análise de requisitos à entrega.
           </p>
 
          <div className={`${styles.ctas} hero-enter-4`}>

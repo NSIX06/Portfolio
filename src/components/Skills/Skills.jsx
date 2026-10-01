@@ -2,22 +2,22 @@ import { useReveal } from '../../hooks/useReveal'
 import { skillCategories } from '../../data/skills'
 import styles from './Skills.module.css'
 
-function SkillPill({ name, dotColor }) {
+function SkillPill({ name, dotColor, i }) {
   return (
-    <li className={styles.pill}>
+    <li className={`${styles.pill} stagger`} style={{ '--i': i }}>
       <span className={`${styles.dot} ${styles[`dot--${dotColor}`]}`} aria-hidden="true" />
       {name}
     </li>
   )
 }
 
-function SkillCategory({ label, skills, dotColor }) {
+function SkillCategory({ label, skills, dotColor, offset }) {
   return (
     <div className={styles.category}>
       <p className={styles.catLabel}>{label}</p>
       <ul className={styles.pillsRow} aria-label={label}>
-        {skills.map((s) => (
-          <SkillPill key={s} name={s} dotColor={dotColor} />
+        {skills.map((s, j) => (
+          <SkillPill key={s} name={s} dotColor={dotColor} i={offset + j} />
         ))}
       </ul>
     </div>
@@ -34,8 +34,8 @@ export default function Skills() {
         <h2 id="skills-heading" className={styles.sectionTitle}>Habilidades</h2>
 
         <div className={styles.categories}>
-          {skillCategories.map((cat) => (
-            <SkillCategory key={cat.id} {...cat} />
+          {skillCategories.map((cat, i) => (
+            <SkillCategory key={cat.id} {...cat} offset={i * 2} />
           ))}
         </div>
       </div>

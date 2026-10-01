@@ -235,3 +235,28 @@
   .featuredBody { grid-template-columns: 1fr; }
   .featuredVisual { display: none; }
 }
+
+.featuredImage {
+  width: 160px;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin-bottom: .75rem;
+}
+
+/* Abertura com ScrollExpand */
+.introOverlay {
+  padding: 0 var(--space-lg) 4rem;
+}
+.introTitle {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.introText {
+  color: #d6d3cd;
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}

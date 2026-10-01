@@ -14,12 +14,22 @@ export default function Contact() {
         <div className={styles.grid}>
           <div>
             <p className={styles.intro}>
-              Aberto a freelas, oportunidades, colaborações e projetos com propósito.
-              Se quiser trocar uma ideia, é só chamar!
+              Aberto a oportunidades de emprego, projetos freelance e colaborações.
+              Se quiser conversar sobre uma vaga ou um sistema, é só chamar!
             </p>
 
             <nav aria-label="Redes sociais e contatos">
               <ul className={styles.socialList}>
+                <li>
+                  <a
+                    href="mailto:felipebugalho2016@gmail.com"
+                    className={styles.socialLink}
+                    aria-label="Enviar e-mail para Felipe Bugalho"
+                  >
+                    <span className={styles.socialIcon} aria-hidden="true">✉️</span>
+                    felipebugalho2016@gmail.com
+                  </a>
+                </li>
                 {socials.map((s) => (
                   <li key={s.id}>
                     <a
@@ -57,9 +67,9 @@ export default function Contact() {
             <h3 className={styles.ctaTitle}>Trabalhe comigo</h3>
 
             <p className={styles.ctaText}>
-              Técnico de TI e desenvolvedor freelance disponível para projetos web,
-              sistemas, banco de dados e redes. Baseado em Rondonópolis&nbsp;-&nbsp;MT,
-              atendo remotamente também.
+              Desenvolvedor Full Stack disponível para contratação e projetos freelance:
+              sistemas sob medida, automação, integrações e sites. Baseado em
+              Rondonópolis&nbsp;-&nbsp;MT, com atendimento remoto.
             </p>
 
             <div className={styles.ctaBtns}>

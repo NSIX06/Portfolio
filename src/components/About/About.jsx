@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { prefersReducedMotion } from '../effects/motion'
 import { useReveal } from '../../hooks/useReveal'
 import styles from './About.module.css'
 
@@ -30,6 +31,42 @@ function useGitHubStats(username) {
   return { repos, stars, loading }
 }
 
+/** Conta de 0 até o valor quando o número aparece na tela. */
+function CountUp({ value, prefix = '' }) {
+  const ref = useRef(null)
+  const [shown, setShown] = useState(0)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || prefersReducedMotion() || !('IntersectionObserver' in window)) {
+      setShown(value)
+      return undefined
+    }
+    let raf = 0
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      io.disconnect()
+      const start = performance.now()
+      const tick = (t) => {
+        const k = Math.min((t - start) / 1200, 1)
+        setShown(Math.round(value * (1 - Math.pow(1 - k, 3))))
+        if (k < 1) raf = requestAnimationFrame(tick)
+      }
+      raf = requestAnimationFrame(tick)
+    })
+    io.observe(el)
+    return () => {
+      io.disconnect()
+      cancelAnimationFrame(raf)
+    }
+  }, [value])
+  return (
+    <span ref={ref}>
+      {prefix}
+      {shown}
+    </span>
+  )
+}
+
 function StatCard({ num, label, loading }) {
   return (
     <div className={styles.statCard}>
@@ -46,8 +83,8 @@ export default function About() {
   const { repos, stars, loading } = useGitHubStats('NSIX06')
 
   const STATS = [
-    { label: 'Repositórios no GitHub', num: loading ? null : repos, loading },
-    { label: 'Estrelas no GitHub', num: loading ? null : `★ ${stars}`, loading },
+    { label: 'Repositórios no GitHub', num: loading ? null : <CountUp value={repos ?? 0} />, loading },
+    { label: 'Estrelas no GitHub', num: loading ? null : <CountUp value={stars ?? 0} prefix="★ " />, loading },
     { label: 'Stack Developer', num: 'Full', loading: false },
     { label: 'Rondonópolis — Brasil', num: 'MT', loading: false },
   ]
@@ -63,20 +100,27 @@ export default function About() {
             <p className={styles.p}>
               Oi! Sou{' '}
               <strong className={styles.highlight}>Luiz Felipe Pablos Bugalho</strong>, aka{' '}
-              <strong className={styles.accentText}>NSIX06</strong> — técnico de TI e 
-              desenvolvedor Full Stack.
+              <strong className={styles.accentText}>NSIX06</strong> — desenvolvedor Full Stack e
+              técnico em informática, graduando em{' '}
+              <strong className={styles.highlight}>Análise e Desenvolvimento de Sistemas</strong> na UniSENAI MT.
             </p>
             <p className={styles.p}>
-              Trabalho com{' '}
-              <strong className={styles.highlight}>HTML, CSS, PHP, MySQL e SQL Server</strong> e
-              estou sempre aprendendo com{' '}
-              <strong className={styles.highlight}>Node.js, Vue, JavaScript e React</strong>.
-              Gosto de construir tanto o front quanto o back-end.
+              Minha experiência combina desenvolvimento de software com conhecimento de processos
+              corporativos: fui usuário-chave do{' '}
+              <strong className={styles.highlight}>TOTVS Protheus</strong> no Planejamento e Controle de
+              Manutenção (PCM) da TMG, onde também criei ferramentas internas. Isso me ajuda a transformar
+              necessidades operacionais em ferramentas digitais mais eficientes.
             </p>
             <p className={styles.p}>
-              Já entreguei projetos com impacto social real, como o site da{' '}
-              <strong className={styles.highlight}>Escolinha de Skate do Bob</strong> — uma ONG
-              que atende mais de 200 alunos por mês com aulas gratuitas de skate.
+              Já entreguei projetos em produção, como o{' '}
+              <strong className={styles.highlight}>TMG Caronas</strong>, sistema corporativo de caronas
+              entre colaboradores, e o site da{' '}
+              <strong className={styles.highlight}>Escolinha de Skate do Bob</strong> — uma ONG que atende
+              mais de 200 alunos por mês com aulas gratuitas de skate.
+            </p>
+            <p className={styles.p}>
+              Busco constantemente aprimorar meus conhecimentos em desenvolvimento web, backend, bancos de
+              dados, cloud, automação e Inteligência Artificial.
             </p>
             <p className={styles.quote}>"Patience is a virtue" 🤓</p>
             <a
@@ -91,8 +135,10 @@ export default function About() {
           </div>
 
           <div className={styles.statsGrid} aria-label="Estatísticas">
-            {STATS.map((s) => (
-              <StatCard key={s.label} {...s} />
+            {STATS.map((s, i) => (
+              <div key={s.label} className="stagger" style={{ '--i': i }}>
+                <StatCard {...s} />
+              </div>
             ))}
           </div>
         </div>

@@ -8,6 +8,7 @@ const About      = lazy(() => import('../components/About/About'))
 const Experience = lazy(() => import('../components/Experience/Experience'))
 const Skills     = lazy(() => import('../components/Skills/Skills'))
 const Projects   = lazy(() => import('../components/Projects/Projects'))
+const Education  = lazy(() => import('../components/Education/Education'))
 const Contact    = lazy(() => import('../components/Contact/Contact'))
 
 const SectionLoader = () => (
@@ -35,6 +36,9 @@ export default function MainLayout() {
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <Projects />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <Education />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <Contact />
