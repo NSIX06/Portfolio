@@ -2,11 +2,12 @@ import type { ReactNode } from "react";
 
 import { HeroCtas } from "./hero-ctas";
 import { FadeIn, ScaleUnblur } from "@/components/ui/motion-primitives";
+import { MapPin } from "lucide-react";
 import Image from "next/image";
 import TextType from "@/components/effects/TextType";
 
 // O título já diz "Desenvolvedor Full Stack": a linha digitada mostra o resto do perfil.
-const ROLES = ["Técnico em Informática", "Graduando em ADS", "Desenvolvedor Web Freelancer"];
+const ROLES = ["Desenvolvedor Full Stack", "Técnico em Informática", "Graduando em ADS"];
 
 export function Hero(): ReactNode {
   return (
@@ -27,20 +28,21 @@ export function Hero(): ReactNode {
                 srText={ROLES.join(", ")}
               />
             </p>
-            <p className="text-foreground text-[20px] leading-tight font-medium tracking-tight">
-              Oi <span aria-hidden="true">👋</span>, eu sou o Felipe
-            </p>
-
-            <h1 className="text-foreground font-serif text-[1.8rem] leading-[1.08] font-bold tracking-tight sm:text-[2.2rem] md:text-[2.3rem] lg:text-[2.7rem]">
-              <span className="block whitespace-nowrap">Desenvolvedor</span>
-              <span className="text-accent block whitespace-nowrap">
-                Full Stack
-              </span>
+            <h1 className="font-serif text-[2.9rem] leading-[0.95] font-extrabold tracking-tight sm:text-[3.6rem] lg:text-[4.1rem]">
+              <span className="text-foreground block">Luiz</span>
+              <span className="text-foreground block whitespace-nowrap">Felipe P.</span>
+              <span className="text-accent block">Bugalho</span>
             </h1>
 
-            <p className="text-foreground/65 max-w-[34ch] text-[22px] leading-[1.4] tracking-tight">
-              Sistemas internos, automação de processos e integrações, da
-              análise de requisitos à entrega.
+            <p className="text-foreground/65 max-w-[36ch] text-[19px] leading-[1.45] tracking-tight sm:text-[21px]">
+              Sistemas internos, automação de processos e integrações, da análise de requisitos à entrega.
+            </p>
+
+            <p className="border-accent/35 bg-accent/8 flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-2xl border px-4 py-3">
+              <span className="text-accent font-mono text-[11px] font-bold tracking-[0.2em] uppercase">Atualmente</span>
+              <span className="text-foreground text-[15px] font-semibold tracking-tight sm:text-[16px]">
+                Profissional Autônomo — Desenvolvedor Web Freelancer
+              </span>
             </p>
 
             <HeroCtas />
@@ -56,7 +58,12 @@ export function Hero(): ReactNode {
                 />
                 Disponível para contratação
               </li>
-              <li className="border-foreground/10 text-foreground/65 inline-flex items-center rounded-full border px-3 py-1 font-mono text-[11px] tracking-wide">
+              <li className="border-accent-2/40 bg-accent-2/10 text-accent-2 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] tracking-wide">
+                <span className="bg-accent-2 h-1.5 w-1.5 animate-pulse rounded-full" aria-hidden="true" />
+                Disponível para projetos
+              </li>
+              <li className="border-foreground/10 text-foreground/70 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[11px] tracking-wide">
+                <MapPin className="text-accent h-3.5 w-3.5" aria-hidden="true" />
                 Rondonópolis - MT · remoto
               </li>
             </ul>

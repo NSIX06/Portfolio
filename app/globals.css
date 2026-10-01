@@ -351,3 +351,19 @@ html:not(.dark) .backdrop-layer > * {
     radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
     var(--background);
 }
+/* Chamada para todos os repositórios */
+.repo-banner {
+  background:
+    radial-gradient(90% 140% at 0% 50%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    radial-gradient(60% 120% at 100% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+    var(--background);
+}
+.repo-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(color-mix(in srgb, var(--foreground) 14%, transparent) 1px, transparent 1px);
+  background-size: 16px 16px;
+  mask-image: linear-gradient(to right, transparent 30%, black);
+  pointer-events: none;
+}

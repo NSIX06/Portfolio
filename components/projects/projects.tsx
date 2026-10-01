@@ -2,6 +2,9 @@
 
 import {
   ArrowLeft,
+  Github,
+  Globe,
+  Lock,
   ArrowRight,
   ArrowUpRight,
   Brain,
@@ -88,7 +91,7 @@ export function Projects({
           </FadeIn>
         ) : null}
 
-        <div className="columns-1 gap-6 md:columns-2 md:gap-7">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-7">
           {items.map((project, index) => (
             <ProjectCard
               key={project.id}
@@ -113,18 +116,32 @@ export function Projects({
             </Link>
           </div>
         ) : (
-          <div className="mt-10 flex justify-center">
+          <FadeIn className="mt-10 sm:mt-14">
             <a
               href={ALL_REPOS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-foreground/8 focus-ring group bg-background text-foreground hover:bg-foreground/5 inline-flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-medium transition-colors"
+              className="repo-banner focus-ring group border-accent/30 hover:border-accent/60 relative flex flex-col items-start gap-5 overflow-hidden rounded-3xl border p-6 transition-colors sm:flex-row sm:items-center sm:p-8"
             >
-              Todos os repositórios no GitHub
-              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              <span className="bg-foreground text-background relative inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-110">
+                <Github className="h-7 w-7" aria-hidden="true" />
+              </span>
+              <span className="relative flex flex-1 flex-col gap-1">
+                <span className="text-accent font-mono text-[11px] tracking-[0.16em] uppercase">github.com/NSIX06</span>
+                <span className="text-foreground font-serif text-[1.5rem] leading-tight font-bold tracking-tight sm:text-[1.8rem]">
+                  Veja todos os meus repositórios
+                </span>
+                <span className="text-foreground/60 text-[15px] tracking-tight">
+                  Código-fonte, estudos e projetos em andamento.
+                </span>
+              </span>
+              <span className="bg-accent relative inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-semibold text-white shadow-[0_10px_30px_-10px_var(--accent)] transition-transform group-hover:translate-x-1">
+                Abrir GitHub
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </span>
               <span className="sr-only">(abre em nova aba)</span>
             </a>
-          </div>
+          </FadeIn>
         )}
       </div>
 
@@ -155,64 +172,86 @@ function ProjectCard({
   const meta = [project.category, project.year].filter(Boolean).join(" · ");
 
   return (
-    <FadeIn
-      delay={Math.min(index * 0.06, 0.3)}
-      className="mb-6 break-inside-avoid md:mb-7"
-    >
-      <button
-        type="button"
-        onClick={(e) => onOpen(project.id, e.currentTarget)}
-        aria-haspopup="dialog"
-        className="focus-ring block w-full rounded-3xl text-left"
-      >
-        <article className="project-card glow-hover border-foreground/8 bg-background flex cursor-pointer flex-col gap-4 rounded-3xl border p-3 sm:p-3.5">
-          <header className="flex items-center gap-2.5 px-1 pt-2">
-            <span className="border-foreground/10 bg-background inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border">
-              <Icon className="text-accent h-3.5 w-3.5" aria-hidden="true" />
-            </span>
-            <span className="text-foreground text-sm font-medium tracking-tight">
+    <FadeIn delay={Math.min((index % 2) * 0.08, 0.3)} className="h-full">
+      {/* O botão "estica" sobre o cartão inteiro; os links de repositório/site ficam por cima dele */}
+      <article className="project-card glow-hover group border-foreground/8 bg-background relative flex h-full flex-col gap-4 rounded-3xl border p-3 sm:p-3.5">
+        <header className="flex items-center gap-2.5 px-1 pt-2">
+          <span className="border-foreground/10 bg-background inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border">
+            <Icon className="text-accent h-3.5 w-3.5" aria-hidden="true" />
+          </span>
+          <h3 className="text-foreground text-sm font-medium tracking-tight">
+            <button
+              type="button"
+              onClick={(e) => onOpen(project.id, e.currentTarget)}
+              aria-haspopup="dialog"
+              className="focus-ring rounded-md text-left after:absolute after:inset-0 after:z-[5] after:rounded-3xl after:content-['']"
+            >
               {project.name}
+            </button>
+          </h3>
+          {project.status ? (
+            <span className="ml-auto rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] tracking-wide text-emerald-600 uppercase dark:text-emerald-400">
+              {project.status}
             </span>
-            {project.status ? (
-              <span className="ml-auto rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] tracking-wide text-emerald-600 uppercase dark:text-emerald-400">
-                {project.status}
-              </span>
-            ) : null}
-          </header>
+          ) : null}
+        </header>
 
-          <div
-            className="project-card__image ring-foreground/5 bg-foreground/5 relative w-full overflow-hidden rounded-2xl ring-1"
-            style={{ aspectRatio: 1024 / 768 }}
-          >
-            <div className="project-card__image-inner">
-              <ProjectVisual
-                project={project}
-                sizes="(min-width: 1024px) 540px, (min-width: 768px) 45vw, 100vw"
-                priority={index < 2}
-              />
-            </div>
+        <div className="project-card__image ring-foreground/5 bg-foreground/5 relative aspect-[16/10] w-full overflow-hidden rounded-2xl ring-1">
+          <div className="project-card__image-inner">
+            <ProjectVisual
+              project={project}
+              sizes="(min-width: 1024px) 540px, (min-width: 768px) 45vw, 100vw"
+              priority={index < 2}
+            />
           </div>
+        </div>
 
-          <div className="flex flex-col gap-2.5 px-1 pb-1">
-            <h3 className="text-foreground text-[20px] leading-[1.2] font-medium tracking-tight sm:text-[22px]">
-              {project.headline}
-            </h3>
-            <p className="text-foreground/65 text-[14px] leading-normal tracking-tight sm:text-[15px]">
-              {project.summary}
-            </p>
-          </div>
+        <div className="flex flex-col gap-2 px-1">
+          <p className="text-foreground line-clamp-2 min-h-[2.4em] text-[19px] leading-[1.2] font-medium tracking-tight sm:text-[20px]">
+            {project.headline}
+          </p>
+          <p className="text-foreground/65 line-clamp-3 min-h-[4.5em] text-[14px] leading-normal tracking-tight sm:text-[15px]">
+            {project.summary}
+          </p>
+        </div>
 
-          <div className="flex items-center justify-between px-1 pb-2">
-            <span className="text-foreground/50 font-mono text-[11px] tracking-wide uppercase">
-              {meta}
+        <div className="border-foreground/8 mt-auto flex flex-wrap items-center gap-2 border-t px-1 pt-3 pb-1.5">
+          <span className="text-foreground/50 mr-auto font-mono text-[11px] tracking-wide uppercase">{meta}</span>
+          {project.live ? (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring border-foreground/12 text-foreground hover:border-accent hover:text-accent relative z-10 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-semibold transition-colors"
+            >
+              <Globe className="h-3.5 w-3.5" aria-hidden="true" />
+              Site
+              <span className="sr-only">de {project.name} (abre em nova aba)</span>
+            </a>
+          ) : null}
+          {project.github && project.github !== "https://github.com/NSIX06" ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring bg-foreground text-background hover:bg-accent relative z-10 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors hover:text-white"
+            >
+              <Github className="h-3.5 w-3.5" aria-hidden="true" />
+              Repositório
+              <span className="sr-only">de {project.name} no GitHub (abre em nova aba)</span>
+            </a>
+          ) : !project.live ? (
+            <span className="text-foreground/45 inline-flex items-center gap-1.5 text-[12px]">
+              <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+              Privado
             </span>
-            <span className="text-accent inline-flex items-center gap-1 text-[13px] font-medium">
-              Ver detalhes
-              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </span>
-          </div>
-        </article>
-      </button>
+          ) : null}
+          <span className="text-accent inline-flex items-center gap-1 pl-1 text-[13px] font-medium">
+            Detalhes
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </span>
+        </div>
+      </article>
     </FadeIn>
   );
 }

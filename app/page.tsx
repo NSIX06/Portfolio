@@ -49,25 +49,33 @@ export default function HomePage(): ReactNode {
       </div>
 
       <section id="sobre" data-bg="flow" aria-labelledby="sobre-title" className="scroll-mt-24 pt-24 sm:pt-32">
-        <SectionHead label="// 01 — sobre" id="sobre-title" sub="Como eu trabalho e o que estou buscando.">
+        <SectionHead label="// 01 — sobre" id="sobre-title" sub="Quem eu sou e como trabalho.">
           Sobre <span className="text-accent">mim</span>
         </SectionHead>
         <div className="mx-auto w-full max-w-160 px-6 pt-10 pb-12 sm:px-10 sm:pt-14">
         <FadeIn delay={0.1}>
           <div className="border-foreground/5 bg-foreground/1.5 dark:bg-foreground/3 rounded-4xl border p-8 sm:p-12">
             <div className="text-foreground/75 space-y-6 text-[17px] leading-[1.7] tracking-tight sm:text-[18px]">
-              <p>
-                Minha experiência combina{" "}
-                <strong className="text-foreground font-semibold">desenvolvimento de software</strong> com{" "}
-                <strong className="text-foreground font-semibold">conhecimento de processos corporativos</strong>, o que
-                me ajuda a criar ferramentas pensadas para a rotina de quem vai usá-las.
+              <p className="text-foreground/85 text-[19px] leading-[1.6] sm:text-[21px]">
+                Sou <strong className="text-foreground font-semibold">Desenvolvedor Full Stack e Técnico em Informática</strong>, com experiência na criação de 
+                <strong className="text-foreground font-semibold">sistemas internos para o agronegócio</strong>, com foco em automação de processos, integração de
+                sistemas e soluções orientadas a resultados.
               </p>
               <p>
-                Hoje busco aprimorar meus conhecimentos em{" "}
-                <strong className="text-foreground font-semibold">
-                  back-end, bancos de dados, cloud, automação e Inteligência Artificial
-                </strong>
-                .
+                Minha experiência combina desenvolvimento de software com 
+                <strong className="text-foreground font-semibold">conhecimento de processos corporativos</strong>: fui usuário-chave do 
+                <strong className="text-foreground font-semibold">TOTVS Protheus</strong> no Planejamento e Controle de Manutenção (PCM) da TMG, onde também criei
+                ferramentas internas. Isso me ajuda a transformar necessidades operacionais em ferramentas digitais
+                mais eficientes.
+              </p>
+              <p>
+                Atualmente atuo como <strong className="text-foreground font-semibold">profissional autônomo</strong>, desenvolvendo soluções web sob medida e
+                prestando suporte técnico em informática.
+              </p>
+              <p>
+                Sou graduando em <strong className="text-foreground font-semibold">Análise e Desenvolvimento de Sistemas</strong> pela UniSENAI MT e busco
+                constantemente aprimorar meus conhecimentos em 
+                <strong className="text-foreground font-semibold">desenvolvimento web, backend, bancos de dados, cloud, automação e Inteligência Artificial</strong>.
               </p>
             </div>
           </div>
