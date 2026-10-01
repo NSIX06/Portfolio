@@ -2,7 +2,7 @@
 
 import { Award, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 
 import { CERTIFICATES } from "@/lib/certificates";
 
@@ -127,12 +127,6 @@ function CertificatesTab(): ReactNode {
   const slice = CERTIFICATES.slice(page * PAGE, page * PAGE + PAGE);
   const running = playing && !hover && inView;
 
-  useEffect(() => {
-    if (!running) return;
-    const id = window.setTimeout(() => setActive((a) => (a + 1) % total), AUTOPLAY_MS);
-    return () => window.clearTimeout(id);
-  }, [running, active, total]);
-
   const go = (d: number): void => setActive((a) => (a + d + total) % total);
   const cert = CERTIFICATES[active];
 
@@ -143,16 +137,16 @@ function CertificatesTab(): ReactNode {
       onMouseLeave={() => setHover(false)}
       className="project-emoji relative overflow-hidden rounded-3xl p-4 sm:p-6"
     >
-      {/* Painel de fundo: nome grande do certificado ativo */}
+      {/* Painel de fundo: nome grande do certificado ativo (troca com fade simples) */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden items-end justify-end p-8 md:flex">
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false}>
           <motion.div
             key={active}
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -10, filter: "blur(6px)" }}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="flex max-w-[22rem] flex-col items-end gap-3 text-right"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.45, ease: EASE }}
+            className="absolute right-8 bottom-8 flex max-w-[22rem] flex-col items-end gap-3 text-right"
           >
             <Award className="text-accent h-16 w-16 opacity-80" strokeWidth={1.25} />
             <p className="text-foreground/90 font-serif text-[1.8rem] leading-[1.05] font-extrabold tracking-tight">
@@ -163,74 +157,85 @@ function CertificatesTab(): ReactNode {
         </AnimatePresence>
       </div>
 
-      <ul className="relative flex max-w-md flex-col gap-2">
-        {slice.map((c, i) => {
-          const idx = page * PAGE + i;
-          const on = idx === active;
-          return (
-            <motion.li key={c.name} layout transition={{ duration: 0.35, ease: EASE }}>
-              <button
-                type="button"
-                onClick={() => setActive(idx)}
-                aria-expanded={on}
-                className={`focus-ring w-full rounded-2xl border text-left backdrop-blur-md transition-colors ${
-                  on
-                    ? "border-accent/40 bg-background/90 p-4 shadow-xl"
-                    : "border-foreground/10 bg-background/60 hover:bg-background/80 px-4 py-2.5"
-                }`}
-              >
-                <span className="flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className={`h-2 w-2 shrink-0 rounded-full ${on ? "bg-accent" : "bg-foreground/25"}`}
-                  />
-                  <span className={`text-foreground tracking-tight ${on ? "text-[15px] font-semibold" : "text-[13px] font-medium"}`}>
-                    {c.name}
-                  </span>
-                </span>
-                <AnimatePresence initial={false}>
-                  {on ? (
-                    <motion.span
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: EASE }}
-                      className="block overflow-hidden"
-                    >
-                      <span className="text-foreground/60 mt-2 block pl-4 text-[13px] leading-relaxed">
-                        {c.institution}
-                        {c.partner ? ` + ${c.partner}` : ""}
-                        {c.workload ? ` · ${c.workload}` : ""}
-                      </span>
+      {/* Altura reservada: o painel não muda de tamanho quando o item ativo troca */}
+      <div className="relative min-h-[21.5rem] max-w-md">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.ul
+            key={page}
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 12 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            className="flex flex-col gap-2"
+          >
+            {slice.map((c, i) => {
+              const idx = page * PAGE + i;
+              const on = idx === active;
+              return (
+                <li key={c.name}>
+                  <button
+                    type="button"
+                    onClick={() => setActive(idx)}
+                    aria-expanded={on}
+                    className={`focus-ring w-full rounded-2xl border px-4 py-3 text-left transition-[background-color,border-color,box-shadow] duration-300 ${
+                      on
+                        ? "border-accent/40 bg-background shadow-xl"
+                        : "border-foreground/10 bg-background/70 hover:bg-background/90"
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
                       <span
-                        className={`mt-2 ml-4 inline-block rounded-full px-2.5 py-0.5 font-mono text-[10px] tracking-[0.12em] uppercase ${
-                          c.inProgress ? "border-accent-2/50 text-accent-2 border" : "bg-foreground text-background"
-                        }`}
-                      >
-                        {c.inProgress ? "Em andamento" : "Concluído"}
+                        aria-hidden="true"
+                        className={`h-2 w-2 shrink-0 rounded-full transition-colors duration-300 ${on ? "bg-accent" : "bg-foreground/25"}`}
+                      />
+                      <span className={`text-[14px] tracking-tight transition-colors duration-300 ${on ? "text-foreground font-semibold" : "text-foreground/80 font-medium"}`}>
+                        {c.name}
                       </span>
-                      {running ? (
-                        <span className="bg-foreground/10 mt-3 ml-4 block h-0.5 overflow-hidden rounded-full">
-                          <motion.span
-                            key={`bar-${active}`}
-                            className="bg-accent block h-full"
-                            initial={{ width: "0%" }}
-                            animate={{ width: "100%" }}
-                            transition={{ duration: AUTOPLAY_MS / 1000, ease: "linear" }}
-                          />
+                    </span>
+                    {/* Expansão por grid-rows (0fr → 1fr): suave e sem distorcer o texto */}
+                    <span
+                      className="grid transition-[grid-template-rows,opacity] duration-400 ease-out"
+                      style={{ gridTemplateRows: on ? "1fr" : "0fr", opacity: on ? 1 : 0 }}
+                    >
+                      <span className="block overflow-hidden">
+                        <span className="text-foreground/60 mt-2 block pl-4 text-[13px] leading-relaxed">
+                          {c.institution}
+                          {c.partner ? ` + ${c.partner}` : ""}
+                          {c.workload ? ` · ${c.workload}` : ""}
                         </span>
-                      ) : null}
-                    </motion.span>
-                  ) : null}
-                </AnimatePresence>
-              </button>
-            </motion.li>
-          );
-        })}
-      </ul>
+                        <span
+                          className={`mt-2 ml-4 inline-block rounded-full px-2.5 py-0.5 font-mono text-[10px] tracking-[0.12em] uppercase ${
+                            c.inProgress ? "border-accent/50 text-accent border" : "bg-foreground/10 text-foreground/70"
+                          }`}
+                        >
+                          {c.inProgress ? "Em andamento" : "Concluído"}
+                        </span>
+                        <span className="bg-foreground/10 mt-3 ml-4 block h-0.5 overflow-hidden rounded-full">
+                          {on && playing ? (
+                            /* A barra comanda a rotação: ao terminar, avança; pausa junto com o mouse/fora da tela */
+                            <span
+                              key={`bar-${active}`}
+                              className="cert-progress bg-accent block h-full"
+                              style={{
+                                animationDuration: `${AUTOPLAY_MS}ms`,
+                                animationPlayState: running ? "running" : "paused",
+                              }}
+                              onAnimationEnd={() => go(1)}
+                            />
+                          ) : null}
+                        </span>
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        </AnimatePresence>
+      </div>
 
       <div className="relative mt-4 flex items-center gap-2">
-        <div className="border-foreground/10 bg-background/80 inline-flex items-center gap-1 rounded-full border p-1 backdrop-blur-md">
+        <div className="border-foreground/10 bg-background/90 inline-flex items-center gap-1 rounded-full border p-1">
           <button type="button" onClick={() => go(-1)} aria-label="Certificado anterior" className="focus-ring hover:bg-foreground/8 inline-flex h-7 w-7 items-center justify-center rounded-full">
             <ChevronLeft className="h-4 w-4" aria-hidden="true" />
           </button>
@@ -245,7 +250,7 @@ function CertificatesTab(): ReactNode {
           type="button"
           onClick={() => setPlaying((p) => !p)}
           aria-label={playing ? "Pausar rotação" : "Retomar rotação"}
-          className="focus-ring border-foreground/10 bg-background/80 inline-flex h-9 w-9 items-center justify-center rounded-full border backdrop-blur-md"
+          className="focus-ring border-foreground/10 bg-background/90 inline-flex h-9 w-9 items-center justify-center rounded-full border"
         >
           {playing ? <Pause className="h-3.5 w-3.5" aria-hidden="true" /> : <Play className="h-3.5 w-3.5" aria-hidden="true" />}
         </button>

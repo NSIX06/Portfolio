@@ -367,3 +367,13 @@ html:not(.dark) .backdrop-layer > * {
   mask-image: linear-gradient(to right, transparent 30%, black);
   pointer-events: none;
 }
+/* Barra de progresso do carrossel de certificações (comanda a rotação) */
+.cert-progress {
+  width: 0;
+  animation-name: cert-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes cert-progress {
+  to { width: 100%; }
+}
