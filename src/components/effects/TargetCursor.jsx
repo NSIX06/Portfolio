@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
-import { prefersReducedMotion, isTouchDevice } from './motion'
+import { prefersReducedMotion, hasFinePointer } from './motion'
 import './TargetCursor.css'
 
 const CORNER = 12
@@ -9,8 +9,8 @@ const BORDER = 3
 
 /**
  * Cursor em mira que gira e "abraça" os elementos com a classe `.cursor-target`
- * (adaptado do TargetCursor do React Bits). Desligado em toque e com movimento reduzido;
- * o cursor do sistema só é escondido enquanto o efeito está ativo.
+ * (adaptado do TargetCursor do React Bits). Só existe com mouse; com movimento reduzido não gira.
+ * O cursor do sistema só é escondido enquanto o efeito está ativo.
  */
 export default function TargetCursor({
   targetSelector = '.cursor-target',
@@ -19,7 +19,9 @@ export default function TargetCursor({
   color = '#f0ede8',
   colorOnTarget = '#e11d1d',
 }) {
-  const [enabled] = useState(() => typeof window !== 'undefined' && !isTouchDevice() && !prefersReducedMotion())
+  // Liga sempre que houver mouse; com movimento reduzido a mira só não gira.
+  const [enabled] = useState(() => hasFinePointer())
+  const [still] = useState(() => prefersReducedMotion())
   const cursorRef = useRef(null)
   const dotRef = useRef(null)
 
@@ -38,6 +40,7 @@ export default function TargetCursor({
 
     const startSpin = () => {
       spin?.kill()
+      if (still) return
       spin = gsap.timeline({ repeat: -1 }).to(cursor, { rotation: '+=360', duration: spinDuration, ease: 'none' })
     }
     startSpin()
@@ -138,7 +141,7 @@ export default function TargetCursor({
       document.removeEventListener('mouseleave', onLeaveWindow)
       document.documentElement.classList.remove('has-target-cursor')
     }
-  }, [enabled, targetSelector, spinDuration, hoverDuration, color, colorOnTarget])
+  }, [enabled, still, targetSelector, spinDuration, hoverDuration, color, colorOnTarget])
 
   if (!enabled) return null
 

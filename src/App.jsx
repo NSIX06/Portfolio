@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { isTouchDevice, prefersReducedMotion } from './components/effects/motion'
+import { hasFinePointer } from './components/effects/motion'
 import MainLayout from './layouts/MainLayout'
 
 // Cursor em mira como cursor principal no computador (carrega à parte, usa gsap).
 const TargetCursor = lazy(() => import('./components/effects/TargetCursor'))
-const wantsCursor = typeof window !== 'undefined' && !isTouchDevice() && !prefersReducedMotion()
+const wantsCursor = hasFinePointer()
 const CURSOR_TARGETS = [
   '.cursor-target',
   'a[class*="btn"]',
