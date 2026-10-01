@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from 'react'
-import { prefersReducedMotion, watchVisibility } from './motion'
+import { watchVisibility } from './motion'
 import './DotField.css'
 
 const TWO_PI = Math.PI * 2
@@ -31,7 +31,6 @@ const DotField = memo(function DotField({
     const ctx = canvas?.getContext('2d')
     if (!wrap || !canvas || !ctx) return undefined
 
-    const reduced = prefersReducedMotion()
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const mouse = { x: -9999, y: -9999, px: -9999, py: -9999, speed: 0 }
     let dots = []
@@ -116,7 +115,7 @@ const DotField = memo(function DotField({
     }
 
     const start = () => {
-      if (!raf && visible && !reduced) raf = requestAnimationFrame(tick)
+      if (!raf && visible) raf = requestAnimationFrame(tick)
     }
 
     const onMove = (e) => {
@@ -141,7 +140,8 @@ const DotField = memo(function DotField({
       if (v) start()
     })
     window.addEventListener('resize', onResize)
-    if (!reduced) window.addEventListener('pointermove', onMove, { passive: true })
+    // Os pontos só reagem ao mouse: fica ligado também com 'reduzir movimento'.
+    window.addEventListener('pointermove', onMove, { passive: true })
 
     return () => {
       cancelAnimationFrame(raf)

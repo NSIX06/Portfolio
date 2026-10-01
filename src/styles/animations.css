@@ -95,6 +95,9 @@
   animation: float 3s ease-in-out infinite;
 }
 
+/* Com 'reduzir movimento' as entradas continuam, mas só como esmaecimento, sem deslizar */
 @media (prefers-reduced-motion: reduce) {
-  .reveal .stagger { opacity: 1; transform: none; transition: none; }
+  .reveal,
+  .reveal .stagger { transform: none !important; }
+  .float { animation: none; }
 }

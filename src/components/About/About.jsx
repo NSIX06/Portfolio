@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import { prefersReducedMotion } from '../effects/motion'
 import { useReveal } from '../../hooks/useReveal'
 import styles from './About.module.css'
 
@@ -37,7 +36,7 @@ function CountUp({ value, prefix = '' }) {
   const [shown, setShown] = useState(0)
   useEffect(() => {
     const el = ref.current
-    if (!el || prefersReducedMotion() || !('IntersectionObserver' in window)) {
+    if (!el || !('IntersectionObserver' in window)) {
       setShown(value)
       return undefined
     }

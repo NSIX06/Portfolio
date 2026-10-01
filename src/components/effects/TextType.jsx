@@ -1,9 +1,8 @@
 /* TextType — React Bits (adaptado para JSX).
  * Diferenças: cursor pisca via CSS (sem gsap no bundle inicial), conteúdo animado
  * fica aria-hidden com o texto completo para leitores de tela, e com
- * prefers-reduced-motion mostra o texto inteiro sem digitação. */
+ * a digitação roda também com prefers-reduced-motion (é só texto aparecendo). */
 import { createElement, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { prefersReducedMotion } from './motion'
 import './TextType.css'
 
 export default function TextType({
@@ -29,7 +28,6 @@ export default function TextType({
   ...props
 }) {
   const textArray = useMemo(() => (Array.isArray(text) ? text : [text]), [text])
-  const [reduced] = useState(prefersReducedMotion)
   const [displayedText, setDisplayedText] = useState('')
   const [currentCharIndex, setCurrentCharIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -57,7 +55,7 @@ export default function TextType({
   }, [startOnVisible])
 
   useEffect(() => {
-    if (!isVisible || reduced) return undefined
+    if (!isVisible) return undefined
     let timeout
     const currentText = textArray[currentTextIndex]
     const processedText = reverseMode ? currentText.split('').reverse().join('') : currentText
@@ -109,13 +107,11 @@ export default function TextType({
     variableSpeed,
     getRandomSpeed,
     onSentenceComplete,
-    reduced,
   ])
 
   const color = textColors.length ? textColors[currentTextIndex % textColors.length] : 'inherit'
-  const shown = reduced ? textArray.join(' · ') : displayedText
+  const shown = displayedText
   const hideCursor =
-    reduced ||
     (hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting))
 
   return createElement(

@@ -243,20 +243,6 @@
   margin-bottom: .75rem;
 }
 
-/* Abertura com ScrollExpand */
-.introOverlay {
-  padding: 0 var(--space-lg) 4rem;
-}
-.introTitle {
-  font-size: clamp(2.4rem, 6vw, 4.5rem);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  line-height: 1;
-  margin-bottom: 1rem;
-}
-.introText {
-  color: #d6d3cd;
-  max-width: 520px;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
+/* Abertura com ScrollExpand: o logo é quadrado, então fica inteiro sobre o azul da marca */
+:global(.projects-intro .scroll-expand__frame) { background: #012b5b; }
+:global(.projects-intro .scroll-expand__media) { object-fit: contain; }
