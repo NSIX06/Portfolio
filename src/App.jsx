@@ -4,6 +4,11 @@ import MainLayout from './layouts/MainLayout'
 import { JourneyModeProvider } from './journey/JourneyMode'
 import { useJourneyMode, loadJourney } from './journey/journeyContext'
 import { seo } from './data'
+import { isTouchDevice, prefersReducedMotion } from './components/effects/motion'
+
+// O cursor em mira só existe em desktop sem movimento reduzido; carrega à parte (usa gsap).
+const TargetCursor = lazy(() => import('./components/effects/TargetCursor'))
+const wantsCursor = typeof window !== 'undefined' && !isTouchDevice() && !prefersReducedMotion()
 
 const Journey = lazy(loadJourney)
 
@@ -52,6 +57,11 @@ export default function App() {
         <link rel="canonical" href={seo.siteUrl} />
       </Helmet>
       <Shell />
+      {wantsCursor && (
+        <Suspense fallback={null}>
+          <TargetCursor targetSelector='.cursor-target, a[class*="btn"], button[class*="btn"], [class*="filter"], [class*="socialLink"]' />
+        </Suspense>
+      )}
     </JourneyModeProvider>
   )
 }

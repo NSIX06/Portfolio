@@ -1,5 +1,6 @@
 import { contact, profile, sections } from '../../data'
 import Icon from '../icons/Icon'
+import PulseHeart from '../effects/PulseHeart'
 import styles from './Footer.module.css'
 
 export default function Footer() {
@@ -45,6 +46,7 @@ export default function Footer() {
       </div>
 
       <div className={`container ${styles.bottom}`}>
+        <PulseHeart />
         <p className={styles.copy}>
           © {year} <span className={styles.copyAccent}>{profile.fullName}</span> — {profile.handle}
         </p>

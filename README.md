@@ -80,6 +80,14 @@ Depois de editar, rode `npm test`: ele aponta ids duplicados, projetos inexisten
 - **Acessibilidade**: skip link, foco visível, `prefers-reduced-motion`, cor secundária com contraste AA e ESLint `jsx-a11y`.
 - **SEO**: canonical, Open Graph com imagem (`public/og-image.png`), JSON-LD `Person`, `robots.txt` e `sitemap.xml`.
 
+## Estudo de caso e efeitos visuais
+
+- **TMG Caronas** (`components/CaseStudy`): abertura com o logo crescendo no scroll (ScrollExpand), capacidades em pilha animada (CardSwap), arquitetura em camadas com fundo LetterGlitch e título TechText, stack, segurança e números. Conteúdo em `data/caseStudies.js`; segredos, configurações e débitos internos do repositório da empresa ficam de fora.
+- **Hero**: fundo DotField e cartão ProfileCard com inclinação 3D.
+- **Cursor em mira** (TargetCursor) em botões, links e cards, apenas em desktop.
+- **Rodapé**: botão de curtida PulseHeart (salvo só no navegador do visitante, sem contador público).
+- Todos os efeitos são adaptações do React Bits, pausam fora da tela e respeitam `prefers-reduced-motion`. Os que usam canvas ou gsap são carregados sob demanda.
+
 ## Jornada interativa
 
 - **Mapa**: SVG no DOM, sem engine de jogo nem Canvas. As estações seguem a ordem de `journey` em `data/navigation.js` e são posicionadas em serpentina por `journey/layout.js`; uma estação nova entra no mapa sozinha. Cada projeto de `data/projects.js` vira um marcador em volta da estação Projetos (os em destaque ficam com borda dourada).

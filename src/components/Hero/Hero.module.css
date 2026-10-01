@@ -32,6 +32,8 @@
 
 /* Layout */
 .inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 5rem;
@@ -115,7 +117,7 @@
 
 /* Photo column */
 .photoCol {
-  width: 280px;
+  width: 340px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -175,8 +177,7 @@
 /* Responsive */
 @media (max-width: 900px) {
   .inner { flex-direction: column; gap: 3rem; align-items: flex-start; }
-  .photoCol { width: 100%; align-items: flex-start; }
-  .photoFrame { width: 240px; height: 270px; }
+  .photoCol { width: 100%; align-items: center; }
 }
 
 @media (max-width: 600px) {

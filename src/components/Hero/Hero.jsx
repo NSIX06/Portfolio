@@ -1,6 +1,8 @@
 import profileImg from '../../assets/images/profile.png'
-import { profile, currentExperience, contactById } from '../../data'
+import { profile, currentExperience, contactById, activeAvailability } from '../../data'
 import Icon from '../icons/Icon'
+import DotField from '../effects/DotField'
+import ProfileCard from '../effects/ProfileCard'
 import { useJourneyMode, loadJourney } from '../../journey/journeyContext'
 import AvailabilityBadge from '../ui/AvailabilityBadge'
 import ui from '../ui/ui.module.css'
@@ -16,7 +18,7 @@ export default function Hero() {
 
   return (
     <section id="inicio" className={styles.hero} aria-labelledby="hero-name">
-      <div className={styles.gridBg} aria-hidden="true" />
+      <DotField />
       <div className={styles.glow} aria-hidden="true" />
 
       <div className={`${styles.inner} container`}>
@@ -76,16 +78,15 @@ export default function Hero() {
         </div>
 
         <div className={`${styles.photoCol} hero-enter-3`}>
-          <div className={styles.photoFrame}>
-            <img
-              src={profileImg}
-              alt={`Foto de ${profile.fullName}`}
-              className={styles.photoImg}
-              width="280"
-              height="320"
-              loading="eager"
-            />
-          </div>
+          <ProfileCard
+            avatarUrl={profileImg}
+            name={profile.shortName}
+            title={profile.title}
+            handle={profile.handle}
+            status={activeAvailability[0]?.label ?? profile.location}
+            contactText="Contato"
+            contactHref="#contato"
+          />
         </div>
       </div>
 

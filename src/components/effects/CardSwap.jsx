@@ -1,11 +1,7 @@
-import { Children, cloneElement, createRef, forwardRef, isValidElement, useEffect, useMemo, useRef } from 'react'
+import { Children, cloneElement, createRef, isValidElement, useEffect, useMemo, useRef } from 'react'
 import gsap from 'gsap'
 import { prefersReducedMotion, watchVisibility } from './motion'
 import './CardSwap.css'
-
-export const Card = forwardRef(function Card({ className = '', ...rest }, ref) {
-  return <div ref={ref} {...rest} className={`swap-card ${className}`.trim()} />
-})
 
 const makeSlot = (i, distX, distY, total) => ({ x: i * distX, y: -i * distY, z: -i * distX * 1.5, zIndex: total - i })
 

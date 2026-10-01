@@ -16,7 +16,7 @@
  * @property {string} [objective]
  * @property {string[]} [highlights]
  * @property {string[]} tech
- * @property {{live?: string|null, github?: string|null}} links
+ * @property {{live?: string|null, github?: string|null, caseStudy?: string|null}} links  caseStudy = âncora do estudo de caso
  * @property {string|null} image     Caminho em /public ou import
  * @property {ProjectStatus} status
  * @property {string|null} date
@@ -60,7 +60,7 @@ export const projects = [
     ],
     tech: ['.NET 10', 'ASP.NET Core MVC', 'Dapper', 'SQL Server', 'Microsoft Entra ID', 'SignalR', 'Azure Blob Storage', 'Microsoft Teams'],
     links: { live: null, github: null, caseStudy: '#caso-tmg-caronas' },
-    image: null,
+    image: '/projetos/tmg-caronas-logo.webp',
     status: 'producao',
     date: '2026',
     featured: true,
