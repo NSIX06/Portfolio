@@ -1,82 +1,137 @@
-
+.section {
+  position: relative;
+  overflow: hidden;
+}
+.inner {
+  position: relative;
+  z-index: 1;
+}
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2.5rem;
   align-items: start;
 }
 
-.intro {
-  color: var(--color-muted);
-  line-height: 1.8;
-  margin-bottom: 2rem;
-  font-size: .95rem;
+/* ── Cartão de chamada ─────────────────────────────────── */
+.ctaCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(225, 29, 29, 0.35);
+  min-height: 420px;
+  display: flex;
 }
-
-.socialList {
+.ctaBg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+}
+.ctaContent {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: .75rem;
+  justify-content: flex-end;
+  gap: 1.1rem;
+  padding: 2.5rem;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.15) 0%, rgba(10, 10, 10, 0.92) 55%);
 }
-
-.socialLink {
+.ctaTitle {
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.ctaText {
+  color: #c9c6c0;
+  line-height: 1.7;
+  max-width: 520px;
+}
+.ctaBtns {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.socialRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  margin-top: 0.4rem;
+}
+.socialLink {
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
-  padding: .95rem 1.2rem;
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  color: var(--color-text);
-  font-size: .9rem;
-  transition: border-color var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #c9c6c0;
+  transition: color var(--transition-fast);
 }
 .socialLink:hover {
-  border-color: var(--color-accent);
-  transform: translateX(4px);
   color: var(--color-accent);
 }
 
-.socialIcon {
-  width: 2rem;
-  display: inline-flex;
-  justify-content: center;
-  flex-shrink: 0;
+/* ── Disponibilidade ───────────────────────────────────── */
+.availability {
+  scroll-margin-top: 5rem;
 }
-
-/* CTA card */
-.ctaCard {
-  background: linear-gradient(135deg, #161616 0%, #1c0808 100%);
-  border: 1px solid rgba(225, 29, 29, .3);
-  border-radius: var(--radius-md);
-  padding: 2.5rem;
-}
-
-.ctaBadges { margin-bottom: 1.25rem; }
-
-.ctaTitle {
-  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
-  line-height: 1.2;
-  font-weight: 700;
+.blockTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
   margin-bottom: 1rem;
 }
-
-.ctaText {
-  color: var(--color-muted);
-  line-height: 1.75;
-  margin-bottom: 1.8rem;
-  font-size: .95rem;
-}
-
-.ctaBtns {
+.statusList {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-left-width: 3px;
+  border-radius: var(--radius-md);
+}
+.status > span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+.status--green { border-left-color: var(--color-green); }
+.status--yellow { border-left-color: var(--color-accent2); }
+.status--red { border-left-color: #ff6b6b; }
+.statusEmoji { font-size: 1.2rem; }
+.statusLabel { font-weight: 700; }
+.statusMessage { color: var(--color-muted); font-size: 0.85rem; }
+
+.current {
+  margin-top: 1rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+.current .blockLabel {
+  display: block;
+  margin: 0 0 0.3rem;
+}
+.blockLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 1.4rem 0 0.6rem;
 }
 
-
-
-@media (max-width: 800px) {
-  .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+  .ctaCard { min-height: 380px; }
+  .ctaContent { padding: 1.75rem; }
 }

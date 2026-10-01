@@ -28,10 +28,10 @@ export default function Skills() {
   const methodsRef = useReveal()
 
   return (
-    <section id="habilidades" className="section section--bg" aria-labelledby="skills-heading">
+    <section id="habilidades" className="section section--surface" aria-labelledby="skills-heading">
       <div className="container">
         <div className="reveal" ref={ref}>
-          <SectionHeader index="04" label="stack" title="Habilidades & Conhecimentos" id="skills-heading" />
+          <SectionHeader section="habilidades" label="stack" title="Habilidades & Conhecimentos" id="skills-heading" />
           <div className={styles.categories}>
             {technologies.map((cat) => (
               <SkillCategory key={cat.id} category={cat} />

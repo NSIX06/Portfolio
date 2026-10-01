@@ -39,8 +39,8 @@ export default function CaseStudy() {
         endShiftX={narrow ? 0 : 24}
         endShiftY={narrow ? -20 : 0}
         overlayScrim={narrow ? 0.85 : 0.45}
-        scrollDistance={0.9}
-        holdDistance={0.3}
+        scrollDistance={0.7}
+        holdDistance={0.15}
       >
         <div className={`container ${styles.intro}`}>
           <p className={ui.sectionLabel}>{`// ${c.eyebrow}`}</p>

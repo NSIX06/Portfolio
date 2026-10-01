@@ -61,6 +61,79 @@
 }
 .nameAccent { color: var(--color-accent); }
 
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.nameRow {
+  display: block;
+  position: relative;
+  height: clamp(3rem, 8vw, 6.4rem);
+  width: min(100%, 640px);
+}
+.nameLine {
+  display: block;
+  line-height: 1;
+}
+.nameRow .techLine {
+  position: absolute;
+  inset: -0.12em -0.2em -0.12em -12px;
+  min-height: 0;
+}
+.dragHint {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: -0.4rem 0 1.4rem;
+}
+
+.secondary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.25rem;
+}
+.journeyLink {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  text-align: left;
+}
+.journeyLink strong {
+  color: var(--color-text);
+  font-weight: 700;
+  border-bottom: 1px solid rgba(225, 29, 29, 0.6);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.journeyLink:hover strong {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.iconLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+.iconLink:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
 .sub {
   font-size: clamp(0.95rem, 2vw, 1.15rem);
   color: var(--color-muted);
@@ -183,4 +256,8 @@
 @media (max-width: 600px) {
   .hero { padding: 7rem 1.5rem 4rem; }
   .scrollHint { left: 1.5rem; }
+}
+
+@media (hover: none) {
+  .dragHint { display: none; }
 }

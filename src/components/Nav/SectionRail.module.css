@@ -1,0 +1,79 @@
+.rail {
+  position: fixed;
+  right: 1.1rem;
+  top: 50%;
+  transform: translate(12px, -50%);
+  z-index: calc(var(--z-nav) - 1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+.visible {
+  opacity: 1;
+  transform: translate(0, -50%);
+  pointer-events: auto;
+}
+
+.rail ol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.25rem 0;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3a3a3a;
+  border: 1px solid #555;
+  transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background: rgba(17, 17, 17, 0.92);
+  border: 1px solid var(--color-border);
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.item:hover .label,
+.item:focus-visible .label,
+.rail:hover .active .label {
+  opacity: 1;
+  transform: none;
+}
+.item:hover .dot { background: #777; }
+
+.active .dot {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: scale(1.35);
+  box-shadow: 0 0 10px rgba(225, 29, 29, 0.6);
+}
+
+/* Só aparece onde há margem lateral sobrando */
+@media (max-width: 1279px) {
+  .rail { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail, .dot, .label { transition: none; }
+}

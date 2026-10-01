@@ -80,10 +80,18 @@ Depois de editar, rode `npm test`: ele aponta ids duplicados, projetos inexisten
 - **Acessibilidade**: skip link, foco visível, `prefers-reduced-motion`, cor secundária com contraste AA e ESLint `jsx-a11y`.
 - **SEO**: canonical, Open Graph com imagem (`public/og-image.png`), JSON-LD `Person`, `robots.txt` e `sitemap.xml`.
 
+## Estrutura e navegação
+
+- Ordem da página (definida em `data/navigation.js`): Início → Sobre → TMG Caronas → Projetos → Experiência → Habilidades (+ Metodologias) → Formação (+ Certificados) → Contato (+ Disponibilidade). Reordenar o array reordena menu, índice lateral e a numeração "// 01".
+- Menu fixo com barra de progresso de leitura, link ativo, botão "Jornada" e botão "Contato" em destaque; no celular, menu em tela cheia.
+- Índice lateral de seções (telas largas) e botão "voltar ao topo" com o progresso em volta.
+- Listas longas recolhidas: projetos mostram os destaques + 3, certificados mostram 6, com botão para ver todos.
+
 ## Estudo de caso e efeitos visuais
 
 - **TMG Caronas** (`components/CaseStudy`): abertura com o logo crescendo no scroll (ScrollExpand), capacidades em pilha animada (CardSwap), arquitetura em camadas com fundo LetterGlitch e título TechText, stack, segurança e números. Conteúdo em `data/caseStudies.js`; segredos, configurações e débitos internos do repositório da empresa ficam de fora.
-- **Hero**: fundo DotField e cartão ProfileCard com inclinação 3D.
+- **Hero**: nome em TechText (letras interativas, com texto real para leitores de tela), fundo DotField e cartão ProfileCard com inclinação 3D.
+- **Contato**: fundo DotField e cartão de chamada com LetterGlitch.
 - **Cursor em mira** (TargetCursor) em botões, links e cards, apenas em desktop.
 - **Rodapé**: botão de curtida PulseHeart (salvo só no navegador do visitante, sem contador público).
 - Todos os efeitos são adaptações do React Bits, pausam fora da tela e respeitam `prefers-reduced-motion`. Os que usam canvas ou gsap são carregados sob demanda.

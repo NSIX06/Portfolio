@@ -208,6 +208,23 @@
 }
 .ctaBtn:hover { border-color: var(--color-accent); color: var(--color-accent); }
 
+/* ── Ver mais ─────────────────────────── */
+.moreCard {
+  width: 100%;
+  cursor: pointer;
+  color: var(--color-text);
+  font: inherit;
+  border-style: solid;
+  border-color: rgba(225, 29, 29, .35);
+}
+.moreCard:hover { border-color: var(--color-accent); }
+.moreCount {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
 /* ── Filtros ───────────────────────────── */
 .filters {
   display: flex;

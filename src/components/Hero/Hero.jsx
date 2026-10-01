@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import profileImg from '../../assets/images/profile.png'
 import { profile, currentExperience, contactById, activeAvailability } from '../../data'
 import Icon from '../icons/Icon'
@@ -8,10 +9,36 @@ import AvailabilityBadge from '../ui/AvailabilityBadge'
 import ui from '../ui/ui.module.css'
 import styles from './Hero.module.css'
 
+const TechText = lazy(() => import('../effects/TechText'))
+
+/** Uma linha do nome: texto comum até o TechText carregar (e para leitores de tela). */
+function NameLine({ text, accent = false, sweep = false }) {
+  const plain = <span className={`${styles.nameLine} ${accent ? styles.nameAccent : ''}`}>{text}</span>
+  return (
+    <span className={styles.nameRow} aria-hidden="true">
+      <Suspense fallback={plain}>
+        <TechText
+          text={text}
+          fontFamily="Syne, sans-serif"
+          fontSize={200}
+          letterSpacing={-0.03}
+          color={accent ? '#e11d1d' : '#f0ede8'}
+          accentColor={accent ? '#ffd100' : '#e11d1d'}
+          sweep={sweep}
+          specks={10}
+          align="left"
+          className={styles.techLine}
+        />
+      </Suspense>
+    </span>
+  )
+}
+
 export default function Hero() {
   const [first, ...rest] = profile.fullName.split(' ')
   const last = rest.pop()
   const middle = rest.map((n, i) => (i === 0 ? n : `${n[0]}.`)).join(' ')
+
   const github = contactById.github
   const currentRole = currentExperience?.roles[0]?.title
   const { open } = useJourneyMode()
@@ -26,10 +53,14 @@ export default function Hero() {
           <p className={`${styles.tag} hero-enter-1`}>• {profile.roles.join(' · ')}</p>
 
           <h1 id="hero-name" className={`${styles.name} hero-enter-2`}>
-            {first} <br />
-            {middle} <br />
-            <span className={styles.nameAccent}>{last}</span>
+            <span className={styles.srOnly}>{profile.fullName}</span>
+            <NameLine text={first} />
+            <NameLine text={middle} />
+            <NameLine text={last} accent sweep />
           </h1>
+          <p className={`${styles.dragHint} hero-enter-3`} aria-hidden="true">
+            ↖ passe o mouse ou arraste as letras
+          </p>
 
           <p className={`${styles.sub} hero-enter-3`}>{profile.tagline}</p>
 
@@ -44,30 +75,32 @@ export default function Hero() {
           <AvailabilityBadge className={`${styles.availability} hero-enter-4`} />
 
           <div className={`${styles.ctas} hero-enter-4`}>
+            <a href="#projetos" className={ui.btnPrimary}>
+              Ver projetos ↓
+            </a>
+            <a href="#contato" className={ui.btnGhost}>
+              Falar comigo
+            </a>
+          </div>
+
+          <div className={`${styles.secondary} hero-enter-5`}>
             <button
               type="button"
-              className={ui.btnPrimary}
+              className={styles.journeyLink}
               onClick={open}
               onPointerEnter={loadJourney}
               onFocus={loadJourney}
             >
-              🗺️ Explorar jornada
+              <span aria-hidden="true">🗺️</span> Prefere explorar? <strong>Abra a jornada interativa →</strong>
             </button>
-            <a href="#projetos" className={ui.btnGhost}>
-              Ver projetos ↓
-            </a>
-            <a href="#contato" className={ui.btnGhost}>
-              Entrar em contato
-            </a>
             <a
               href={github.href}
               target="_blank"
               rel="noreferrer"
-              className={ui.btnGhost}
+              className={styles.iconLink}
               aria-label={`${github.ariaLabel} (abre em nova aba)`}
             >
-              <Icon name="github" size={16} />
-              GitHub
+              <Icon name="github" size={18} />
             </a>
           </div>
 

@@ -8,9 +8,10 @@ import Education from '../components/Education/Education'
 import Skills from '../components/Skills/Skills'
 import Projects from '../components/Projects/Projects'
 import Certificates from '../components/Certificates/Certificates'
-import Availability from '../components/Availability/Availability'
 import Contact from '../components/Contact/Contact'
 import Footer from '../components/Footer/Footer'
+import SectionRail from '../components/Nav/SectionRail'
+import BackToTop from '../components/Nav/BackToTop'
 
 /**
  * Portfólio tradicional. As seções são carregadas juntas (sem lazy) para que
@@ -31,16 +32,17 @@ export default function MainLayout() {
       <main id="main-content" tabIndex={-1}>
         <Hero />
         <About />
-        <Experience />
         <CaseStudy />
-        <Education />
-        <Skills />
         <Projects />
+        <Experience />
+        <Skills />
+        <Education />
         <Certificates />
-        <Availability />
         <Contact />
       </main>
       <Footer />
+      <SectionRail />
+      <BackToTop />
     </>
   )
 }

@@ -7,6 +7,8 @@ import CertificateDetails from './CertificateDetails'
 import ui from '../ui/ui.module.css'
 import styles from './Certificates.module.css'
 
+const COLLAPSED = 6
+
 const FILTERS = [
   { id: 'todos', label: 'Todos' },
   { id: 'concluido', label: certificateStatusLabels.concluido },
@@ -17,18 +19,20 @@ export default function Certificates() {
   const ref = useReveal()
   const [filter, setFilter] = useState('todos')
   const [selected, setSelected] = useState(null)
+  const [expanded, setExpanded] = useState(false)
   const close = useCallback(() => setSelected(null), [])
 
-  const visible = filter === 'todos' ? certificates : certificates.filter((c) => c.status === filter)
+  const filtered = filter === 'todos' ? certificates : certificates.filter((c) => c.status === filter)
+  const visible = expanded ? filtered : filtered.slice(0, COLLAPSED)
+  const hidden = filtered.length - visible.length
   const institutions = new Set(certificates.map((c) => c.institution)).size
 
   return (
-    <section id="certificados" className="section section--bg" aria-labelledby="certificates-heading">
+    <section id="certificados" className={`section section--bg ${styles.attached}`} aria-labelledby="certificates-heading">
       <div className="container">
         <div className="reveal" ref={ref}>
           <SectionHeader
-            index="06"
-            label="aprendizado"
+            label="formação · aprendizado"
             title="Cursos & Certificados"
             id="certificates-heading"
             lead={`${certificates.length} cursos e certificações em ${institutions} instituições. Clique em um item para ver os detalhes.`}
@@ -44,7 +48,10 @@ export default function Certificates() {
                 type="button"
                 className={`${styles.filter} ${filter === f.id ? styles.filterActive : ''}`}
                 aria-pressed={filter === f.id}
-                onClick={() => setFilter(f.id)}
+                onClick={() => {
+                  setFilter(f.id)
+                  setExpanded(false)
+                }}
               >
                 {f.label} <span className={styles.filterCount}>{count}</span>
               </button>
@@ -71,6 +78,14 @@ export default function Certificates() {
             </li>
           ))}
         </ul>
+
+        {(hidden > 0 || expanded) && filtered.length > COLLAPSED && (
+          <div className={styles.moreRow}>
+            <button type="button" className={ui.btnGhost} onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}>
+              {expanded ? 'Mostrar menos ↑' : `Ver todos os ${filtered.length} certificados ↓`}
+            </button>
+          </div>
+        )}
       </div>
 
       <Modal open={Boolean(selected)} onClose={close} title={selected?.name ?? ''} eyebrow="Certificado">

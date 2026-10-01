@@ -1,15 +1,16 @@
+import { sectionNumber } from '../../data/navigation'
 import styles from './ui.module.css'
 
 /**
  * Cabeçalho padrão de seção: rótulo "// 01 — ...", título e texto opcional.
- * @param {{index: string, label: string, title: string, id: string, lead?: string}} props
+ * O número vem da ordem em data/navigation.js (passe `section`), ou de `index`.
+ * @param {{section?: string, index?: string, label: string, title: string, id: string, lead?: string}} props
  */
-export default function SectionHeader({ index, label, title, id, lead }) {
+export default function SectionHeader({ section, index, label, title, id, lead }) {
+  const num = index ?? (section ? sectionNumber(section) : '')
   return (
     <div className={styles.header}>
-      <p className={styles.sectionLabel}>
-        {`// ${index} — ${label}`}
-      </p>
+      <p className={styles.sectionLabel}>{num ? `// ${num} — ${label}` : `// ${label}`}</p>
       <h2 id={id} className={styles.sectionTitle}>
         {title}
       </h2>

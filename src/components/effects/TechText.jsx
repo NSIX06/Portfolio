@@ -57,6 +57,7 @@ export default function TechText({
   draggable = true,
   sweep = true,
   speed = 1,
+  align = 'center',
   className = '',
   style,
 }) {
@@ -68,7 +69,7 @@ export default function TechText({
   useEffect(() => {
     settingsRef.current = {
       text, fontFamily, fontWeight, fontSize, letterSpacing, color, accentColor, reach, softness, dashLength,
-      dashGap, strokeWidth, lineStyle, reveal, specks, selection, labels, draggable, sweep, speed,
+      dashGap, strokeWidth, lineStyle, reveal, specks, selection, labels, draggable, sweep, speed, align,
     }
     wakeRef.current()
   })
@@ -148,7 +149,7 @@ export default function TechText({
     }
 
     const ensureLayout = (s) => {
-      const key = [s.text, family(s), s.fontWeight, s.fontSize, s.letterSpacing, s.color, s.dashLength, s.dashGap, s.strokeWidth, s.lineStyle, width, height, dpr].join('|')
+      const key = [s.text, s.align, family(s), s.fontWeight, s.fontSize, s.letterSpacing, s.color, s.dashLength, s.dashGap, s.strokeWidth, s.lineStyle, width, height, dpr].join('|')
       if (key === layoutKey && word) return word
       layoutKey = key
       const wanted = fontFor(s, 64)
@@ -168,7 +169,8 @@ export default function TechText({
       m = scratchCtx.measureText(s.text)
       const inkW = m.actualBoundingBoxLeft + m.actualBoundingBoxRight
       const inkH = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent
-      const x = (width - inkW) / 2 + m.actualBoundingBoxLeft
+      // 'left' encosta a tinta na borda esquerda (com folga para a moldura de seleção)
+      const x = s.align === 'left' ? 12 + m.actualBoundingBoxLeft : (width - inkW) / 2 + m.actualBoundingBoxLeft
       const baseline = (height - inkH) / 2 + m.actualBoundingBoxAscent
       const next = {
         size,

@@ -96,3 +96,12 @@
 @media (max-width: 640px) {
   .grid { grid-template-columns: 1fr; }
 }
+
+/* Faz parte da área de Formação: sem respiro duplo entre as duas */
+.attached { padding-top: 0; }
+
+.moreRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}

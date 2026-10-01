@@ -64,7 +64,7 @@ export default function About() {
   return (
     <section id="sobre" className="section section--surface" aria-labelledby="about-heading">
       <div className="container reveal" ref={ref}>
-        <SectionHeader index="01" label="quem sou" title="Sobre mim" id="about-heading" />
+        <SectionHeader section="sobre" label="quem sou" title="Sobre mim" id="about-heading" />
 
         <div className={styles.grid}>
           <div className={styles.textCol}>
