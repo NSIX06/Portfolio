@@ -1,7 +1,37 @@
 .footer {
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
-  padding: 1.75rem 3rem;
+  padding: 0 0 1.75rem;
+}
+
+.band {
+  position: relative;
+  height: clamp(140px, 22vw, 260px);
+  background: #0a0a0a;
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+}
+
+.wavesLayer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+
+.wavesLayer:has([data-ready='true']) { opacity: 1; }
+
+.bandText {
+  font-family: Syne, sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.5rem, 13vw, 10rem);
+  letter-spacing: -.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(225, 29, 29, .45);
+  user-select: none;
 }
 
 .logo {
@@ -29,7 +59,11 @@
 .copyAccent { color: var(--color-accent); }
 
 @media (max-width: 600px) {
-  .footer { padding: 1.5rem; }
-  .bottom { flex-direction: column; align-items: flex-start; gap: .75rem; }
+  .footer { padding: 0 0 1.5rem; }
+  .bottom { flex-direction: column; align-items: flex-start; gap: .75rem; padding-inline: 1.5rem; }
 }
 
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .bottom { padding-inline: 3rem; }
+}

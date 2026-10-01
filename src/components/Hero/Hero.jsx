@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { profile, currentExperience, contactById } from '../../data'
 import Icon from '../icons/Icon'
 import DotField from '../effects/DotField'
+import TextType from '../effects/TextType'
 import { useJourneyMode, loadJourney } from '../../journey/journeyContext'
 import AvailabilityBadge from '../ui/AvailabilityBadge'
 import ui from '../ui/ui.module.css'
@@ -48,7 +49,19 @@ export default function Hero() {
 
       <div className={`${styles.inner} container`}>
         <div className={styles.textCol}>
-          <p className={`${styles.tag} hero-enter-1`}>• {profile.roles.join(' · ')}</p>
+          <p className={`${styles.tag} hero-enter-1`}>
+            <span aria-hidden="true">• </span>
+            <TextType
+              as="span"
+              text={profile.roles}
+              typingSpeed={60}
+              deletingSpeed={30}
+              pauseDuration={2200}
+              initialDelay={600}
+              cursorCharacter="_"
+              srText={profile.roles.join(', ')}
+            />
+          </p>
 
           <h1 id="hero-name" className={`${styles.name} hero-enter-2`}>
             <span className={styles.srOnly}>{profile.fullName}</span>
