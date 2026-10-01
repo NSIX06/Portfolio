@@ -1,9 +1,7 @@
 import { lazy, Suspense } from 'react'
-import profileImg from '../../assets/images/profile.png'
-import { profile, currentExperience, contactById, activeAvailability } from '../../data'
+import { profile, currentExperience, contactById } from '../../data'
 import Icon from '../icons/Icon'
 import DotField from '../effects/DotField'
-import ProfileCard from '../effects/ProfileCard'
 import { useJourneyMode, loadJourney } from '../../journey/journeyContext'
 import AvailabilityBadge from '../ui/AvailabilityBadge'
 import ui from '../ui/ui.module.css'
@@ -110,15 +108,6 @@ export default function Hero() {
           </ul>
         </div>
 
-        <div className={`${styles.photoCol} hero-enter-3`}>
-          <ProfileCard
-            avatarUrl={profileImg}
-            name={profile.shortName}
-            title={profile.title}
-            handle={profile.handle}
-            status={activeAvailability[0]?.label ?? profile.location}
-          />
-        </div>
       </div>
 
       <p className={`${styles.scrollHint} hero-enter-6`} aria-hidden="true">

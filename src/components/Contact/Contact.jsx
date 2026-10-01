@@ -1,9 +1,11 @@
 import { lazy, Suspense } from 'react'
 import { useReveal } from '../../hooks/useReveal'
-import { contact, contactById, availability, activeAvailability, currentExperience } from '../../data'
+import { contact, contactById, availability, activeAvailability, currentExperience, profile } from '../../data'
 import SectionHeader from '../ui/SectionHeader'
 import Icon from '../icons/Icon'
 import DotField from '../effects/DotField'
+import ProfileCard from '../effects/ProfileCard'
+import profileImg from '../../assets/images/profile.png'
 import ui from '../ui/ui.module.css'
 import styles from './Contact.module.css'
 
@@ -24,6 +26,19 @@ export default function Contact() {
         <SectionHeader section="contato" label="contato" title="Bora conversar?" id="contact-heading" lead={contact.intro} />
 
         <div className={styles.grid}>
+          {/* Cartão de perfil (antes no Hero): fecha a página com o rosto de quem atende */}
+          <div className={styles.profileCol}>
+            <ProfileCard
+              avatarUrl={profileImg}
+              name={profile.shortName}
+              title={profile.title}
+              handle={profile.handle}
+              status={activeAvailability[0]?.label ?? profile.location}
+              contactText="E-mail"
+              contactHref={email.href}
+            />
+          </div>
+
           {/* Cartão principal: chamada + ações, com fundo LetterGlitch */}
           <aside className={`${styles.ctaCard} cursor-target`} aria-labelledby="contact-cta-title">
             <div className={styles.ctaBg} aria-hidden="true">
@@ -71,12 +86,16 @@ export default function Contact() {
               </ul>
             </div>
           </aside>
+        </div>
 
-          {/* Disponibilidade */}
+        {/* Disponibilidade */}
+        <div className={styles.availabilityWrap}>
           <div id="disponibilidade" className={styles.availability} aria-labelledby="availability-heading">
             <h3 id="availability-heading" className={styles.blockTitle}>
               Disponibilidade
             </h3>
+            <div className={styles.availCols}>
+            <div>
             <ul className={styles.statusList}>
               {activeAvailability.map((s) => (
                 <li key={s.key} className={`${styles.status} ${styles[`status--${s.tone}`]}`}>
@@ -97,8 +116,9 @@ export default function Contact() {
                 {role ? ` — ${role}` : ''}, desde {currentExperience.start}
               </p>
             )}
-
-            <p className={styles.blockLabel}>Especialidades</p>
+            </div>
+            <div>
+            <p className={`${styles.blockLabel} ${styles.firstLabel}`}>Especialidades</p>
             <ul className={ui.tagList}>
               {availability.specialties.map((s) => (
                 <li key={s} className={ui.tag}>
@@ -122,6 +142,8 @@ export default function Contact() {
                 </li>
               ))}
             </ul>
+            </div>
+            </div>
           </div>
         </div>
       </div>
