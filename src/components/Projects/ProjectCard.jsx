@@ -8,12 +8,20 @@ const VARIANT_CLASS = {
   yellow: styles['badge--yellow'],
 }
 
+/** Posição do mouse no card, para o brilho que acompanha o cursor. */
+function trackGlow(e) {
+  const r = e.currentTarget.getBoundingClientRect()
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+}
+
 const ProjectCard = memo(function ProjectCard({ project }) {
   const { tag, title, description, tech, techVariant, live, github, emoji, image, visualSub, visualNote, stars, featured } = project
 
   return (
     <article
-      className={`${styles.card} ${featured ? styles.cardFeatured : ''}`}
+      className={`${styles.card} ${featured ? styles.cardFeatured : ''} glow-hover cursor-target`}
+      onPointerMove={trackGlow}
       aria-label={`Projeto: ${title}`}
     >
       <div className={styles.cardTopBar} aria-hidden="true" />

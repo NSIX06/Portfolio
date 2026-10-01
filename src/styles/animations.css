@@ -40,7 +40,7 @@
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.6s var(--transition-slow), transform 0.6s var(--transition-slow);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .reveal.visible {
@@ -56,6 +56,32 @@
 .reveal-stagger > *:nth-child(5) { transition-delay: 320ms; }
 .reveal-stagger > *:nth-child(6) { transition-delay: 400ms; }
 
+/* Filhos que entram em sequência quando o pai .reveal fica visível (usa --i) */
+.reveal .stagger {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.reveal.visible .stagger {
+  opacity: 1;
+  transform: none;
+}
+
+/* Brilho que segue o mouse (--mx/--my definidos no pointermove) */
+.glow-hover { position: relative; }
+.glow-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(225, 29, 29, .14), transparent 45%);
+}
+.glow-hover:hover::after { opacity: 1; }
+
 /* Hero entrance animations */
 .hero-enter-1 { animation: fadeUp 0.6s 0.2s both; }
 .hero-enter-2 { animation: fadeUp 0.7s 0.35s both; }
@@ -67,4 +93,8 @@
 /* Float animation for decorative elements */
 .float {
   animation: float 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal .stagger { opacity: 1; transform: none; transition: none; }
 }

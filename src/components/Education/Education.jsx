@@ -18,8 +18,8 @@ export default function Education() {
         <h2 id="edu-heading" className={styles.sectionTitle}>Formação</h2>
 
         <div className={styles.eduGrid}>
-          {education.map((e) => (
-            <article key={e.id} className={styles.card}>
+          {education.map((e, i) => (
+            <article key={e.id} className={`${styles.card} stagger`} style={{ '--i': i }}>
               <div className={styles.cardBar} aria-hidden="true" />
               <span className={`${styles.status} ${e.status === 'cursando' ? styles.statusNow : ''}`}>
                 {e.statusLabel}
@@ -37,8 +37,8 @@ export default function Education() {
 
         <p className={styles.subTitle}>📜 Cursos e certificados</p>
         <ul className={styles.certGrid}>
-          {visible.map((c) => (
-            <li key={c.id} className={styles.cert}>
+          {visible.map((c, i) => (
+            <li key={c.id} className={`${styles.cert} stagger`} style={{ '--i': i % 8 }}>
               <p className={styles.certName}>{c.name}</p>
               <p className={styles.certMeta}>
                 {c.institution}

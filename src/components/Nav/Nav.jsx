@@ -31,7 +31,8 @@ export default function Nav() {
       const line = window.innerHeight * 0.35
       let current = ''
       ids.forEach((id) => {
-        const el = document.getElementById(id)
+        // A abertura dos projetos (ScrollExpand) já conta como "Projetos" no menu
+        const el = (id === 'projetos' && document.querySelector('.projects-intro')) || document.getElementById(id)
         if (el && el.getBoundingClientRect().top <= line) current = id
       })
       setActive(current)

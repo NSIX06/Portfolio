@@ -1,5 +1,9 @@
 import profileImg from '../../assets/images/profile.png'
+import DotField from '../effects/DotField'
+import TextType from '../effects/TextType'
 import styles from './Hero.module.css'
+
+const ROLES = ['Desenvolvedor Full Stack', 'Técnico em Informática', 'Freelancer']
 
 const BADGES = [
   '🟢 Disponível para contratação',
@@ -13,14 +17,24 @@ const BADGES = [
 export default function Hero() {
   return (
     <section id="sobre" className={styles.hero} aria-label="Apresentação">
-      <div className={styles.gridBg} aria-hidden="true" />
+      <DotField />
       <div className={styles.glow} aria-hidden="true" />
 
       <div className={`${styles.inner} container`}>
         <div className={styles.textCol}>
           
           <p className={`${styles.tag} hero-enter-1`}>
-            • DESENVOLVEDOR FULL STACK · TÉCNICO EM INFORMÁTICA · FREELANCER
+            <span aria-hidden="true">• </span>
+            <TextType
+              as="span"
+              text={ROLES}
+              typingSpeed={60}
+              deletingSpeed={30}
+              pauseDuration={2200}
+              initialDelay={700}
+              cursorCharacter="_"
+              srText={ROLES.join(', ')}
+            />
           </p>
 
           <h1 className={`${styles.name} hero-enter-2`}>

@@ -50,9 +50,9 @@ const EXPERIENCES = [
   },
 ]
 
-function ToolCard({ emoji, name, desc }) {
+function ToolCard({ emoji, name, desc, i }) {
   return (
-    <div className={styles.toolCard}>
+    <div className={`${styles.toolCard} stagger`} style={{ '--i': i + 3 }}>
       <div className={styles.toolHeader}>
         <span className={styles.toolEmoji} aria-hidden="true">{emoji}</span>
         <strong className={styles.toolName}>{name}</strong>
@@ -76,8 +76,8 @@ function ExperienceCard({ company, role, period, description, bullets, tools, ac
       </div>
       <p className={styles.description}>{description}</p>
       <ul className={styles.bullets}>
-        {bullets.map((b) => (
-          <li key={b} className={styles.bullet}>
+        {bullets.map((b, i) => (
+          <li key={b} className={`${styles.bullet} stagger`} style={{ '--i': i }}>
             <span className={styles.bulletDot} style={{ background: accent }} aria-hidden="true" />
             {b}
           </li>
@@ -87,8 +87,8 @@ function ExperienceCard({ company, role, period, description, bullets, tools, ac
         <div className={styles.tools}>
           <p className={styles.toolsLabel}>🛠️ Ferramentas utilizadas</p>
           <div className={styles.toolsGrid}>
-            {tools.map((t) => (
-              <ToolCard key={t.name} {...t} />
+            {tools.map((t, i) => (
+              <ToolCard key={t.name} {...t} i={i} />
             ))}
           </div>
         </div>
