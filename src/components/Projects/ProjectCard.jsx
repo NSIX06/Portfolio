@@ -45,11 +45,6 @@ const ProjectCard = memo(function ProjectCard({ project, onOpen }) {
             <span className={styles.cardLinkHint} aria-hidden="true">
               Ver detalhes →
             </span>
-            {links.caseStudy && (
-              <a href={links.caseStudy} className={styles.cardLink}>
-                Estudo de caso ↓
-              </a>
-            )}
             {links.live && (
               <a
                 href={links.live}

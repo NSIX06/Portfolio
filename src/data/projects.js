@@ -3,7 +3,7 @@
  * ele aparece sozinho na seção Projetos (e, na Fase 3, na jornada).
  *
  * @typedef {'profissional'|'freelancer'|'academico'|'pessoal'|'curso'} ProjectOrigin
- * @typedef {'producao'|'concluido'|'em-desenvolvimento'|null} ProjectStatus
+ * @typedef {'producao'|'concluido'|'em-desenvolvimento'|null} ProjectStatus  'producao' aparece como "Lançado"
  *
  * @typedef {Object} Project
  * @property {string} id
@@ -16,7 +16,7 @@
  * @property {string} [objective]
  * @property {string[]} [highlights]
  * @property {string[]} tech
- * @property {{live?: string|null, github?: string|null, caseStudy?: string|null}} links  caseStudy = âncora do estudo de caso
+ * @property {{live?: string|null, github?: string|null}} links
  * @property {string|null} image     Caminho em /public ou import
  * @property {ProjectStatus} status
  * @property {string|null} date
@@ -34,7 +34,7 @@ export const projectOrigins = {
 }
 
 export const projectStatusLabels = {
-  producao: 'Em produção',
+  producao: 'Lançado',
   concluido: 'Concluído',
   'em-desenvolvimento': 'Em desenvolvimento',
 }
@@ -59,7 +59,7 @@ export const projects = [
       'Arquitetura em camadas (Web, Application, Infrastructure, Shared), tempo real com SignalR e PWA instalável',
     ],
     tech: ['.NET 10', 'ASP.NET Core MVC', 'Dapper', 'SQL Server', 'Microsoft Entra ID', 'SignalR', 'Azure Blob Storage', 'Microsoft Teams'],
-    links: { live: null, github: null, caseStudy: '#caso-tmg-caronas' },
+    links: { live: null, github: null },
     image: '/projetos/tmg-caronas-logo.webp',
     status: 'producao',
     date: '2026',

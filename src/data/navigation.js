@@ -10,7 +10,6 @@
 export const sections = [
   { id: 'inicio', label: 'Início', inNav: false, inRail: true, numbered: false },
   { id: 'sobre', label: 'Sobre', inNav: true, inRail: true, numbered: true },
-  { id: 'caso-tmg-caronas', label: 'TMG Caronas', inNav: true, inRail: true, numbered: false },
   { id: 'projetos', label: 'Projetos', inNav: true, inRail: true, numbered: true },
   { id: 'experiencia', label: 'Experiência', inNav: true, inRail: true, numbered: true },
   { id: 'habilidades', label: 'Habilidades', inNav: true, inRail: true, numbered: true },

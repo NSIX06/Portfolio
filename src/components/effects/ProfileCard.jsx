@@ -16,8 +16,8 @@ function ProfileCard({
   title,
   handle,
   status,
-  contactText = 'Contato',
-  contactHref = '#contato',
+  contactText = null,
+  contactHref = null,
   innerGradient = 'linear-gradient(145deg, rgba(225, 29, 29, 0.32) 0%, rgba(255, 209, 0, 0.14) 100%)',
   glowColor = 'rgba(225, 29, 29, 0.55)',
   enableTilt = true,
@@ -162,9 +162,11 @@ function ProfileCard({
                   <span className="pc-status">{status}</span>
                 </div>
               </div>
-              <a className="pc-contact-btn cursor-target" href={contactHref}>
-                {contactText}
-              </a>
+              {contactText && contactHref && (
+                <a className="pc-contact-btn cursor-target" href={contactHref}>
+                  {contactText}
+                </a>
+              )}
             </div>
           </div>
         </section>

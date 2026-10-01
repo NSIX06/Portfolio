@@ -5,7 +5,7 @@ import ui from '../ui/ui.module.css'
 const experienceName = Object.fromEntries(experiences.map((e) => [e.id, e.company]))
 
 /** Conteúdo completo de um projeto. Usado no modal da seção e, na Fase 3, no painel da jornada. */
-export default function ProjectDetails({ project, showCaseStudyLink = true }) {
+export default function ProjectDetails({ project }) {
   const { description, summary, objective, highlights = [], tech, links, status, date, origin, experienceId } = project
 
   return (
@@ -49,15 +49,10 @@ export default function ProjectDetails({ project, showCaseStudyLink = true }) {
 
       {project.image && <img src={project.image} alt={`Logo do ${project.title}`} className={ui.detailImage} loading="lazy" />}
 
-      {(links.live || links.github || (showCaseStudyLink && links.caseStudy)) && (
+      {(links.live || links.github) && (
         <div className={ui.detailLinks}>
-          {showCaseStudyLink && links.caseStudy && (
-            <a href={links.caseStudy} className={ui.btnPrimary}>
-              Ver estudo de caso ↓
-            </a>
-          )}
           {links.live && (
-            <a href={links.live} target="_blank" rel="noreferrer" className={links.caseStudy ? ui.btnGhost : ui.btnPrimary}>
+            <a href={links.live} target="_blank" rel="noreferrer" className={ui.btnPrimary}>
               🌐 Ver site ao vivo
             </a>
           )}

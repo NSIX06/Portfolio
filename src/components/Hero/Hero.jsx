@@ -117,8 +117,6 @@ export default function Hero() {
             title={profile.title}
             handle={profile.handle}
             status={activeAvailability[0]?.label ?? profile.location}
-            contactText="Contato"
-            contactHref="#contato"
           />
         </div>
       </div>

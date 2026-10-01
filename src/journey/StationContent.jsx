@@ -182,7 +182,7 @@ export default function StationContent({ stationId, focusItem, onGo }) {
               </span>
             </>
           )}
-          renderDetail={(p) => <ProjectDetails project={p} showCaseStudyLink={false} />}
+          renderDetail={(p) => <ProjectDetails project={p} />}
         />
       )
 

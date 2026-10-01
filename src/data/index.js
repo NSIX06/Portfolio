@@ -15,7 +15,6 @@ import { contact, contactById } from './contact'
 import { character } from './character'
 import { sections, journey, sectionNumber, navSectionFor } from './navigation'
 import { seo } from './seo'
-import { caronasCase } from './caseStudies'
 
 // Exportações nomeadas para os componentes (import { projects } from '../../data').
 export {
@@ -43,7 +42,6 @@ export {
   sectionNumber,
   navSectionFor,
   seo,
-  caronasCase,
 }
 
 export const portfolioData = {
@@ -69,7 +67,6 @@ export const portfolioData = {
   sections,
   journey,
   seo,
-  caronasCase,
 }
 
 export default portfolioData
