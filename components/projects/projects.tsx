@@ -185,12 +185,9 @@ function ProjectCard({
             style={{ aspectRatio: 1024 / 768 }}
           >
             <div className="project-card__image-inner">
-              <Image
-                src={project.image}
-                alt={project.imageAlt}
-                fill
+              <ProjectVisual
+                project={project}
                 sizes="(min-width: 1024px) 540px, (min-width: 768px) 45vw, 100vw"
-                className="object-cover"
                 priority={index < 2}
               />
             </div>
@@ -362,13 +359,7 @@ function ProjectPanel({
             className="ring-foreground/8 relative w-full overflow-hidden rounded-3xl ring-1"
             style={{ aspectRatio: 1024 / 768 }}
           >
-            <Image
-              src={project.image}
-              alt={project.imageAlt}
-              fill
-              sizes="(min-width: 900px) 860px, 100vw"
-              className="object-cover"
-            />
+            <ProjectVisual project={project} sizes="(min-width: 900px) 860px, 100vw" large />
           </div>
 
           <div className="grid gap-8 md:grid-cols-[1.6fr_1fr]">
@@ -513,6 +504,51 @@ function ProjectPanel({
         </motion.div>
       </motion.div>
     </motion.div>
+  );
+}
+
+/**
+ * Imagem do projeto ou, sem imagem real, o emoji grande sobre o pontilhado vermelho
+ * (como os cards da primeira versão do portfólio).
+ */
+export function ProjectVisual({
+  project,
+  sizes,
+  priority = false,
+  large = false,
+}: {
+  project: Project;
+  sizes: string;
+  priority?: boolean;
+  large?: boolean;
+}): ReactNode {
+  if (project.image) {
+    return (
+      <Image
+        src={project.image}
+        alt={project.imageAlt ?? ""}
+        fill
+        sizes={sizes}
+        className="object-cover"
+        priority={priority}
+      />
+    );
+  }
+  return (
+    <div className="project-emoji absolute inset-0 flex flex-col items-center justify-center gap-3">
+      <span
+        aria-hidden="true"
+        className={`project-emoji__glyph ${large ? "text-[7rem]" : "text-[5rem]"} leading-none`}
+      >
+        {project.emoji}
+      </span>
+      <span className="text-foreground font-serif text-[clamp(1.1rem,2.4vw,1.6rem)] font-bold tracking-tight">
+        {project.name}
+      </span>
+      <span className="text-foreground/50 font-mono text-[10px] tracking-[0.18em] uppercase">
+        {project.category}
+      </span>
+    </div>
   );
 }
 

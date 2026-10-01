@@ -307,21 +307,20 @@ html[data-theme-anim="1"]::view-transition-new(root) {
   }
 }
 
-/* Scrolly Video: o vídeo ocupa a tela presa. Inteiro no computador; no celular em pé,
-   ampliado na faixa por onde o carro passa (ele fica a 42% da largura). */
-.trajectory-video video,
-.trajectory-video canvas {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain;
-  background: #0a0a0a;
+
+/* Card de projeto sem imagem: emoji flutuando sobre pontilhado vermelho (primeira versão) */
+.project-emoji {
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    radial-gradient(circle at 80% 90%, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 55%),
+    radial-gradient(color-mix(in srgb, var(--foreground) 14%, transparent) 1px, transparent 1px) 0 0 / 18px 18px,
+    var(--background);
 }
-@media (orientation: portrait) {
-  .trajectory-video video,
-  .trajectory-video canvas {
-    object-fit: cover;
-    object-position: 42% 50%;
-  }
+.project-emoji__glyph {
+  animation: project-float 4s ease-in-out infinite;
+  filter: drop-shadow(0 12px 24px rgb(0 0 0 / 0.35));
+}
+@keyframes project-float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
 }

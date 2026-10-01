@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FileDown } from "lucide-react";
 import { LayoutGroup, motion } from "motion/react";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -33,6 +33,22 @@ export function HeroCtas(): ReactNode {
               aria-hidden="true"
             />
           </Link>
+        </motion.div>
+
+        <motion.div
+          layout
+          transition={{ layout: { duration: 0.55, ease: EASE } }}
+        >
+          <a
+            href="/curriculo-felipe-bugalho.pdf"
+            target="_blank"
+            rel="noopener"
+            className="focus-ring border-accent/40 text-accent hover:bg-accent group inline-flex items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-medium transition-colors hover:text-white"
+          >
+            <FileDown className="h-4 w-4" aria-hidden="true" />
+            Currículo (PDF)
+            <span className="sr-only">(abre em nova aba)</span>
+          </a>
         </motion.div>
       </motion.div>
     </LayoutGroup>

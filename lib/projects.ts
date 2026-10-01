@@ -29,13 +29,16 @@ export type Project = {
   status?: "Lançado" | "Concluído";
   live?: string;
   github?: string;
-  image: string;
-  imageAlt: string;
+  /** Imagem real do projeto; sem ela, o card mostra o emoji (como na primeira versão). */
+  image?: string;
+  imageAlt?: string;
+  emoji: string;
 };
 
 export const PROJECTS: Project[] = [
   {
     id: "tmg-caronas",
+    emoji: "🚗",
     icon: "car",
     name: "TMG Caronas",
     headline:
@@ -70,6 +73,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "escolinha-skate-bob",
+    emoji: "🛹",
     icon: "heart",
     name: "Escolinha de Skate do Bob",
     headline:
@@ -91,11 +95,10 @@ export const PROJECTS: Project[] = [
     status: "Lançado",
     live: "https://www.escoladeskatedobob.org.br/",
     github: "https://github.com/NSIX06",
-    image: "/projetos/escolinha-skate-bob.webp",
-    imageAlt: "Capa do projeto Escolinha de Skate do Bob",
   },
   {
     id: "orderly-checkout",
+    emoji: "🛒",
     icon: "cart",
     name: "Orderly Checkout",
     headline:
@@ -108,11 +111,10 @@ export const PROJECTS: Project[] = [
     category: "Sistema full stack",
     role: "Desenvolvedor",
     github: "https://github.com/NSIX06/Orderly-Checkout-Main",
-    image: "/projetos/orderly-checkout.webp",
-    imageAlt: "Capa do projeto Orderly Checkout",
   },
   {
     id: "agrodatahub",
+    emoji: "🌾",
     icon: "sprout",
     name: "AgroDataHub",
     headline: "Plataforma de dados para o agronegócio.",
@@ -124,11 +126,10 @@ export const PROJECTS: Project[] = [
     category: "Plataforma de dados",
     role: "Desenvolvedor",
     github: "https://github.com/NSIX06/AgroDataHub-Main",
-    image: "/projetos/agrodatahub.webp",
-    imageAlt: "Capa do projeto AgroDataHub",
   },
   {
     id: "app-restaurant",
+    emoji: "🍽️",
     icon: "utensils",
     name: "App Restaurant",
     headline: "Gestão de restaurantes com mesas, pedidos e cardápio digital.",
@@ -140,11 +141,10 @@ export const PROJECTS: Project[] = [
     category: "Aplicativo",
     role: "Desenvolvedor",
     github: "https://github.com/NSIX06/App_Restaurant",
-    image: "/projetos/app-restaurant.webp",
-    imageAlt: "Capa do projeto App Restaurant",
   },
   {
     id: "braintag",
+    emoji: "🧠",
     icon: "brain",
     name: "BrainTag",
     headline:
@@ -158,11 +158,10 @@ export const PROJECTS: Project[] = [
     role: "Desenvolvedor",
     status: "Concluído",
     github: "https://github.com/NSIX06/BrainTag",
-    image: "/projetos/braintag.webp",
-    imageAlt: "Capa do projeto BrainTag",
   },
   {
     id: "devops-py",
+    emoji: "🐍",
     icon: "terminal",
     name: "Devops.py",
     headline: "Scripts e automações em Python para práticas de DevOps.",
@@ -173,11 +172,10 @@ export const PROJECTS: Project[] = [
     category: "Automação",
     role: "Desenvolvedor",
     github: "https://github.com/NSIX06/Devops.py",
-    image: "/projetos/devops-py.webp",
-    imageAlt: "Capa do projeto Devops.py",
   },
   {
     id: "projeto-cinematic",
+    emoji: "🎬",
     icon: "clapper",
     name: "Projeto Cinematic",
     headline: "Sistema de filmes em C#, desenvolvido em colaboração.",
@@ -189,11 +187,10 @@ export const PROJECTS: Project[] = [
     category: "Projeto acadêmico",
     role: "Colaborador",
     github: "https://github.com/NSIX06/Projeto_Cinematic",
-    image: "/projetos/projeto-cinematic.webp",
-    imageAlt: "Capa do Projeto Cinematic",
   },
   {
     id: "motos",
+    emoji: "🏍️",
     icon: "gauge",
     name: "Motos",
     headline: "Interface web com tema de motocicletas.",
@@ -204,8 +201,6 @@ export const PROJECTS: Project[] = [
     category: "Front-end",
     role: "Desenvolvedor",
     github: "https://github.com/NSIX06/Motos",
-    image: "/projetos/motos.webp",
-    imageAlt: "Capa do projeto Motos",
   },
 ];
 

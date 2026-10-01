@@ -1,89 +1,154 @@
 /**
- * Trajetória do Felipe — fonte única para os polaroids e a linha do tempo.
- * Dados do currículo (out/2026). `icon` é um nome do Iconify resolvido no servidor.
+ * Trajetória do Felipe (carreira e formação) — usada na linha do tempo da página Sobre.
+ * Fonte: currículo (out/2026) e conteúdo da primeira versão do portfólio.
+ * `icon` é um nome do Iconify resolvido no servidor.
  */
+export type MilestoneKind = "profissional" | "academica";
+
 export type Milestone = {
   id: string;
+  kind: MilestoneKind;
+  /** Ano em destaque no cartão */
   year: string;
+  /** Período completo, ex.: "Ago/2022 – Atual" */
+  period: string;
   badge: string;
   title: string;
+  subtitle?: string;
   place: string;
   text: string;
-  tags: string[];
+  current?: boolean;
+  note?: string;
+  roles?: { title: string; activities: string[] }[];
+  activities?: string[];
+  systems?: { name: string; description: string }[];
+  tech?: string[];
+  projects?: { name: string; detail: string }[];
   icon: string;
   link?: { href: string; label: string };
 };
 
 export const MILESTONES: Milestone[] = [
   {
-    id: "senac",
-    year: "2022",
-    badge: "Formação",
-    title: "Técnico em Informática",
-    place: "SENAC · Santos, SP",
-    text: "Base em hardware, redes, sistemas operacionais e suporte, concluída em 2024.",
-    tags: ["Hardware", "Redes", "Suporte técnico"],
-    icon: "ph:desktop-tower-duotone",
-  },
-  {
     id: "autonomo",
+    kind: "profissional",
     year: "2022",
-    badge: "Carreira",
+    period: "Ago/2022 – Atual",
+    badge: "Atual",
+    current: true,
     title: "Profissional Autônomo",
+    subtitle: "Desenvolvedor Web Freelancer · Técnico em Informática",
     place: "Rondonópolis - MT · Remoto",
-    text: "Começo como técnico em informática e, depois, desenvolvedor web freelancer: sistemas sob medida, APIs, integrações e automação.",
-    tags: ["Full Stack", "APIs", "Automação", "Suporte"],
+    text: "Desenvolvimento de aplicações web e soluções personalizadas para diferentes segmentos, da análise de requisitos à implementação e evolução dos sistemas, além de suporte técnico em informática.",
+    roles: [
+      {
+        title: "Desenvolvedor Web Freelancer",
+        activities: [
+          "Desenvolvimento de aplicações Full Stack e sistemas sob medida",
+          "Criação de APIs e integrações entre sistemas",
+          "Interfaces responsivas e integração com bancos de dados",
+          "Automação de processos",
+        ],
+      },
+      {
+        title: "Técnico em Informática",
+        activities: [
+          "Instalação, configuração e manutenção de computadores, notebooks, sistemas operacionais, softwares e periféricos",
+          "Diagnóstico e solução de falhas de hardware, software, redes locais e conexões de internet",
+          "Montagem, formatação, testes, atualização de antivírus, backup e recuperação de dados, com documentação dos atendimentos",
+        ],
+      },
+    ],
     icon: "ph:code-duotone",
   },
   {
-    id: "unisenai",
-    year: "2024",
-    badge: "Graduação",
-    title: "Análise e Desenvolvimento de Sistemas",
-    place: "UniSENAI MT",
-    text: "Graduação em andamento, com projetos de extensão e integradores ao longo do curso.",
-    tags: ["Engenharia de software", "Bancos de dados", "Projetos"],
-    icon: "ph:graduation-cap-duotone",
-  },
-  {
     id: "tmg",
+    kind: "profissional",
     year: "2024",
-    badge: "Carreira",
-    title: "Auxiliar Administrativo — PCM",
-    place: "TMG — Tropical Melhoramento & Genética",
-    text: "Usuário-chave do TOTVS Protheus no Planejamento e Controle de Manutenção, criando ferramentas internas para a operação (nov/2024 – 2026).",
-    tags: ["Protheus", "GLPI", "Astrein", "Power Automate"],
+    period: "Nov/2024 – 2026",
+    badge: "PCM",
+    title: "TMG — Tropical Melhoramento & Genética",
+    subtitle: "Auxiliar Administrativo — PCM",
+    place: "Rondonópolis - MT",
+    note: "Empresa de pesquisa e desenvolvimento de sementes de soja, milho e algodão, focada em melhoramento genético e biotecnologia.",
+    text: "Atuação no PCM conciliando atividades administrativas com o desenvolvimento de ferramentas internas para otimização de processos.",
+    activities: [
+      "Suporte às rotinas administrativas, operacionais e documentais do Planejamento e Controle de Manutenção (PCM)",
+      "Usuário-chave do TOTVS Protheus (SIGAMNT): planos de manutenção preventiva e preditiva, ordens de serviço, controle de peças e materiais e relatórios gerenciais",
+      "Administração do GLPI: chamados, protocolo de notas fiscais e solicitações de cadastro",
+      "Cadastro e padronização de peças e ferramentas no Protheus e no Astrein (SSA-CAD)",
+      "Desenvolvimento de ferramentas internas para otimização de processos",
+    ],
+    systems: [
+      {
+        name: "TOTVS Protheus (SIGAMNT)",
+        description:
+          "Usuário-chave no módulo de Manutenção de Ativos: planos preventivos e preditivos, ordens de serviço, peças, materiais e relatórios.",
+      },
+      {
+        name: "GLPI",
+        description: "Catálogo de serviços, chamados de suporte, protocolo de notas fiscais e solicitações de cadastro.",
+      },
+      {
+        name: "Astrein (SSA-CAD)",
+        description:
+          "Cadastro e padronização de peças e ferramentas, garantindo a integridade dos dados de manutenção e almoxarifado.",
+      },
+    ],
+    tech: [".NET", "SQL Server", "Microsoft Entra ID", "Power Automate", "Microsoft Teams"],
+    projects: [
+      {
+        name: "TMG Caronas",
+        detail: "Sistema corporativo de caronas, em produção desde setembro de 2026 e piloto do programa TMG IA.",
+      },
+    ],
     icon: "ph:gear-six-duotone",
   },
   {
-    id: "escolinha",
-    year: "2025",
-    badge: "Projeto",
-    title: "Escolinha de Skate do Bob",
-    place: "Projeto de extensão · FATEC/UniSENAI",
-    text: "Site institucional da ONG que atende mais de 200 alunos por mês com aulas gratuitas de skate. Publicado e em uso.",
-    tags: ["HTML", "CSS", "JavaScript"],
-    icon: "ph:hand-heart-duotone",
-    link: { href: "https://www.escoladeskatedobob.org.br/", label: "Ver site" },
+    id: "recode",
+    kind: "academica",
+    year: "Atual",
+    period: "Em andamento",
+    badge: "Curso",
+    current: true,
+    title: "Programadores Jr. com Ferramentas de IA",
+    place: "Recode + UFR",
+    text: "Formação em desenvolvimento com ferramentas de Inteligência Artificial aplicadas à programação.",
+    tech: ["IA aplicada", "Desenvolvimento"],
+    icon: "ph:sparkle-duotone",
   },
   {
-    id: "caronas",
-    year: "2026",
-    badge: "Lançamento",
-    title: "TMG Caronas em produção",
-    place: "TMG · setembro de 2026",
-    text: "Sistema corporativo de caronas entre colaboradores, selecionado como um dos quatro pilotos do programa TMG IA.",
-    tags: [".NET 10", "SQL Server", "Entra ID", "SignalR"],
-    icon: "ph:car-profile-duotone",
+    id: "unisenai",
+    kind: "academica",
+    year: "2024",
+    period: "2024 – Atual",
+    badge: "Graduando",
+    current: true,
+    title: "Tecnologia em Análise e Desenvolvimento de Sistemas",
+    place: "UniSENAI MT · Mato Grosso",
+    text: "Graduação com projetos de extensão e integradores ao longo do curso.",
+    projects: [
+      {
+        name: "Escolinha de Skate do Bob",
+        detail: "Projeto de extensão (FATEC/UniSENAI, 2025): site da ONG que atende mais de 200 alunos por mês. Publicado e em uso.",
+      },
+      { name: "BrainTag", detail: "Projeto integrador em C# para organização e gerenciamento de informações." },
+      { name: "Projeto Cinematic", detail: "Sistema de filmes em C#, desenvolvido em colaboração via GitHub." },
+    ],
+    tech: ["C#", ".NET", "HTML", "CSS", "JavaScript", "Git"],
+    icon: "ph:graduation-cap-duotone",
+    link: { href: "https://www.escoladeskatedobob.org.br/", label: "Ver site da Escolinha" },
   },
   {
-    id: "agora",
-    year: "Hoje",
-    badge: "Agora",
-    title: "Desenvolvedor Web Freelancer",
-    place: "Recode + UFR · Programadores Jr. com Ferramentas de IA",
-    text: "Desenvolvendo sistemas sob medida e estudando IA aplicada ao desenvolvimento. Aberto a contratação e a projetos.",
-    tags: ["Freelance", "IA", "Disponível"],
-    icon: "ph:rocket-launch-duotone",
+    id: "senac",
+    kind: "academica",
+    year: "2022",
+    period: "2022 – 2024",
+    badge: "Concluído",
+    title: "Técnico em Informática",
+    place: "SENAC · Santos, SP",
+    text: "Base em hardware, redes, sistemas operacionais e suporte técnico.",
+    tech: ["Hardware", "Redes", "Sistemas operacionais", "Suporte técnico"],
+    icon: "ph:desktop-tower-duotone",
   },
 ];

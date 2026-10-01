@@ -2,16 +2,16 @@ import {
   PolaroidStrip,
   type PolaroidItem,
 } from "@/components/about/polaroid-strip";
-import { Skills } from "@/components/about/skills";
-import { Stack } from "@/components/about/stack";
+import { Knowledge } from "@/components/about/knowledge";
+import { Methodologies } from "@/components/about/methodologies";
 import { Stats } from "@/components/about/stats";
-import { Credentials } from "@/components/about/credentials";
+import { PassionCorner } from "@/components/about/passion-corner";
 import { ContactCard } from "@/components/contact/contact-card";
 import { FadeIn } from "@/components/ui/motion-primitives";
 import { Timeline } from "@/components/trajectory/timeline";
-import { TrajectoryVideo } from "@/components/trajectory/trajectory-video";
 import { icon } from "@/lib/icons";
 import { MILESTONES } from "@/lib/trajectory";
+import { METHODOLOGIES, METHODOLOGIES_INTRO, SKILL_CATEGORIES } from "@/lib/skills";
 import { createMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -69,25 +69,13 @@ const POLAROIDS: PolaroidItem[] = [
   },
 ];
 
-const STACK_ICONS: Record<string, string> = {
-  ".NET": "logos:dotnet",
-  React: "logos:react",
-  "Next.js": "logos:nextjs-icon",
-  TypeScript: "logos:typescript-icon",
-  Python: "logos:python",
-  FastAPI: "logos:fastapi-icon",
-  PostgreSQL: "logos:postgresql",
-  Supabase: "logos:supabase-icon",
-  Flutter: "logos:flutter",
-  Docker: "logos:docker-icon",
-  Git: "logos:git-icon",
-  GitHub: "logos:github-icon",
-};
-
 export default function AboutPage(): ReactNode {
-  const stackIcons = Object.fromEntries(
-    Object.entries(STACK_ICONS).map(([label, name]) => [label, icon(name)])
-  );
+  const knowledge = SKILL_CATEGORIES.map(({ icon: catIcon, items, ...c }) => ({
+    ...c,
+    iconData: icon(catIcon),
+    items: items.map((it) => ({ name: it.name, iconData: it.icon ? icon(it.icon) : undefined })),
+  }));
+  const methodologies = METHODOLOGIES.map(({ icon: mIcon, ...m }) => ({ ...m, iconData: icon(mIcon) }));
   const timeline = MILESTONES.map((m) => ({ ...m, iconData: icon(m.icon) }));
 
   return (
@@ -153,7 +141,7 @@ export default function AboutPage(): ReactNode {
         </FadeIn>
       </section>
 
-      {/* Trajetória: vídeo controlado pela rolagem + linha do tempo */}
+      {/* Trajetória: abas Profissional/Acadêmica + linha do tempo expansível */}
       <section
         id="trajetoria"
         aria-labelledby="trajetoria-title"
@@ -168,28 +156,83 @@ export default function AboutPage(): ReactNode {
             A estrada até <span className="text-accent">aqui</span>
           </h2>
           <p className="text-foreground/65 max-w-[36ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
-            Role para percorrer: do técnico em informática ao TMG Caronas em
-            produção.
+            Carreira e formação, do técnico em informática ao TMG Caronas em
+            produção. Clique em um item para ver os detalhes.
           </p>
         </FadeIn>
-        <TrajectoryVideo />
         <div className="mt-6 sm:mt-10">
           <Timeline items={timeline} />
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[40rem] px-6 pb-20 sm:px-10 sm:pb-28">
-        <FadeIn delay={0.1}>
-          <div className="flex flex-col gap-10">
-            <Skills />
-            <Stack icons={stackIcons} />
-            <Credentials />
-          </div>
-        </FadeIn>
+      <section
+        id="habilidades"
+        aria-labelledby="habilidades-title"
+        className="mx-auto w-full max-w-275 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
+      >
+        <SectionHead label="// 02 — habilidades" id="habilidades-title" sub="Linguagens, frameworks, sistemas corporativos e infraestrutura, organizados por área.">
+          Habilidades & <span className="text-accent">Conhecimentos</span>
+        </SectionHead>
+        <div className="mt-10">
+          <Knowledge categories={knowledge} />
+        </div>
+      </section>
+
+      <section
+        id="metodologias"
+        aria-labelledby="metodologias-title"
+        className="mx-auto w-full max-w-275 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
+      >
+        <SectionHead label="// 03 — metodologias" id="metodologias-title" sub="Como organizo o trabalho do backlog à entrega.">
+          Metodologias <span className="text-accent">ágeis</span>
+        </SectionHead>
+        <div className="mt-10">
+          <Methodologies items={methodologies} intro={METHODOLOGIES_INTRO} />
+        </div>
+      </section>
+
+      <section
+        id="paixoes"
+        aria-labelledby="paixoes-title"
+        className="mx-auto w-full max-w-275 px-6 pt-8 pb-20 sm:px-10 sm:pb-28"
+      >
+        <SectionHead label="// 04 — vitrine" id="paixoes-title" sub="Projetos, certificações, competências e idiomas em um só lugar.">
+          Meu canto de <span className="text-accent">paixões</span>
+        </SectionHead>
+        <div className="mt-10">
+          <PassionCorner />
+        </div>
       </section>
 
       <ContactCard />
       <div className="h-12 sm:h-16" />
     </main>
+  );
+}
+
+function SectionHead({
+  label,
+  id,
+  sub,
+  children,
+}: {
+  label: string;
+  id: string;
+  sub: string;
+  children: ReactNode;
+}): ReactNode {
+  return (
+    <FadeIn className="flex flex-col items-center gap-4 text-center">
+      <p className="section-label">{label}</p>
+      <h2
+        id={id}
+        className="text-foreground font-serif text-[1.55rem] leading-[1.05] min-[400px]:text-[1.85rem] sm:text-[2.4rem] font-extrabold tracking-tight md:text-[3rem] lg:text-[3.5rem]"
+      >
+        {children}
+      </h2>
+      <p className="text-foreground/65 max-w-[40ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
+        {sub}
+      </p>
+    </FadeIn>
   );
 }
