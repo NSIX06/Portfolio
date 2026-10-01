@@ -3,7 +3,7 @@
 import { Icon, type IconifyIcon } from "@iconify/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, BookOpen, Briefcase, GraduationCap, X } from "lucide-react";
+import { ArrowUpRight, Briefcase, GraduationCap, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -16,18 +16,17 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const KINDS: { id: MilestoneKind; label: string; Icon: typeof Briefcase }[] = [
   { id: "profissional", label: "Profissional", Icon: Briefcase },
   { id: "academica", label: "Acadêmica", Icon: GraduationCap },
-  { id: "curso", label: "Cursos", Icon: BookOpen },
 ];
 
 /**
- * Trajetória com abas Profissional/Acadêmica/Cursos (referência: barretolopes.com) sobre a
+ * Trajetória com abas Profissional/Acadêmica (referência: barretolopes.com) sobre a
  * linha do tempo que se preenche com a rolagem (GSAP). Cada cartão abre uma janela com os
- * detalhes, como os cartões da Tech Stack. Os cursos aparecem em destaque.
+ * detalhes, como os cartões da Tech Stack. Cursos em andamento aparecem em destaque.
  */
 export function Timeline({ items }: { items: TimelineItem[] }): ReactNode {
   const rootRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
-  const [kinds, setKinds] = useState<MilestoneKind[]>(["profissional", "academica", "curso"]);
+  const [kinds, setKinds] = useState<MilestoneKind[]>(["profissional", "academica"]);
   const [openId, setOpenId] = useState<string | null>(null);
 
   const visible = items.filter((i) => kinds.includes(i.kind));
@@ -137,7 +136,7 @@ function TimelineEntry({
   left: boolean;
   onOpen: () => void;
 }): ReactNode {
-  const isCourse = item.kind === "curso";
+  const isCourse = Boolean(item.highlight);
 
   return (
     <motion.li

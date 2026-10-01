@@ -3,9 +3,7 @@
  * Fonte: currículo (out/2026) e conteúdo da primeira versão do portfólio.
  * `icon` é um nome do Iconify resolvido no servidor.
  */
-import { CERTIFICATES, type Certificate } from "@/lib/certificates";
-
-export type MilestoneKind = "profissional" | "academica" | "curso";
+export type MilestoneKind = "profissional" | "academica";
 
 export type Milestone = {
   id: string;
@@ -20,6 +18,7 @@ export type Milestone = {
   place: string;
   text: string;
   current?: boolean;
+  note?: string;
   roles?: { title: string; activities: string[] }[];
   activities?: string[];
   systems?: { name: string; description: string }[];
@@ -27,98 +26,25 @@ export type Milestone = {
   projects?: { name: string; detail: string }[];
   icon: string;
   link?: { href: string; label: string };
-  /** Cursos do grupo (só nos cartões de cursos, que aparecem em destaque). */
-  courses?: Certificate[];
+  /** Curso em destaque na linha do tempo. */
+  highlight?: boolean;
+  courses?: { name: string; institution: string; partner?: string; workload?: string; inProgress?: boolean }[];
 };
 
-/** Agrupa os cursos do currículo por área (os nomes vêm de lib/certificates.ts). */
-function pick(...names: string[]): Certificate[] {
-  return names.map((n) => {
-    const c = CERTIFICATES.find((x) => x.name === n);
-    if (!c) throw new Error(`Curso não encontrado: ${n}`);
-    return c;
-  });
-}
-
-function courseGroup(
-  id: string,
-  title: string,
-  text: string,
-  icon: string,
-  courses: Certificate[]
-): Milestone {
-  const doing = courses.filter((c) => c.inProgress).length;
-  const done = courses.length - doing;
-  const period = [done ? `${done} concluído${done > 1 ? "s" : ""}` : "", doing ? `${doing} em andamento` : ""]
-    .filter(Boolean)
-    .join(" · ");
-  return {
-    id,
-    kind: "curso",
-    year: String(courses.length).padStart(2, "0"),
-    period,
-    badge: courses.length > 1 ? "Cursos" : "Curso",
-    current: doing > 0,
-    title,
-    place: [...new Set(courses.map((c) => c.institution))].join(" · "),
-    text,
-    courses,
-    icon,
-  };
-}
-
-const COURSES_AI = courseGroup(
-  "cursos-ia",
-  "Inteligência Artificial, Cloud & DevOps",
-  "Desenvolvimento com ferramentas de IA, fundamentos de nuvem e entrega contínua.",
-  "ph:sparkle-duotone",
-  pick(
-    "Programadores Jr. com Ferramentas de IA",
-    "Introduction to Generative Artificial Intelligence",
-    "Introduction to Cloud 101",
-    "Imersão Cloud DevOps"
-  )
-);
-const COURSES_LANG = courseGroup(
-  "cursos-linguagens",
-  "Linguagens & Orientação a Objetos",
-  "C#, C/C++, Python, Java, React e mobile, da lógica à orientação a objetos.",
-  "ph:code-block-duotone",
-  pick(
-    "C# Completo — Programação Orientada a Objetos e Projetos",
-    "Linguagem C, C++ e Orientação a Objetos",
-    "POO com C# (.NET 6 e Visual Studio Code)",
-    "Trilha C#",
-    "Python Essentials 1",
-    "Java",
-    "Trilha React",
-    "Imersão Mobile"
-  )
-);
-const COURSES_DATA = courseGroup(
-  "cursos-dados",
-  "Dados & Business Intelligence",
-  "Análise de dados com Python e dashboards com Power BI.",
-  "ph:chart-bar-duotone",
-  pick("Microsoft Power BI para Business Intelligence e Data Science", "Imersão Dados com Python")
-);
-const COURSES_TOOLS = courseGroup(
-  "cursos-ferramentas",
-  "Ferramentas & Produtividade",
-  "Versionamento com Git e GitHub e o pacote Microsoft 365.",
-  "ph:toolbox-duotone",
-  pick("Introdução ao Git e GitHub", "Pacote Office 365 — Microsoft Essencial")
-);
-const COURSES_SOFT = courseGroup(
-  "cursos-comunicacao",
-  "Comunicação & Idiomas",
-  "Comunicação, relacionamento e inglês certificado.",
-  "ph:chats-circle-duotone",
-  pick("Comunicação Não Violenta", "Relações Interpessoais", "EF SET English Certificate — B1")
-);
-
-/** Ordem da linha do tempo: o que está em andamento vem primeiro, depois o histórico. */
+/** Ordem cronológica: do início da formação ao que está em andamento agora. */
 export const MILESTONES: Milestone[] = [
+  {
+    id: "senac",
+    kind: "academica",
+    year: "2022",
+    period: "2022 – 2024",
+    badge: "Concluído",
+    title: "Curso Técnico em Informática",
+    place: "SENAC · Santos, SP",
+    text: "Base em hardware, redes, sistemas operacionais e suporte técnico.",
+    tech: ["Hardware", "Redes", "Sistemas operacionais", "Suporte técnico"],
+    icon: "ph:desktop-tower-duotone",
+  },
   {
     id: "autonomo",
     kind: "profissional",
@@ -172,9 +98,6 @@ export const MILESTONES: Milestone[] = [
     icon: "ph:graduation-cap-duotone",
     link: { href: "https://www.escoladeskatedobob.org.br/", label: "Ver site da Escolinha" },
   },
-  COURSES_AI,
-  COURSES_LANG,
-  COURSES_DATA,
   {
     id: "tmg",
     kind: "profissional",
@@ -215,17 +138,17 @@ export const MILESTONES: Milestone[] = [
     icon: "ph:gear-six-duotone",
   },
   {
-    id: "senac",
+    id: "recode",
     kind: "academica",
-    year: "2022",
-    period: "2022 – 2024",
-    badge: "Concluído",
-    title: "Curso Técnico em Informática",
-    place: "SENAC · Santos, SP",
-    text: "Base em hardware, redes, sistemas operacionais e suporte técnico.",
-    tech: ["Hardware", "Redes", "Sistemas operacionais", "Suporte técnico"],
-    icon: "ph:desktop-tower-duotone",
+    year: "Atual",
+    period: "Em andamento",
+    badge: "Curso",
+    current: true,
+    highlight: true,
+    title: "Programadores Jr. com Ferramentas de IA",
+    place: "Recode + UFR",
+    text: "Formação em desenvolvimento com ferramentas de Inteligência Artificial aplicadas à programação.",
+    tech: ["IA aplicada", "Desenvolvimento"],
+    icon: "ph:sparkle-duotone",
   },
-  COURSES_TOOLS,
-  COURSES_SOFT,
 ];
