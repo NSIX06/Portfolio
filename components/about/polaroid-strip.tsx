@@ -1,23 +1,27 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { Icon, type IconifyIcon } from "@iconify/react";
+import Image from "next/image";
 import { useRef, useSyncExternalStore, type ReactNode } from "react";
 
 import { DottedPattern } from "@/components/ui/dotted-pattern";
 
-type Polaroid = {
+/** Um momento da trajetória: foto (src) ou marco com ano e ícone. */
+export type PolaroidItem = {
   id: string;
-  rotate: number;
+  caption: string;
+  sub: string;
+  src?: string;
+  imageFit?: "cover" | "contain";
+  imageBg?: string;
+  year?: string;
+  iconData?: IconifyIcon;
 };
 
-const PHOTOS: Polaroid[] = [
-  { id: "a", rotate: -8 },
-  { id: "b", rotate: 6 },
-  { id: "c", rotate: -4 },
-  { id: "d", rotate: 7 },
-  { id: "e", rotate: -6 },
-  { id: "f", rotate: 5 },
-];
+type Polaroid = PolaroidItem & { rotate: number };
+
+const ROTATIONS = [-8, 6, -4, 7, -6, 5];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -58,6 +62,8 @@ function PolaroidCard({
   return (
     <motion.div
       ref={ref}
+      role="listitem"
+      aria-label={`${photo.year ? `${photo.year}: ` : ""}${photo.caption} — ${photo.sub}`}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
       initial={{
@@ -79,12 +85,59 @@ function PolaroidCard({
       }}
       className="relative aspect-[3/4] w-[clamp(6rem,11vw,9rem)] shrink-0 overflow-hidden rounded-2xl border-6 border-neutral-300/40 bg-white p-1.5 dark:border-white/15 dark:bg-neutral-900"
     >
-      <DottedPattern className="relative h-full w-full overflow-hidden rounded-xl" />
+      <div className="flex h-full w-full flex-col gap-1">
+        <div
+          className="relative flex-1 overflow-hidden rounded-xl"
+          style={photo.imageBg ? { backgroundColor: photo.imageBg } : undefined}
+        >
+          {photo.src ? (
+            <Image
+              src={photo.src}
+              alt=""
+              fill
+              sizes="144px"
+              className={
+                photo.imageFit === "contain"
+                  ? "object-contain p-1"
+                  : "object-cover"
+              }
+            />
+          ) : (
+            <>
+              <DottedPattern className="absolute inset-0" />
+              <div className="relative flex h-full flex-col items-center justify-center gap-1 bg-gradient-to-b from-transparent to-[color-mix(in_srgb,var(--accent)_14%,transparent)]">
+                {photo.iconData ? (
+                  <Icon
+                    icon={photo.iconData}
+                    className="text-accent h-[38%] w-[38%]"
+                    aria-hidden="true"
+                  />
+                ) : null}
+                <span className="text-foreground font-serif text-[clamp(1rem,2vw,1.5rem)] leading-none font-extrabold tracking-tight">
+                  {photo.year}
+                </span>
+              </div>
+            </>
+          )}
+        </div>
+        <div className="flex flex-col px-0.5 pt-0.5 pb-0.5 text-center">
+          <span className="truncate text-[clamp(0.55rem,0.9vw,0.72rem)] leading-tight font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
+            {photo.caption}
+          </span>
+          <span className="truncate font-mono text-[clamp(0.45rem,0.7vw,0.58rem)] tracking-wide text-neutral-500 uppercase">
+            {photo.sub}
+          </span>
+        </div>
+      </div>
     </motion.div>
   );
 }
 
-export function PolaroidStrip(): ReactNode {
+export function PolaroidStrip({ items }: { items: PolaroidItem[] }): ReactNode {
+  const photos: Polaroid[] = items.slice(0, 6).map((it, i) => ({
+    ...it,
+    rotate: ROTATIONS[i % ROTATIONS.length] ?? 0,
+  }));
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,
@@ -98,8 +151,12 @@ export function PolaroidStrip(): ReactNode {
   }
 
   return (
-    <div className="flex w-full flex-wrap items-start justify-center gap-1 px-4 sm:gap-1.5 sm:px-8">
-      {PHOTOS.map((photo, i) => (
+    <div
+      role="list"
+      aria-label="Momentos da trajetória"
+      className="flex w-full flex-wrap items-start justify-center gap-1 px-4 sm:gap-1.5 sm:px-8"
+    >
+      {photos.map((photo, i) => (
         <PolaroidCard key={photo.id} photo={photo} index={i} />
       ))}
     </div>

@@ -174,7 +174,7 @@ export function Projects({
       <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
         {withHeadline ? (
           <FadeIn className="flex flex-col items-center gap-5 pt-12 pb-10 text-center sm:pt-20 sm:pb-14">
-            <h2 className="text-foreground font-serif text-[2.5rem] leading-[1.05] font-medium tracking-tight md:text-[3rem] lg:text-[3.5rem]">
+            <h2 className="text-foreground font-serif text-[2.5rem] leading-[1.05] font-bold tracking-tight md:text-[3rem] lg:text-[3.5rem]">
               Meus projetos
             </h2>
             <p className="text-foreground/65 max-w-[33ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
@@ -219,7 +219,7 @@ function ProjectCard({
   const Icon = project.icon;
   const card = (
     <article
-      className={`project-card flex flex-col ${project.href ? "cursor-pointer" : ""} border-foreground/8 bg-background gap-4 rounded-3xl border p-3 sm:p-3.5`}
+      className={`project-card glow-hover flex flex-col ${project.href ? "cursor-pointer" : ""} border-foreground/8 bg-background gap-4 rounded-3xl border p-3 sm:p-3.5`}
     >
       <header className="flex items-center gap-2.5 px-1 pt-2">
         <span className="border-foreground/10 bg-background inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border">

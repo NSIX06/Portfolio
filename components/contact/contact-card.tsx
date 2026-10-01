@@ -26,12 +26,18 @@ export function ContactCard(): ReactNode {
                 maskImage: CARD_FADE_MASK,
               }}
             >
-              <ShaderFlow scale={3} brightness={3} />
+              <ShaderFlow
+                className="absolute inset-0 h-full w-full"
+                scale={3}
+                brightness={2.6}
+                colorLowA={[0.1, 0.02, 0.02]}
+                colorHighA={[0.62, 0.1, 0.08]}
+              />
             </div>
 
             <div className="relative grid gap-8 p-6 sm:gap-10 sm:p-7 md:grid-cols-[1.2fr_1fr] md:items-stretch md:gap-6 md:p-6">
               <div className="flex flex-col gap-5">
-                <h2 className="text-foreground font-serif text-[2.25rem] leading-[1.05] font-medium tracking-tight sm:text-[2.75rem] lg:text-[3.25rem]">
+                <h2 className="text-foreground font-serif text-[2.25rem] leading-[1.05] font-bold tracking-tight sm:text-[2.75rem] lg:text-[3.25rem]">
                   Vamos conversar
                 </h2>
                 <p className="text-foreground/65 mb-6 max-w-[29ch] text-[18px] leading-[1.4] tracking-tight sm:text-[22px]">

@@ -2,6 +2,7 @@ import { Nav } from "@/components/layout/nav";
 import { PageBackdrop } from "@/components/layout/page-backdrop";
 import { Providers } from "@/components/layout/providers";
 import { SkipToContent } from "@/components/layout/skip-to-content";
+import { SiteEffects } from "@/components/effects/site-effects";
 import { baseMetadata } from "@/lib/metadata";
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
@@ -14,17 +15,41 @@ import "./globals.css";
 const geistSans = GeistSans;
 const geistMono = GeistMono;
 
-const fraunces = localFont({
-  variable: "--font-fraunces",
+// Identidade do portfólio antigo: Syne nos títulos e Space Mono nos rótulos.
+const syne = localFont({
+  variable: "--font-display",
   display: "swap",
   src: [
     {
-      path: "../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2",
-      style: "normal",
+      path: "../node_modules/@fontsource/syne/files/syne-latin-500-normal.woff2",
+      weight: "500",
     },
     {
-      path: "../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-ext-full-normal.woff2",
-      style: "normal",
+      path: "../node_modules/@fontsource/syne/files/syne-latin-600-normal.woff2",
+      weight: "600",
+    },
+    {
+      path: "../node_modules/@fontsource/syne/files/syne-latin-700-normal.woff2",
+      weight: "700",
+    },
+    {
+      path: "../node_modules/@fontsource/syne/files/syne-latin-800-normal.woff2",
+      weight: "800",
+    },
+  ],
+});
+
+const spaceMono = localFont({
+  variable: "--font-label",
+  display: "swap",
+  src: [
+    {
+      path: "../node_modules/@fontsource/space-mono/files/space-mono-latin-400-normal.woff2",
+      weight: "400",
+    },
+    {
+      path: "../node_modules/@fontsource/space-mono/files/space-mono-latin-700-normal.woff2",
+      weight: "700",
     },
   ],
 });
@@ -51,7 +76,7 @@ export default function RootLayout({
       lang="pt-BR"
       suppressHydrationWarning
       // As variáveis das fontes ficam no <html> porque o :root do globals.css as usa.
-      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${spaceMono.variable}`}
     >
       <body
         className={`bg-background text-foreground min-h-screen font-sans antialiased`}
@@ -92,6 +117,7 @@ export default function RootLayout({
           <PageBackdrop />
           <Nav />
           {children}
+          <SiteEffects />
         </Providers>
       </body>
     </html>

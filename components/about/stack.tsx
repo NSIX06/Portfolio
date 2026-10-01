@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon, type IconifyIcon } from "@iconify/react";
 import { RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -8,7 +9,6 @@ type Chip = {
   slug: string;
   bg: string;
   fg: string;
-  iconUrl?: string;
 };
 
 const CHIPS: Chip[] = [
@@ -37,7 +37,12 @@ type ChipState = {
   height: number;
 };
 
-export function Stack(): ReactNode {
+/** `icons`: logos do Iconify por rótulo, resolvidos no servidor (sem CDN externo). */
+export function Stack({
+  icons,
+}: {
+  icons: Record<string, IconifyIcon>;
+}): ReactNode {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const measureRef = useRef<HTMLDivElement | null>(null);
   const chipRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -234,7 +239,11 @@ export function Stack(): ReactNode {
           className="pointer-events-none invisible absolute top-0 left-0 flex flex-wrap gap-2"
         >
           {CHIPS.map((chip) => (
-            <ChipPill key={`m-${chip.label}`} chip={chip} />
+            <ChipPill
+              key={`m-${chip.label}`}
+              chip={chip}
+              icon={icons[chip.label]}
+            />
           ))}
         </div>
 
@@ -253,7 +262,7 @@ export function Stack(): ReactNode {
               className="pointer-events-none absolute top-0 left-0 will-change-transform"
               style={{ transform: "translate3d(-9999px, -9999px, 0)" }}
             >
-              <ChipPill chip={chip} />
+              <ChipPill chip={chip} icon={icons[chip.label]} />
             </div>
           ))}
         </div>
@@ -262,7 +271,13 @@ export function Stack(): ReactNode {
   );
 }
 
-function ChipPill({ chip }: { chip: Chip }): ReactNode {
+function ChipPill({
+  chip,
+  icon,
+}: {
+  chip: Chip;
+  icon: IconifyIcon | undefined;
+}): ReactNode {
   return (
     <div
       className="inline-flex items-center gap-2 p-1 pr-2 text-[15px] font-medium tracking-tight sm:text-[16px] dark:ring-1 dark:ring-white/15"
@@ -277,14 +292,7 @@ function ChipPill({ chip }: { chip: Chip }): ReactNode {
         style={{ borderRadius: `${ICON_RADIUS}px` }}
         aria-hidden="true"
       >
-        <img
-          src={chip.iconUrl ?? `https://cdn.simpleicons.org/${chip.slug}`}
-          alt=""
-          width={18}
-          height={18}
-          className="h-5 w-5"
-          draggable={false}
-        />
+        {icon ? <Icon icon={icon} className="h-5 w-5" /> : null}
       </span>
       <span>{chip.label}</span>
     </div>

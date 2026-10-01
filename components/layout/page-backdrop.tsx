@@ -9,7 +9,14 @@ export function PageBackdrop(): ReactNode {
       className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-225 overflow-hidden"
     >
       <div className="absolute inset-0 opacity-50 md:opacity-100">
-        <ShaderFlow brightness={3} iterations={10} flowSpeed={[0, 0.1]} />
+        <ShaderFlow
+          className="absolute inset-0 h-full w-full"
+          brightness={2.6}
+          iterations={10}
+          flowSpeed={[0, 0.1]}
+          colorLowA={[0.1, 0.02, 0.02]}
+          colorHighA={[0.62, 0.1, 0.08]}
+        />
       </div>
     </div>
   );
