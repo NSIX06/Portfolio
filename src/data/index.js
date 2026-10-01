@@ -15,6 +15,7 @@ import { contact, contactById } from './contact'
 import { character } from './character'
 import { sections, journey, sectionNumber, navSectionFor } from './navigation'
 import { seo } from './seo'
+import { services } from './services'
 
 // Exportações nomeadas para os componentes (import { projects } from '../../data').
 export {
@@ -42,10 +43,12 @@ export {
   sectionNumber,
   navSectionFor,
   seo,
+  services,
 }
 
 export const portfolioData = {
   profile,
+  services,
   education,
   experiences,
   currentExperience,

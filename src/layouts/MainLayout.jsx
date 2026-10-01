@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Nav from '../components/Nav/Nav'
 import Hero from '../components/Hero/Hero'
+import Services from '../components/Services/Services'
 import About from '../components/About/About'
 import Experience from '../components/Experience/Experience'
 import Education from '../components/Education/Education'
@@ -29,8 +30,9 @@ export default function MainLayout() {
       <Nav />
       <main id="main-content" tabIndex={-1}>
         <Hero />
-        <About />
+        <Services />
         <Projects />
+        <About />
         <Experience />
         <Skills />
         <Education />

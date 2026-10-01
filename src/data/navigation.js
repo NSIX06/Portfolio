@@ -9,10 +9,11 @@
 /** @type {{id: string, label: string, inNav: boolean, numbered: boolean, parent?: string}[]} */
 export const sections = [
   { id: 'inicio', label: 'Início', inNav: false, numbered: false },
-  { id: 'sobre', label: 'Sobre', inNav: true, numbered: true },
+  { id: 'servicos', label: 'Serviços', inNav: true, numbered: true },
   { id: 'projetos', label: 'Projetos', inNav: true, numbered: true },
+  { id: 'sobre', label: 'Sobre', inNav: true, numbered: true },
   { id: 'experiencia', label: 'Experiência', inNav: true, numbered: true },
-  { id: 'habilidades', label: 'Habilidades', inNav: true, numbered: true },
+  { id: 'habilidades', label: 'Habilidades', inNav: false, numbered: true },
   { id: 'metodologias', label: 'Metodologias', inNav: false, numbered: false, parent: 'habilidades' },
   { id: 'formacao', label: 'Formação', inNav: true, numbered: true },
   { id: 'certificados', label: 'Certificados', inNav: false, numbered: false, parent: 'formacao' },

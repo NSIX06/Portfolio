@@ -6,6 +6,7 @@ import DotField from '../effects/DotField'
 import ProfileCard from '../effects/ProfileCard'
 import ScrollExpand from '../effects/ScrollExpand'
 import DecryptReveal from '../effects/DecryptReveal'
+import CopyEmail from './CopyEmail'
 import profileImg from '../../assets/images/profile.png'
 import ui from '../ui/ui.module.css'
 import styles from './Contact.module.css'
@@ -49,11 +50,8 @@ export default function Contact() {
             <div className={`${styles.cta} cursor-target`}>
               <h3 className={styles.ctaTitle}>{availability.headline}</h3>
               <p className={styles.ctaText}>{availability.description}</p>
+              <CopyEmail email={contact.email} href={email.href} />
               <div className={styles.ctaBtns}>
-                <a href={email.href} className={ui.btnPrimary}>
-                  <Icon name="email" size={16} />
-                  Enviar e-mail
-                </a>
                 <a
                   href={linkedin.href}
                   target="_blank"

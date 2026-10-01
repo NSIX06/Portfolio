@@ -82,6 +82,6 @@
   font-size: .66rem;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: var(--color-accent);
   margin: 1.5rem 0 .75rem;
 }

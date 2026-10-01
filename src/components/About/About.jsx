@@ -48,6 +48,7 @@ function StatCard({ num, label, loading }) {
 export default function About() {
   const ref = useReveal()
   const { repos, stars, loading, error } = useGitHubStats(profile.stats.github)
+  const aboutTitle = `Sou o ${profile.shortName.split(' ')[0]}, ${profile.title.toLowerCase()} em ${profile.location}.`
 
   const stats = [
     ...(error
@@ -62,17 +63,18 @@ export default function About() {
   return (
     <section id="sobre" className="section section--surface" aria-labelledby="about-heading">
       <div className="container reveal" ref={ref}>
-        <SectionHeader section="sobre" label="quem sou" title="Sobre mim" id="about-heading" />
+        <SectionHeader section="sobre" label="sobre mim" title={aboutTitle} id="about-heading" />
 
         <div className={styles.grid}>
           <div className={styles.textCol}>
+            <p className={styles.subLabel}>[ minha trajetória ]</p>
             {profile.about.map((p) => (
               <p key={p.slice(0, 24)} className={styles.p}>
                 {p}
               </p>
             ))}
 
-            <p className={styles.subLabel}>Idiomas</p>
+            <p className={styles.subLabel}>[ idiomas ]</p>
             <ul className={ui.tagList}>
               {profile.languages.map((l) => (
                 <li key={l.language} className={ui.tag} title={l.note}>
@@ -90,7 +92,7 @@ export default function About() {
               ))}
             </div>
 
-            <p className={styles.subLabel}>Competências comportamentais</p>
+            <p className={styles.subLabel}>[ competências ]</p>
             <ul className={ui.tagList}>
               {profile.softSkills.map((s) => (
                 <li key={s} className={ui.tag}>

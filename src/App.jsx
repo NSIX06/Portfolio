@@ -5,6 +5,7 @@ import { JourneyModeProvider } from './journey/JourneyMode'
 import { useJourneyMode, loadJourney } from './journey/journeyContext'
 import { seo } from './data'
 import { isTouchDevice, prefersReducedMotion } from './components/effects/motion'
+import { initSmoothScroll, setSmoothScrollPaused } from './components/motion/smoothScroll'
 
 // O cursor em mira só existe em desktop sem movimento reduzido; carrega à parte (usa gsap).
 const TargetCursor = lazy(() => import('./components/effects/TargetCursor'))
@@ -32,7 +33,10 @@ function Shell() {
     if (isOpen) bg.setAttribute('aria-hidden', 'true')
     else bg.removeAttribute('aria-hidden')
     document.documentElement.style.overflow = isOpen ? 'hidden' : ''
+    setSmoothScrollPaused(isOpen)
   }, [isOpen])
+
+  useEffect(() => initSmoothScroll(), [])
 
   return (
     <>

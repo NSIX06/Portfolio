@@ -30,7 +30,7 @@ export const availabilityStates = {
 export const availability = {
   /** @type {AvailabilityState[]} */
   active: ['hiring', 'projects'],
-  headline: 'Vamos conversar sobre seu próximo projeto.',
+  headline: 'Vamos construir algo juntos.',
   description:
     'Aberto a oportunidades de emprego e a projetos freelance. Baseado em Rondonópolis - MT, com atendimento remoto.',
   specialties: ['Desenvolvimento Web', 'Full Stack', 'Sistemas Corporativos', 'Automação de Processos', 'Integração de Sistemas'],
