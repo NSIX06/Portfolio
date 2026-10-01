@@ -1,0 +1,21 @@
+/* O cartão da frente fica no centro do container; os de trás sobem para a direita.
+   Quem usa o componente reserva espaço acima e à direita (ver CaseStudy). */
+.card-swap-container {
+  position: relative;
+  perspective: 900px;
+  overflow: visible;
+}
+
+.swap-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 14px;
+  border: 1px solid #2a2a2a;
+  background: linear-gradient(160deg, #1a1a1a 0%, #120a0a 100%);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.55);
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}

@@ -8,6 +8,7 @@ export const sections = [
   { id: 'inicio', label: 'Início', inNav: false },
   { id: 'sobre', label: 'Sobre', inNav: true },
   { id: 'experiencia', label: 'Experiência', inNav: true },
+  { id: 'caso-tmg-caronas', label: 'TMG Caronas', inNav: false },
   { id: 'formacao', label: 'Formação', inNav: true },
   { id: 'habilidades', label: 'Habilidades', inNav: true },
   { id: 'metodologias', label: 'Metodologias', inNav: false },

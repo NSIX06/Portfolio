@@ -70,7 +70,7 @@ export const experiences = [
           'Usuário-chave do TOTVS Protheus (SIGAMNT): planos de manutenção preventiva e preditiva, ordens de serviço, controle de peças e materiais e relatórios gerenciais',
           'Administração do GLPI: chamados, protocolo de notas fiscais e solicitações de cadastro',
           'Cadastro e padronização de peças e ferramentas no Protheus e no Astrein (SSA-CAD)',
-          'Desenvolvimento de ferramentas internas para otimização de processos',
+          'Desenvolvimento de ferramentas internas, como o TMG Caronas e a conferência automatizada de produtos com a base do Protheus',
         ],
       },
     ],
@@ -80,7 +80,7 @@ export const experiences = [
     location: 'Rondonópolis - MT',
     description:
       'Atuação no PCM conciliando atividades administrativas com o desenvolvimento de ferramentas internas para otimização de processos.',
-    technologies: ['TOTVS Protheus', 'GLPI', 'Astrein', 'Power Automate', 'Microsoft Teams'],
+    technologies: ['TOTVS Protheus', 'GLPI', 'Astrein', '.NET', 'SQL Server', 'Microsoft Entra ID', 'Power Automate', 'Microsoft Teams'],
     tools: [
       {
         name: 'TOTVS Protheus (SIGAMNT)',
@@ -98,7 +98,7 @@ export const experiences = [
           'Cadastro e padronização de peças e ferramentas, garantindo a integridade dos dados de manutenção e almoxarifado.',
       },
     ],
-    projectIds: ['tmg-caronas', 'consulta-produtos', 'catalogo-pecas'],
+    projectIds: ['tmg-caronas'],
     accent: 'var(--color-accent2)',
   },
 ]
