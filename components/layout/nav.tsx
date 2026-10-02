@@ -76,7 +76,7 @@ function useIsMounted(): boolean {
   );
 }
 
-function NavThemeToggle(): ReactNode {
+export function NavThemeToggle(): ReactNode {
   const mounted = useIsMounted();
   const { setTheme, resolvedTheme } = useTheme();
   const isDark = mounted && resolvedTheme === "dark";

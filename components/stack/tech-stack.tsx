@@ -39,7 +39,7 @@ export function TechStack({
   const open = [...languages, ...technologies].find((i) => i.id === openId) ?? null;
 
   return (
-    <section id="stack" aria-labelledby="stack-title" className="mx-auto w-full max-w-275 px-6 sm:px-10">
+    <section id="stack" aria-labelledby="stack-title" className="mx-auto w-full max-w-275 scroll-mt-24 px-6 sm:px-10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

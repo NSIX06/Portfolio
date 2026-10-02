@@ -39,7 +39,7 @@ export function SmoothScroll({ children }: { children: ReactNode }): ReactNode {
       if (!element) return;
 
       e.preventDefault();
-      lenis.scrollTo(element as HTMLElement, { offset: -100 });
+      lenis.scrollTo(element as HTMLElement, { offset: 0 }); // a margem fica no scroll-mt de cada seção
     }
 
     document.addEventListener("click", handleAnchorClick);
