@@ -131,25 +131,29 @@ export function ShapeGrid({
       });
       for (const k of targets.keys()) if (!opac.has(k)) opac.set(k, 0);
       for (const [k, o] of opac) {
-        const next = o + ((targets.get(k) ?? 0) - o) * 0.15;
+        const next = o + ((targets.get(k) ?? 0) - o) * 0.28;
         if (next < 0.005) opac.delete(k);
         else opac.set(k, next);
       }
     };
 
-    const step = Math.max(speed, 0.05);
+    const step = Math.max(speed, 0.05) * 2; // dobra porque roda a 30 fps
     const wrapX = isHex ? hexH * 2 : size;
     const wrapY = isHex ? hexV : size;
     let raf = 0;
     let running = false;
-    const tick = (): void => {
+    const FRAME_MS = 1000 / 30;
+    let lastFrame = 0;
+    const tick = (now: number): void => {
+      raf = requestAnimationFrame(tick);
+      if (now - lastFrame < FRAME_MS - 1) return;
+      lastFrame = now;
       if (direction === "right" || direction === "diagonal") off.x = mod(off.x - step, wrapX);
       if (direction === "left") off.x = mod(off.x + step, wrapX);
       if (direction === "up") off.y = mod(off.y + step, wrapY);
       if (direction === "down" || direction === "diagonal") off.y = mod(off.y - step, wrapY);
       updateOpacities();
       draw();
-      raf = requestAnimationFrame(tick);
     };
     const start = (): void => {
       if (running || document.hidden) return;

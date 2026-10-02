@@ -29,6 +29,9 @@ export function ContactCard(): ReactNode {
               <ShaderFlow
                 className="absolute inset-0 h-full w-full"
                 scale={3}
+                resolution={0.5}
+                maxFps={30}
+                iterations={10}
                 brightness={2.6}
                 colorLowA={[0.1, 0.02, 0.02]}
                 colorHighA={[0.62, 0.1, 0.08]}

@@ -69,7 +69,9 @@ export function ScrollBackdrop(): ReactNode {
         <ShaderFlow
           className="absolute inset-0 h-full w-full"
           brightness={1.7}
-          iterations={10}
+          iterations={8}
+          resolution={0.35}
+          maxFps={30}
           flowSpeed={[0, 0.06]}
           colorLowA={[0.06, 0.008, 0.008]}
           colorHighA={[0.42, 0.06, 0.05]}

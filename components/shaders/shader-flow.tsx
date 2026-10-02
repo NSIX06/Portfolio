@@ -15,6 +15,10 @@ export type ShaderFlowProps = {
   fadeRy?: number;
   fadeCx?: number;
   fadeCy?: number;
+  /** Fração da resolução da tela usada no render (o degradê é suave, então 0.3–0.5 é invisível ao olho). */
+  resolution?: number;
+  /** Limite de quadros por segundo (o fluxo é lento; 30 fps bastam). */
+  maxFps?: number;
 };
 
 const VS = `attribute vec2 position;void main(){gl_Position=vec4(position,0.,1.);}`;
@@ -138,8 +142,11 @@ export function ShaderFlow(props: ShaderFlowProps): ReactNode {
     const el = ref.current;
     if (!el) return;
 
+    // Qualidade adaptativa: começa na resolução pedida e cai se o aparelho não acompanhar.
+    let scale = Math.min(Math.max(pr.current.resolution ?? 1, 0.1), 1);
+    let frozen = false;
     const r = new Renderer({
-      dpr: Math.min(window.devicePixelRatio || 1, 1),
+      dpr: scale,
       alpha: false,
       antialias: false,
       powerPreference: "high-performance",
@@ -186,9 +193,15 @@ export function ShaderFlow(props: ShaderFlowProps): ReactNode {
     mesh.setParent(scene);
 
     const onResize = (): void => {
+      if (frozen) {
+        frozen = false; // ao redimensionar, tenta de novo
+      }
       const w = el.clientWidth;
       const h = el.clientHeight;
+      r.dpr = scale;
       r.setSize(w, h);
+      gl.canvas.style.width = "100%";
+      gl.canvas.style.height = "100%";
       p.uniforms.uR.value = [gl.drawingBufferWidth, gl.drawingBufferHeight];
     };
 
@@ -240,13 +253,35 @@ export function ShaderFlow(props: ShaderFlowProps): ReactNode {
       ];
     };
 
-    const tick = (): void => {
-      if (visible && onScreen) {
-        p.uniforms.uT.value = (performance.now() - t0) / 1000;
-        sync();
-        r.render({ scene });
-      }
+    const frameMs = 1000 / Math.max(pr.current.maxFps ?? 60, 1);
+    let last = 0;
+    let slow = 0;
+    let samples = 0;
+    const tick = (now: number): void => {
       raf = requestAnimationFrame(tick);
+      if (!visible || !onScreen || frozen) return;
+      const dt = now - last;
+      if (dt < frameMs - 1) return;
+      // Se os quadros demoram demais (aparelho fraco), reduz a resolução pela metade.
+      if (last) {
+        samples++;
+        if (dt > frameMs * 1.8) slow++;
+        if (samples >= 45) {
+          if (slow > 30 && scale > 0.15) {
+            scale = Math.max(scale / 2, 0.15);
+            onResize();
+          } else if (slow > 30) {
+            // Mesmo na menor resolução o aparelho não acompanha: congela no quadro atual.
+            frozen = true;
+          }
+          samples = 0;
+          slow = 0;
+        }
+      }
+      last = now;
+      p.uniforms.uT.value = (now - t0) / 1000;
+      sync();
+      r.render({ scene });
     };
     raf = requestAnimationFrame(tick);
 

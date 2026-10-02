@@ -14,7 +14,7 @@
   --accent: #e11d1d;
   --accent-2: #b8860b;
   --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-label), var(--font-geist-mono), ui-monospace, monospace;
+  --font-mono: var(--font-label), ui-monospace, monospace;
   --font-serif: var(--font-display), system-ui, sans-serif;
 }
 

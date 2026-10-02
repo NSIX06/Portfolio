@@ -7,14 +7,12 @@ import { SiteEffects } from "@/components/effects/site-effects";
 import { baseMetadata } from "@/lib/metadata";
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import "./globals.css";
 
 // Fontes empacotadas no projeto (sem depender do Google Fonts no build).
 const geistSans = GeistSans;
-const geistMono = GeistMono;
 
 // Identidade do portfólio antigo: Syne nos títulos e Space Mono nos rótulos.
 const syne = localFont({
@@ -77,7 +75,7 @@ export default function RootLayout({
       lang="pt-BR"
       suppressHydrationWarning
       // As variáveis das fontes ficam no <html> porque o :root do globals.css as usa.
-      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${spaceMono.variable}`}
+      className={`${geistSans.variable} ${syne.variable} ${spaceMono.variable}`}
     >
       <body
         className={`bg-background text-foreground min-h-screen font-sans antialiased`}
