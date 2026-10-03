@@ -48,8 +48,9 @@ export function Stats(): ReactNode {
       {STATS.map((s) => (
         <div
           key={s.label}
-          className="glow-hover border-foreground/8 bg-background flex flex-col gap-1 overflow-hidden rounded-3xl border p-5"
+          className="glow-hover border-foreground/8 bg-background relative flex flex-col items-center gap-2 overflow-hidden rounded-3xl border px-5 py-6 text-center"
         >
+          <span aria-hidden="true" className="bg-accent absolute top-4 bottom-4 left-0 w-[3px] rounded-r-full" />
           <dt className="sr-only">{s.label}</dt>
           <dd className="text-accent font-serif text-[2.4rem] leading-none font-extrabold tracking-tight">
             <CountUp value={s.value} />

@@ -49,41 +49,59 @@ export default function HomePage(): ReactNode {
       </div>
 
       <section id="sobre" data-bg="flow" aria-labelledby="sobre-title" className="scroll-mt-24 pt-24 sm:pt-32">
-        <SectionHead label="// 01 — sobre" id="sobre-title" sub="Quem eu sou e como trabalho.">
-          Sobre <span className="text-accent">mim</span>
-        </SectionHead>
-        <div className="mx-auto w-full max-w-160 px-6 pt-10 pb-12 sm:px-10 sm:pt-14">
-        <FadeIn delay={0.1}>
-          <div className="border-foreground/5 bg-foreground/1.5 dark:bg-foreground/3 rounded-4xl border p-8 sm:p-12">
-            <div className="text-foreground/75 space-y-6 text-[17px] leading-[1.7] tracking-tight sm:text-[18px]">
-              <p className="text-foreground/85 text-[19px] leading-[1.6] sm:text-[21px]">
-                Sou <strong className="text-foreground font-semibold">Desenvolvedor Full Stack e Técnico em Informática</strong>, com experiência na criação de{" "}
-                <strong className="text-foreground font-semibold">sistemas internos para o agronegócio</strong>, com foco em automação de processos, integração de
-                sistemas e soluções orientadas a resultados.
-              </p>
-              <p>
-                Minha experiência combina desenvolvimento de software com{" "}
-                <strong className="text-foreground font-semibold">conhecimento de processos corporativos</strong>: fui usuário-chave do{" "}
-                <strong className="text-foreground font-semibold">TOTVS Protheus</strong> no Planejamento e Controle de Manutenção (PCM) da TMG, onde também criei
-                ferramentas internas. Isso me ajuda a transformar necessidades operacionais em ferramentas digitais
-                mais eficientes.
-              </p>
-              <p>
-                Atualmente atuo como <strong className="text-foreground font-semibold">profissional autônomo</strong>, desenvolvendo soluções web sob medida e
-                prestando suporte técnico em informática.
-              </p>
-              <p>
-                Sou graduando em <strong className="text-foreground font-semibold">Análise e Desenvolvimento de Sistemas</strong> pela UniSENAI MT e busco
-                constantemente aprimorar meus conhecimentos em{" "}
-                <strong className="text-foreground font-semibold">desenvolvimento web, backend, bancos de dados, cloud, automação e Inteligência Artificial</strong>.
-              </p>
-            </div>
-          </div>
-        </FadeIn>
-        </div>
-        <div className="mx-auto w-full max-w-[40rem] px-6 pb-16 sm:px-10">
-          <FadeIn delay={0.1}>
+        {/* Números primeiro, depois o título e o texto (layout de referência do Felipe) */}
+        <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
+          <FadeIn delay={0.05}>
             <Stats />
+          </FadeIn>
+        </div>
+
+        <div className="mx-auto w-full max-w-275 px-6 pt-20 sm:px-10 sm:pt-24">
+          <SectionHead
+            size="md"
+            label="// 01 — sobre"
+            id="sobre-title"
+            sub="Soluções que transformam requisitos de negócio em software."
+          >
+            Quem eu sou e <span className="text-accent">como trabalho</span>
+          </SectionHead>
+        </div>
+
+        <div className="mx-auto w-full max-w-275 px-6 pt-10 pb-16 sm:px-10 sm:pt-12 sm:pb-24">
+          <FadeIn delay={0.1}>
+            <div className="border-foreground/5 bg-foreground/1.5 dark:bg-foreground/3 relative overflow-hidden rounded-4xl border px-6 py-10 sm:px-12 sm:py-14">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-24 -bottom-24 h-72 w-72 rounded-full opacity-20 blur-3xl"
+                style={{ background: "var(--accent)" }}
+              />
+              <div className="relative mx-auto max-w-[46rem]">
+                <div className="text-foreground/75 space-y-6 text-[17px] leading-[1.7] tracking-tight sm:text-[18px]">
+                  <p className="text-foreground/85 text-[19px] leading-[1.6] sm:text-[21px]">
+                    Sou <strong className="text-foreground font-semibold">Desenvolvedor Full Stack e Técnico em Informática</strong>, com experiência na criação de{" "}
+                    <strong className="text-foreground font-semibold">sistemas internos</strong> para o{" "}
+                    <strong className="text-accent font-semibold">agronegócio</strong>, com foco em automação de processos, integração de
+                    sistemas e soluções orientadas a resultados.
+                  </p>
+                  <p>
+                    Minha experiência combina desenvolvimento de software com{" "}
+                    <strong className="text-foreground font-semibold">conhecimento de processos corporativos</strong>: fui usuário-chave do{" "}
+                    <strong className="text-foreground font-semibold">TOTVS Protheus</strong> no Planejamento e Controle de Manutenção (PCM) da <strong className="text-foreground font-semibold">TMG</strong>, onde também criei
+                    ferramentas internas. Isso me ajuda a transformar necessidades operacionais em ferramentas digitais
+                    mais eficientes.
+                  </p>
+                  <p>
+                    Atualmente atuo como <strong className="text-foreground font-semibold">profissional autônomo</strong>, desenvolvendo soluções web sob medida e
+                    prestando suporte técnico em informática.
+                  </p>
+                  <p>
+                    Sou graduando em <strong className="text-foreground font-semibold">Análise e Desenvolvimento de Sistemas</strong> pela UniSENAI MT e busco
+                    constantemente aprimorar meus conhecimentos em{" "}
+                    <strong className="text-foreground font-semibold">desenvolvimento web, backend, bancos de dados, cloud, automação e Inteligência Artificial</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
           </FadeIn>
         </div>
       </section>
@@ -173,11 +191,13 @@ function SectionHead({
   label,
   id,
   sub,
+  size = "lg",
   children,
 }: {
   label: string;
   id: string;
   sub: string;
+  size?: "md" | "lg";
   children: ReactNode;
 }): ReactNode {
   return (
@@ -185,7 +205,7 @@ function SectionHead({
       <p className="section-label">{label}</p>
       <h2
         id={id}
-        className="text-foreground font-serif text-[1.55rem] leading-[1.05] min-[400px]:text-[1.85rem] sm:text-[2.4rem] font-extrabold tracking-tight md:text-[3rem] lg:text-[3.5rem]"
+        className={`text-foreground font-serif leading-[1.05] font-extrabold tracking-tight ${size === "md" ? "text-[1.55rem] min-[400px]:text-[1.8rem] sm:text-[2.2rem] lg:text-[2.6rem]" : "text-[1.55rem] min-[400px]:text-[1.85rem] sm:text-[2.4rem] md:text-[3rem] lg:text-[3.5rem]"}`}
       >
         {children}
       </h2>
