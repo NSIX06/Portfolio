@@ -126,7 +126,7 @@ export function CardNav(): ReactNode {
               className="card-nav-cta-button focus-ring"
             >
               <FileDown className="h-4 w-4" aria-hidden="true" />
-              Currículo
+              Currículo{" "}
               <span className="sr-only">(abre em nova aba)</span>
             </a>
           </div>

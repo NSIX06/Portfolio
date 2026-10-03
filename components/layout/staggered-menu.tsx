@@ -189,9 +189,6 @@ export function StaggeredMenu(): ReactNode {
       </div>
 
       <header className="staggered-menu-header">
-        <a href="#inicio" className="sm-logo focus-ring" onClick={() => open && toggle(false)}>
-          <span className="text-foreground">Felipe</span> <span className="text-accent">Bugalho</span>
-        </a>
         <div className="sm-actions">
           <NavThemeToggle />
           <button

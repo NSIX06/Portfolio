@@ -57,13 +57,13 @@ export default function HomePage(): ReactNode {
           <div className="border-foreground/5 bg-foreground/1.5 dark:bg-foreground/3 rounded-4xl border p-8 sm:p-12">
             <div className="text-foreground/75 space-y-6 text-[17px] leading-[1.7] tracking-tight sm:text-[18px]">
               <p className="text-foreground/85 text-[19px] leading-[1.6] sm:text-[21px]">
-                Sou <strong className="text-foreground font-semibold">Desenvolvedor Full Stack e Técnico em Informática</strong>, com experiência na criação de 
+                Sou <strong className="text-foreground font-semibold">Desenvolvedor Full Stack e Técnico em Informática</strong>, com experiência na criação de{" "}
                 <strong className="text-foreground font-semibold">sistemas internos para o agronegócio</strong>, com foco em automação de processos, integração de
                 sistemas e soluções orientadas a resultados.
               </p>
               <p>
-                Minha experiência combina desenvolvimento de software com 
-                <strong className="text-foreground font-semibold">conhecimento de processos corporativos</strong>: fui usuário-chave do 
+                Minha experiência combina desenvolvimento de software com{" "}
+                <strong className="text-foreground font-semibold">conhecimento de processos corporativos</strong>: fui usuário-chave do{" "}
                 <strong className="text-foreground font-semibold">TOTVS Protheus</strong> no Planejamento e Controle de Manutenção (PCM) da TMG, onde também criei
                 ferramentas internas. Isso me ajuda a transformar necessidades operacionais em ferramentas digitais
                 mais eficientes.
@@ -74,7 +74,7 @@ export default function HomePage(): ReactNode {
               </p>
               <p>
                 Sou graduando em <strong className="text-foreground font-semibold">Análise e Desenvolvimento de Sistemas</strong> pela UniSENAI MT e busco
-                constantemente aprimorar meus conhecimentos em 
+                constantemente aprimorar meus conhecimentos em{" "}
                 <strong className="text-foreground font-semibold">desenvolvimento web, backend, bancos de dados, cloud, automação e Inteligência Artificial</strong>.
               </p>
             </div>

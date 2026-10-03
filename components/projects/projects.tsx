@@ -225,7 +225,7 @@ function ProjectCard({
               className="focus-ring border-foreground/12 text-foreground hover:border-accent hover:text-accent relative z-10 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-semibold transition-colors"
             >
               <Globe className="h-3.5 w-3.5" aria-hidden="true" />
-              Site
+              Site{" "}
               <span className="sr-only">de {project.name} (abre em nova aba)</span>
             </a>
           ) : null}
@@ -237,7 +237,7 @@ function ProjectCard({
               className="focus-ring bg-foreground text-background hover:bg-accent relative z-10 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors hover:text-white"
             >
               <Github className="h-3.5 w-3.5" aria-hidden="true" />
-              Repositório
+              Repositório{" "}
               <span className="sr-only">de {project.name} no GitHub (abre em nova aba)</span>
             </a>
           ) : !project.live ? (
