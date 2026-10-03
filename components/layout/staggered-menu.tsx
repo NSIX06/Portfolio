@@ -1,30 +1,81 @@
 "use client";
 
 import { gsap } from "gsap";
+import { ArrowRight, Download, FileText, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import { NavThemeToggle } from "@/components/layout/nav";
-import { CV_URL, SECTIONS, SOCIALS } from "@/lib/nav";
+import { CV_URL } from "@/lib/nav";
+import { profile } from "@/lib/profile";
 import "./staggered-menu.css";
 
 const LAYERS = ["#2a0707", "#e11d1d"];
 
+const ITEMS = [
+  { label: "Início", href: "#inicio" },
+  { label: "Sobre mim", href: "#sobre" },
+  { label: "Trajetória", href: "#trajetoria" },
+  { label: "Projetos", href: "#projetos" },
+  { label: "Tech Stack", href: "#stack" },
+  { label: "Habilidades", href: "#habilidades" },
+  { label: "Contato", href: "#contato" },
+] as const;
+
+const SOCIAL = [
+  { label: "LinkedIn", href: profile.links.linkedin, Icon: Linkedin },
+  { label: "GitHub", href: profile.links.github, Icon: Github },
+  { label: "E-mail", href: `mailto:${profile.email}`, Icon: Mail },
+  { label: "Instagram", href: profile.links.instagram, Icon: Instagram },
+] as const;
+
+/** Seção sob ~45% da tela → índice do item ativo (scroll spy). */
+function useActiveItem(): number {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    let raf = 0;
+    const measure = (): void => {
+      raf = 0;
+      const mid = window.innerHeight * 0.45;
+      let next = 0;
+      ITEMS.forEach((it, i) => {
+        const el = document.querySelector(it.href);
+        if (el && el.getBoundingClientRect().top <= mid) next = i;
+      });
+      setActive(next);
+    };
+    const onScroll = (): void => {
+      if (!raf) raf = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+  return active;
+}
+
 /**
- * StaggeredMenu (React Bits), adaptado: camadas em vermelho escuro e vermelho que deslizam
- * antes do painel, itens grandes em Syne com numeração vermelha, redes sociais e currículo.
+ * StaggeredMenu (React Bits) adaptado ao site: mantém as camadas vermelhas que deslizam
+ * antes do painel, os itens que sobem em cascata e o botão Menu/Fechar com o "+" girando;
+ * o painel ganha a organização de um "sistema de navegação": seção ativa destacada,
+ * disponibilidade, redes e o currículo em destaque.
  */
 export function StaggeredMenu(): ReactNode {
   const [open, setOpen] = useState(false);
   const [lines, setLines] = useState<string[]>(["Menu", "Fechar"]);
+  const active = useActiveItem();
   const panelRef = useRef<HTMLElement>(null);
   const layersRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLSpanElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const openTl = useRef<gsap.core.Timeline | null>(null);
-  const closeTw = useRef<gsap.core.Tween | null>(null);
+  const closeTl = useRef<gsap.core.Timeline | null>(null);
 
-  // Estado inicial: painel e camadas fora da tela, à direita.
+  // Estado inicial: painel e camadas fora da tela, à direita; fundo escurecido invisível.
   useLayoutEffect(() => {
     const panel = panelRef.current;
     const layers = layersRef.current ? Array.from(layersRef.current.children) : [];
@@ -32,7 +83,8 @@ export function StaggeredMenu(): ReactNode {
     const ctx = gsap.context(() => {
       // x: 0 zera o translateX(100%) do CSS (que o GSAP leria como pixels) e deixa só o xPercent.
       gsap.set([panel, ...layers], { x: 0, xPercent: 100 });
-      gsap.set(".sm-panel-itemLabel", { yPercent: 140, rotate: 10 });
+      gsap.set(".sm-item-label", { yPercent: 120, rotate: 6 });
+      if (backdropRef.current) gsap.set(backdropRef.current, { autoAlpha: 0 });
     }, panel);
     return () => ctx.revert();
   }, []);
@@ -40,28 +92,35 @@ export function StaggeredMenu(): ReactNode {
   const play = (opening: boolean): void => {
     const panel = panelRef.current;
     const layers = layersRef.current ? (Array.from(layersRef.current.children) as HTMLElement[]) : [];
+    const backdrop = backdropRef.current;
     if (!panel) return;
-    const labels = panel.querySelectorAll<HTMLElement>(".sm-panel-itemLabel");
-    const nums = panel.querySelectorAll<HTMLElement>(".sm-panel-list .sm-panel-item");
-    const socials = panel.querySelectorAll<HTMLElement>(".sm-socials-title, .sm-socials-link");
+    const labels = panel.querySelectorAll<HTMLElement>(".sm-item-label");
+    const nums = panel.querySelectorAll<HTMLElement>(".sm-item-num");
+    const reveal = panel.querySelectorAll<HTMLElement>("[data-sm-reveal]");
 
     openTl.current?.kill();
-    closeTw.current?.kill();
+    closeTl.current?.kill();
 
     if (opening) {
-      gsap.set(labels, { yPercent: 140, rotate: 10 });
-      gsap.set(nums, { "--sm-num-opacity": 0 });
-      gsap.set(socials, { y: 20, opacity: 0 });
+      gsap.set(labels, { yPercent: 120, rotate: 6 });
+      gsap.set(nums, { opacity: 0, x: -6 });
+      gsap.set(reveal, { y: 16, opacity: 0 });
       const tl = gsap.timeline();
-      layers.forEach((el, i) => tl.fromTo(el, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: "power4.out" }, i * 0.07));
+      if (backdrop) tl.to(backdrop, { autoAlpha: 1, duration: 0.4, ease: "power2.out" }, 0);
+      layers.forEach((el, i) =>
+        tl.fromTo(el, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: "power4.out" }, i * 0.07)
+      );
       const t = layers.length * 0.07 + 0.02;
       tl.fromTo(panel, { xPercent: 100 }, { xPercent: 0, duration: 0.65, ease: "power4.out" }, t);
-      tl.to(labels, { yPercent: 0, rotate: 0, duration: 1, ease: "power4.out", stagger: 0.08 }, t + 0.1);
-      tl.to(nums, { "--sm-num-opacity": 1, duration: 0.6, ease: "power2.out", stagger: 0.08 }, t + 0.2);
-      tl.to(socials, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.05 }, t + 0.3);
+      tl.to(labels, { yPercent: 0, rotate: 0, duration: 0.9, ease: "power4.out", stagger: 0.06 }, t + 0.12);
+      tl.to(nums, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out", stagger: 0.06 }, t + 0.2);
+      tl.to(reveal, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out", stagger: 0.07 }, t + 0.3);
       openTl.current = tl;
     } else {
-      closeTw.current = gsap.to([...layers, panel], { xPercent: 100, duration: 0.32, ease: "power3.in" });
+      const tl = gsap.timeline();
+      tl.to([...layers, panel], { xPercent: 100, duration: 0.32, ease: "power3.in" }, 0);
+      if (backdrop) tl.to(backdrop, { autoAlpha: 0, duration: 0.3, ease: "power2.in" }, 0);
+      closeTl.current = tl;
     }
 
     // Ícone "+" gira para virar "×".
@@ -93,7 +152,7 @@ export function StaggeredMenu(): ReactNode {
     window.dispatchEvent(new Event(next ? "lenis:stop" : "lenis:start"));
   };
 
-  // Esc e clique fora fecham; foco vai para o primeiro item ao abrir.
+  // Esc e clique fora fecham; foco vai para o item ativo ao abrir.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent): void => {
@@ -108,8 +167,8 @@ export function StaggeredMenu(): ReactNode {
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onDown);
-    const first = panelRef.current?.querySelector<HTMLElement>("a");
-    const id = window.setTimeout(() => first?.focus({ preventScroll: true }), 350);
+    const target = panelRef.current?.querySelector<HTMLElement>('[aria-current="location"]');
+    const id = window.setTimeout(() => target?.focus({ preventScroll: true }), 380);
     return () => {
       window.clearTimeout(id);
       document.removeEventListener("keydown", onKey);
@@ -118,13 +177,11 @@ export function StaggeredMenu(): ReactNode {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- toggle usa só refs/estado atual
   }, [open]);
 
-  // Item clicado: fecha o menu e deixa o Lenis rolar até a seção.
-  const onItem = (): void => {
-    toggle(false);
-  };
+  const tab = open ? 0 : -1;
 
   return (
     <div className="staggered-menu-wrapper" data-open={open || undefined}>
+      <div ref={backdropRef} className="sm-backdrop" aria-hidden="true" />
       <div ref={layersRef} className="sm-prelayers" aria-hidden="true">
         {LAYERS.map((c) => (
           <div key={c} className="sm-prelayer" style={{ background: c }} />
@@ -168,43 +225,83 @@ export function StaggeredMenu(): ReactNode {
         ref={panelRef}
         className="staggered-menu-panel"
         aria-hidden={!open}
-        aria-label="Menu"
+        aria-label="Menu de navegação"
         data-lenis-prevent
       >
-        <div className="sm-panel-inner">
-          <ul className="sm-panel-list">
-            {SECTIONS.map((s) => (
-              <li className="sm-panel-itemWrap" key={s.href}>
-                <a className="sm-panel-item" href={s.href} tabIndex={open ? 0 : -1} onClick={onItem}>
-                  <span className="sm-panel-itemLabel">{s.label}</span>
+        <div className="sm-panel-head">
+          <p className="sm-kicker">{"// navegação do site"}</p>
+        </div>
+
+        <nav className="sm-panel-body" aria-label="Seções">
+          <p className="sm-group-label">Seções principais</p>
+          <ul className="sm-list">
+            {ITEMS.map((it, i) => {
+              const on = i === active;
+              return (
+                <li key={it.href} className="sm-item-wrap">
+                  <a
+                    href={it.href}
+                    tabIndex={tab}
+                    aria-current={on ? "location" : undefined}
+                    className={`sm-item focus-ring ${on ? "is-active" : ""}`}
+                    onClick={() => toggle(false)}
+                  >
+                    <span className="sm-item-num">{String(i + 1).padStart(2, "0")}.</span>
+                    <span className="sm-item-clip">
+                      <span className="sm-item-label">{it.label}</span>
+                    </span>
+                    <ArrowRight className="sm-item-arrow" aria-hidden="true" />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="sm-status" data-sm-reveal>
+            <span className="sm-status-dot" aria-hidden="true" />
+            <span className="sm-status-text">Disponível para novos projetos</span>
+            <span className="sm-status-meta">MT · Remoto</span>
+          </div>
+        </nav>
+
+        <div className="sm-panel-foot">
+          <div className="sm-foot-head" data-sm-reveal>
+            <span>{"Conectar // redes"}</span>
+            <span className="text-accent">@{profile.handle}</span>
+          </div>
+          <ul className="sm-social-grid" data-sm-reveal>
+            {SOCIAL.map(({ label, href, Icon }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  tabIndex={tab}
+                  className="sm-social focus-ring"
+                  {...(href.startsWith("mailto") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                >
+                  <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  {label}
                 </a>
               </li>
             ))}
           </ul>
-
-          <div className="sm-socials">
-            <h3 className="sm-socials-title">Redes e currículo</h3>
-            <ul className="sm-socials-list">
-              {SOCIALS.map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target={s.href.startsWith("mailto") ? undefined : "_blank"}
-                    rel="noopener noreferrer"
-                    tabIndex={open ? 0 : -1}
-                    className="sm-socials-link"
-                  >
-                    {s.label}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a href={CV_URL} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1} className="sm-socials-link sm-socials-link--cv">
-                  Currículo (PDF)
-                </a>
-              </li>
-            </ul>
-          </div>
+          <a
+            href={CV_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={tab}
+            className="sm-cv focus-ring"
+            data-sm-reveal
+          >
+            <span className="sm-cv-icon" aria-hidden="true">
+              <FileText className="h-4 w-4" />
+            </span>
+            <span className="sm-cv-text">
+              <span className="sm-cv-title">Currículo completo</span>
+              <span className="sm-cv-sub">Download em PDF · atualizado</span>
+            </span>
+            <Download className="sm-cv-arrow" aria-hidden="true" />
+            <span className="sr-only">(abre em nova aba)</span>
+          </a>
         </div>
       </aside>
     </div>
