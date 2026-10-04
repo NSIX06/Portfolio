@@ -74,7 +74,7 @@ export function ScrollBackdrop(): ReactNode {
       <div className="absolute inset-0 opacity-90 dark:opacity-75">
         <ShaderFlow
           className="absolute inset-0 h-full w-full"
-          brightness={light ? 1 : 1.7}
+          brightness={light ? 1.05 : 1.7}
           iterations={8}
           resolution={0.35}
           maxFps={30}
@@ -83,8 +83,8 @@ export function ScrollBackdrop(): ReactNode {
           colorHighA={light ? pal.shaderHigh : [0.42, 0.06, 0.05]}
           fadeCx={0.5}
           fadeCy={0}
-          fadeRx={1.5}
-          fadeRy={0.85}
+          fadeRx={light ? 2.2 : 1.5}
+          fadeRy={light ? 1.5 : 0.85}
         />
       </div>
       <div className="backdrop-gradient absolute inset-0" />

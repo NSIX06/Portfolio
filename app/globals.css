@@ -354,10 +354,12 @@ html:not(.dark) .backdrop-layer--glitch > * {
   opacity: 0.55;
 }
 html:not(.dark) .backdrop-gradient {
+  /* Mesma ideia do escuro (brilhos da cor de destaque + vinheta), invertida para o claro */
   background:
-    radial-gradient(ellipse 80% 55% at 50% 0%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%),
-    radial-gradient(ellipse 70% 60% at 0% 100%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 70%),
-    linear-gradient(to bottom, color-mix(in srgb, var(--background) 10%, transparent), color-mix(in srgb, var(--background) 45%, transparent));
+    radial-gradient(ellipse 80% 55% at 50% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 0% 100%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 100% 60%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, color-mix(in srgb, var(--background) 70%, transparent) 100%);
 }
 .backdrop-layer--dots > * {
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 35%);
@@ -601,8 +603,8 @@ html:not(.dark) .backdrop-gradient {
 }
 
 /* ---------- Paletas do tema claro (cursor e destaques acompanham) ---------- */
-html:not(.dark)[data-palette="rubi"] { --accent: #e11d1d; --ring: #e11d1d; --cursor: #e11d1d; --cursor-target: #991b1b; }
-html:not(.dark)[data-palette="oceano"] { --accent: #2563eb; --ring: #2563eb; --cursor: #2563eb; --cursor-target: #1e40af; }
-html:not(.dark)[data-palette="lavanda"] { --accent: #7c3aed; --ring: #7c3aed; --cursor: #7c3aed; --cursor-target: #5b21b6; }
-html:not(.dark)[data-palette="esmeralda"] { --accent: #059669; --ring: #059669; --cursor: #059669; --cursor-target: #065f46; }
-html:not(.dark)[data-palette="ambar"] { --accent: #ea580c; --ring: #ea580c; --cursor: #ea580c; --cursor-target: #9a3412; }
+html:not(.dark)[data-palette="rubi"] { --background: #fdf6f6; --accent: #e11d1d; --ring: #e11d1d; --cursor: #e11d1d; --cursor-target: #991b1b; }
+html:not(.dark)[data-palette="oceano"] { --background: #f5f8ff; --accent: #2563eb; --ring: #2563eb; --cursor: #2563eb; --cursor-target: #1e40af; }
+html:not(.dark)[data-palette="lavanda"] { --background: #f8f5ff; --accent: #7c3aed; --ring: #7c3aed; --cursor: #7c3aed; --cursor-target: #5b21b6; }
+html:not(.dark)[data-palette="esmeralda"] { --background: #f3fbf7; --accent: #059669; --ring: #059669; --cursor: #059669; --cursor-target: #065f46; }
+html:not(.dark)[data-palette="ambar"] { --background: #fff8f2; --accent: #ea580c; --ring: #ea580c; --cursor: #ea580c; --cursor-target: #9a3412; }
