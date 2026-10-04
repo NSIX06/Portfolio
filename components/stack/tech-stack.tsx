@@ -52,7 +52,7 @@ export function TechStack({
           id="stack-title"
           className="text-foreground font-serif text-[2.4rem] leading-[1.05] font-extrabold tracking-tight md:text-[3rem] lg:text-[3.5rem]"
         >
-          Tech <span className="text-accent">Stack</span>
+          <span className="text-outline">Tech</span> <span className="text-accent">Stack</span>
         </h2>
         <p className="text-foreground/65 max-w-[40ch] text-[18px] leading-[1.45] tracking-tight">
           Clique em um cartão para ver onde usei cada tecnologia.

@@ -82,7 +82,7 @@ export function Projects({
           <FadeIn className="flex flex-col items-center gap-5 pt-12 pb-10 text-center sm:pt-20 sm:pb-14">
             <p className="section-label">{"// 03 — projetos"}</p>
             <h2 className="text-foreground font-serif text-[2.5rem] leading-[1.05] font-bold tracking-tight md:text-[3rem] lg:text-[3.5rem]">
-              Meus projetos
+              Meus <span className="text-outline">projetos</span>
             </h2>
             <p className="text-foreground/65 max-w-[33ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
               De sistemas corporativos em produção a projetos acadêmicos e

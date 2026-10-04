@@ -12,7 +12,7 @@ const ROLES = ["Desenvolvedor Full Stack", "Técnico em Informática", "Graduand
 export function Hero(): ReactNode {
   return (
     <section className="relative w-full">
-      <div className="mx-auto w-full max-w-275 px-6 pt-44 pb-24 sm:px-10 sm:pt-56 sm:pb-32">
+      <div className="mx-auto w-full max-w-275 px-6 pt-28 pb-16 sm:px-10 sm:pt-32 sm:pb-20">
         <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-8">
           <div className="flex flex-col gap-4">
             <FadeIn delay={0}>
@@ -32,7 +32,7 @@ export function Hero(): ReactNode {
             </FadeIn>
             <h1 className="font-serif text-[2.9rem] leading-[0.95] font-extrabold tracking-tight sm:text-[3.6rem] lg:text-[4.1rem]">
               <MaskLine delay={0.05} className="text-foreground">Luiz</MaskLine>
-              <MaskLine delay={0.15} className="text-foreground whitespace-nowrap">Felipe P.</MaskLine>
+              <MaskLine delay={0.15} className="text-outline whitespace-nowrap">Felipe P.</MaskLine>
               <MaskLine delay={0.25} className="text-accent">Bugalho</MaskLine>
             </h1>
 

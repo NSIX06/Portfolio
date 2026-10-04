@@ -6,7 +6,21 @@
   height: 0;
   pointer-events: none;
   z-index: 10000;
-  mix-blend-mode: difference;
+  filter: drop-shadow(0 0 6px rgba(225, 29, 29, 0.35));
+}
+
+/* Ponto separado da mira: segue o mouse quase sem atraso */
+.target-cursor-dot-solo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10001;
+  box-shadow: 0 0 10px rgba(225, 29, 29, 0.6);
+  will-change: transform;
 }
 
 .target-cursor-dot {
@@ -26,7 +40,8 @@
   top: 50%;
   width: 12px;
   height: 12px;
-  border: 3px solid;
+  border: 2px solid;
+  border-radius: 2px;
   will-change: transform;
 }
 .corner-tl {

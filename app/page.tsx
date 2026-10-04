@@ -64,7 +64,7 @@ export default function HomePage(): ReactNode {
             id="sobre-title"
             sub="Soluções que transformam requisitos de negócio em software."
           >
-            Quem eu sou e <span className="text-accent">como trabalho</span>
+            Quem eu <span className="text-outline">sou</span> e <span className="text-accent">como trabalho</span>
           </SectionHead>
         </div>
 
@@ -120,7 +120,7 @@ export default function HomePage(): ReactNode {
             id="trajetoria-title"
             className="text-foreground font-serif text-[2.4rem] leading-[1.05] font-extrabold tracking-tight md:text-[3rem] lg:text-[3.5rem]"
           >
-            A estrada até <span className="text-accent">aqui</span>
+            A <span className="text-outline">estrada</span> até <span className="text-accent">aqui</span>
           </h2>
           <p className="text-foreground/65 max-w-[36ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
             Carreira e formação em ordem cronológica. Clique em um card para ver os detalhes.
@@ -148,7 +148,7 @@ export default function HomePage(): ReactNode {
           className="mx-auto w-full max-w-275 scroll-mt-24 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
         >
           <SectionHead label="// 05 — habilidades" id="habilidades-title" sub="Linguagens, frameworks, sistemas corporativos e infraestrutura, organizados por área.">
-            Habilidades & <span className="text-accent">Conhecimentos</span>
+            <span className="text-outline">Habilidades</span> & <span className="text-accent">Conhecimentos</span>
           </SectionHead>
           <div className="mt-10">
             <Knowledge categories={knowledge} />
@@ -161,7 +161,7 @@ export default function HomePage(): ReactNode {
           className="mx-auto w-full max-w-275 scroll-mt-24 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
         >
           <SectionHead label="// 06 — metodologias" id="metodologias-title" sub="Como organizo o trabalho do backlog à entrega.">
-            Metodologias <span className="text-accent">ágeis</span>
+            <span className="text-outline">Metodologias</span> <span className="text-accent">ágeis</span>
           </SectionHead>
           <div className="mt-10">
             <Methodologies items={methodologies} intro={METHODOLOGIES_INTRO} />
@@ -176,14 +176,14 @@ export default function HomePage(): ReactNode {
         className="mx-auto w-full max-w-275 scroll-mt-24 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
       >
         <SectionHead label="// 07 — vitrine" id="vitrine-title" sub="Certificações, competências e idiomas em um só lugar.">
-          Meu canto de <span className="text-accent">paixões</span>
+          Meu <span className="text-outline">canto</span> de <span className="text-accent">paixões</span>
         </SectionHead>
         <div className="mt-10">
           <PassionCorner />
         </div>
       </section>
 
-      <div id="contato" data-bg="dots" className="scroll-mt-24 pb-12 sm:pb-16">
+      <div id="contato" data-bg="dots" className="scroll-mt-24 pb-4">
         <ContactCard />
       </div>
     </main>

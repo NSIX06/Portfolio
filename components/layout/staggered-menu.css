@@ -160,6 +160,9 @@
   padding: 0 1.5rem;
   border-bottom: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
 }
+.sm-head-logo {
+  margin-right: 0.85rem;
+}
 .sm-kicker {
   font-family: var(--font-mono);
   font-size: 11px;

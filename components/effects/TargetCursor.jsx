@@ -28,17 +28,28 @@ export default function TargetCursor({
   const dotRef = useRef(null)
 
   useEffect(() => {
-    if (!enabled || !cursorRef.current) return undefined
+    if (!enabled || !cursorRef.current || !dotRef.current) return undefined
     const cursor = cursorRef.current
+    const dot = dotRef.current
     const corners = Array.from(cursor.querySelectorAll('.target-cursor-corner'))
-    const strength = { v: 0 }
-    let targetCorners = null
+    const HOME = [
+      { x: -CORNER * 1.5, y: -CORNER * 1.5 },
+      { x: CORNER * 0.5, y: -CORNER * 1.5 },
+      { x: CORNER * 0.5, y: CORNER * 0.5 },
+      { x: -CORNER * 1.5, y: CORNER * 0.5 },
+    ]
     let activeTarget = null
-    let leaveHandler = null
     let spin
+    const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
 
     document.documentElement.classList.add('has-target-cursor')
-    gsap.set(cursor, { xPercent: -50, yPercent: -50, x: window.innerWidth / 2, y: window.innerHeight / 2, opacity: 0 })
+    gsap.set([cursor, dot], { xPercent: -50, yPercent: -50, x: mouse.x, y: mouse.y, opacity: 0 })
+
+    // Ponto acompanha o mouse quase na hora; a mira vem atrás com atraso suave (fluidez da referência).
+    const dotX = gsap.quickTo(dot, 'x', { duration: 0.08, ease: 'power3.out' })
+    const dotY = gsap.quickTo(dot, 'y', { duration: 0.08, ease: 'power3.out' })
+    const ringX = gsap.quickTo(cursor, 'x', { duration: 0.45, ease: 'power3.out' })
+    const ringY = gsap.quickTo(cursor, 'y', { duration: 0.45, ease: 'power3.out' })
 
     const startSpin = () => {
       spin?.kill()
@@ -47,81 +58,66 @@ export default function TargetCursor({
     }
     startSpin()
 
+    // A cada quadro, os cantos deslizam (interpolação) até o alvo — ou de volta para casa.
     const ticker = () => {
-      if (!targetCorners || strength.v === 0) return
       const cx = gsap.getProperty(cursor, 'x')
       const cy = gsap.getProperty(cursor, 'y')
-      corners.forEach((corner, i) => {
-        const curX = gsap.getProperty(corner, 'x')
-        const curY = gsap.getProperty(corner, 'y')
-        const tx = targetCorners[i].x - cx
-        const ty = targetCorners[i].y - cy
-        gsap.to(corner, {
-          x: curX + (tx - curX) * strength.v,
-          y: curY + (ty - curY) * strength.v,
-          duration: strength.v >= 0.99 ? 0.2 : 0.05,
-          ease: 'power1.out',
-          overwrite: 'auto',
-        })
+      let goal = HOME
+      if (activeTarget) {
+        const r = activeTarget.getBoundingClientRect()
+        goal = [
+          { x: r.left - BORDER - cx, y: r.top - BORDER - cy },
+          { x: r.right + BORDER - CORNER - cx, y: r.top - BORDER - cy },
+          { x: r.right + BORDER - CORNER - cx, y: r.bottom + BORDER - CORNER - cy },
+          { x: r.left - BORDER - cx, y: r.bottom + BORDER - CORNER - cy },
+        ]
+      }
+      corners.forEach((c, i) => {
+        const x = gsap.getProperty(c, 'x')
+        const y = gsap.getProperty(c, 'y')
+        gsap.set(c, { x: x + (goal[i].x - x) * 0.22, y: y + (goal[i].y - y) * 0.22 })
       })
     }
+    gsap.ticker.add(ticker)
 
     const onMove = (e) => {
-      gsap.to(cursor, { x: e.clientX, y: e.clientY, opacity: 1, duration: 0.1, ease: 'power3.out' })
+      mouse.x = e.clientX
+      mouse.y = e.clientY
+      dotX(e.clientX)
+      dotY(e.clientY)
+      ringX(e.clientX)
+      ringY(e.clientY)
+      gsap.to([cursor, dot], { opacity: 1, duration: 0.2, overwrite: 'auto' })
     }
     const onDown = () => {
-      gsap.to(dotRef.current, { scale: 0.7, duration: 0.3 })
-      gsap.to(cursor, { scale: 0.9, duration: 0.2 })
+      gsap.to(dot, { scale: 0.6, duration: 0.25 })
+      gsap.to(cursor, { scale: 0.88, duration: 0.25 })
     }
     const onUp = () => {
-      gsap.to(dotRef.current, { scale: 1, duration: 0.3 })
-      gsap.to(cursor, { scale: 1, duration: 0.2 })
+      gsap.to(dot, { scale: 1, duration: 0.3 })
+      gsap.to(cursor, { scale: 1, duration: 0.3 })
     }
-    const onLeaveWindow = () => gsap.to(cursor, { opacity: 0, duration: 0.2 })
+    const onLeaveWindow = () => gsap.to([cursor, dot], { opacity: 0, duration: 0.2 })
 
-    const release = () => {
-      gsap.ticker.remove(ticker)
-      targetCorners = null
-      strength.v = 0
-      gsap.to(corners, { borderColor: color, duration: 0.15 })
-      gsap.to(dotRef.current, { backgroundColor: color, duration: 0.15 })
-      const home = [
-        { x: -CORNER * 1.5, y: -CORNER * 1.5 },
-        { x: CORNER * 0.5, y: -CORNER * 1.5 },
-        { x: CORNER * 0.5, y: CORNER * 0.5 },
-        { x: -CORNER * 1.5, y: CORNER * 0.5 },
-      ]
-      corners.forEach((c, i) => gsap.to(c, { ...home[i], duration: 0.3, ease: 'power3.out', overwrite: true }))
-      if (activeTarget && leaveHandler) activeTarget.removeEventListener('mouseleave', leaveHandler)
-      activeTarget = null
-      leaveHandler = null
-      startSpin()
-    }
-
-    const onOver = (e) => {
-      const target = e.target.closest?.(targetSelector)
-      if (!target || target === activeTarget) return
-      if (activeTarget) release()
+    const setTarget = (target) => {
+      if (target === activeTarget) return
       activeTarget = target
-      spin?.kill()
-      gsap.set(cursor, { rotation: 0 })
-      gsap.to(corners, { borderColor: colorOnTarget, duration: 0.15 })
-      gsap.to(dotRef.current, { backgroundColor: colorOnTarget, duration: 0.15 })
-      const r = target.getBoundingClientRect()
-      targetCorners = [
-        { x: r.left - BORDER, y: r.top - BORDER },
-        { x: r.right + BORDER - CORNER, y: r.top - BORDER },
-        { x: r.right + BORDER - CORNER, y: r.bottom + BORDER - CORNER },
-        { x: r.left - BORDER, y: r.bottom + BORDER - CORNER },
-      ]
-      gsap.ticker.add(ticker)
-      gsap.to(strength, { v: 1, duration: hoverDuration, ease: 'power2.out' })
-      leaveHandler = release
-      target.addEventListener('mouseleave', leaveHandler)
+      const c = target ? colorOnTarget : color
+      gsap.to(corners, { borderColor: c, duration: 0.2 })
+      gsap.to(dot, { backgroundColor: c, duration: 0.2 })
+      if (target) {
+        spin?.kill()
+        gsap.to(cursor, { rotation: 0, duration: 0.3, ease: 'power3.out' })
+      } else {
+        startSpin()
+      }
     }
 
+    const onOver = (e) => setTarget(e.target.closest?.(targetSelector) ?? null)
+    // Ao rolar, o elemento sob o mouse muda sem "mouseover": confere de novo.
     const onScroll = () => {
-      if (activeTarget) release()
+      const el = document.elementFromPoint(mouse.x, mouse.y)
+      setTarget(el?.closest?.(targetSelector) ?? null)
     }
 
     window.addEventListener('mousemove', onMove, { passive: true })
@@ -134,7 +130,6 @@ export default function TargetCursor({
     return () => {
       gsap.ticker.remove(ticker)
       spin?.kill()
-      if (activeTarget && leaveHandler) activeTarget.removeEventListener('mouseleave', leaveHandler)
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseover', onOver)
       window.removeEventListener('mousedown', onDown)
@@ -148,13 +143,15 @@ export default function TargetCursor({
   if (!enabled) return null
 
   return createPortal(
-    <div ref={cursorRef} className="target-cursor-wrapper" aria-hidden="true">
-      <div ref={dotRef} className="target-cursor-dot" style={{ backgroundColor: color }} />
-      <div className="target-cursor-corner corner-tl" style={{ borderColor: color }} />
-      <div className="target-cursor-corner corner-tr" style={{ borderColor: color }} />
-      <div className="target-cursor-corner corner-br" style={{ borderColor: color }} />
-      <div className="target-cursor-corner corner-bl" style={{ borderColor: color }} />
-    </div>,
+    <>
+      <div ref={cursorRef} className="target-cursor-wrapper" aria-hidden="true">
+        <div className="target-cursor-corner corner-tl" style={{ borderColor: color }} />
+        <div className="target-cursor-corner corner-tr" style={{ borderColor: color }} />
+        <div className="target-cursor-corner corner-br" style={{ borderColor: color }} />
+        <div className="target-cursor-corner corner-bl" style={{ borderColor: color }} />
+      </div>
+      <div ref={dotRef} className="target-cursor-dot-solo" aria-hidden="true" style={{ backgroundColor: color }} />
+    </>,
     document.body
   )
 }

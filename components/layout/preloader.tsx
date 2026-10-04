@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 
+import { N6Logo } from "@/components/ui/n6-logo";
 import { markSiteLoaded } from "@/lib/site-loaded";
 
 const KEY = "fb-preloaded";
@@ -61,13 +62,13 @@ export function Preloader(): ReactNode {
   return (
     <div className={`preloader ${phase === "leaving" ? "is-leaving" : ""}`} aria-hidden="true">
       <div className="preloader-inner">
-        <p className="preloader-name">
-          <span>Felipe</span> <span className="text-accent">Bugalho</span>
-        </p>
+        <div className="preloader-name">
+          <N6Logo size={5} />
+        </div>
         <div className="preloader-bar">
           <span />
         </div>
-        <p className="preloader-label">{"// carregando portfólio"}</p>
+        <p className="preloader-label">{"// nsix06 · carregando"}</p>
       </div>
     </div>
   );

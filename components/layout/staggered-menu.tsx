@@ -5,6 +5,7 @@ import { ArrowRight, Download, FileText, Github, Instagram, Linkedin, Mail } fro
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import { NavThemeToggle } from "@/components/layout/nav";
+import { N6Logo } from "@/components/ui/n6-logo";
 import { CV_URL } from "@/lib/nav";
 import { profile } from "@/lib/profile";
 import "./staggered-menu.css";
@@ -226,7 +227,8 @@ export function StaggeredMenu(): ReactNode {
         data-lenis-prevent
       >
         <div className="sm-panel-head">
-          <p className="sm-kicker">{"// navegação do site"}</p>
+          <N6Logo size={1.5} className="sm-head-logo n6-logo--solid" />
+          <p className="sm-kicker">{"// navegação"}</p>
         </div>
 
         <nav className="sm-panel-body" aria-label="Seções">
