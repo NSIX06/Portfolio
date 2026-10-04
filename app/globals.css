@@ -558,31 +558,25 @@ html:not(.dark) .backdrop-layer > * {
   -webkit-text-stroke: 0.045em var(--accent);
   margin-left: 0.02em;
 }
+/* Padrão: ponto vazado — contorno claro com o miolo preto */
 .n6-logo__dot {
-  color: var(--foreground);
+  color: #000;
+  -webkit-text-stroke: max(1.5px, 0.045em) var(--foreground);
+  paint-order: stroke fill;
   margin-left: 0.03em;
 }
 .preloader .n6-logo__n {
   color: #fff;
 }
-/* No carregamento: 6 cheio e o ponto branco vazado, que vai sendo preenchido junto com a barra */
+/* No carregamento: 6 cheio e o ponto vazado (padrão da logo) */
 .preloader .n6-logo__six {
   color: var(--accent);
   -webkit-text-stroke: 0;
 }
 .preloader .n6-logo__dot {
-  color: transparent;
-  -webkit-text-stroke: 0.035em #fff;
-  background: linear-gradient(#fff, #fff) left bottom / 100% 0% no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: n6-fill 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards;
+  -webkit-text-stroke-color: #fff;
 }
-@keyframes n6-fill {
-  to {
-    background-size: 100% 100%;
-  }
-}
+
 /* Em tamanho pequeno o 6 vazado some: versão cheia */
 .n6-logo--solid .n6-logo__six {
   color: var(--accent);
