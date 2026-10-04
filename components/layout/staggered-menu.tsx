@@ -1,7 +1,7 @@
 "use client";
 
 import { gsap } from "gsap";
-import { ArrowRight, Download, FileText, Github, Instagram, Linkedin, Mail, Moon } from "lucide-react";
+import { ArrowRight, Download, FileText, Github, Instagram, Linkedin, Mail, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
@@ -12,7 +12,6 @@ import { CV_URL } from "@/lib/nav";
 import { profile } from "@/lib/profile";
 import "./staggered-menu.css";
 
-const DARK_LAYERS: [string, string] = ["#2a0707", "#e11d1d"];
 
 const ITEMS = [
   { label: "Início", href: "#inicio" },
@@ -72,7 +71,7 @@ export function StaggeredMenu(): ReactNode {
   const { resolvedTheme, setTheme } = useTheme();
   const isLight = resolvedTheme === "light";
   const pal = usePalette();
-  const LAYERS = isLight ? pal.layers : DARK_LAYERS;
+  const LAYERS = isLight ? pal.layers : pal.dark.layers;
   const panelRef = useRef<HTMLElement>(null);
   const layersRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
@@ -264,23 +263,34 @@ export function StaggeredMenu(): ReactNode {
 
           <div className="sm-themes" data-sm-reveal>
             <p className="sm-group-label">Aparência</p>
-            <div className="sm-theme-row" role="radiogroup" aria-label="Tema do site">
-              <button
-                type="button"
-                role="radio"
-                aria-checked={!isLight}
-                tabIndex={tab}
-                onClick={() => setTheme("dark")}
-                className={`sm-swatch focus-ring ${!isLight ? "is-on" : ""}`}
-                title="Escuro"
-              >
-                <span className="sm-swatch-dot sm-swatch-dot--dark" aria-hidden="true">
-                  <Moon className="h-3 w-3" />
-                </span>
-                <span className="sm-swatch-label">Escuro</span>
-              </button>
+            <div className="sm-mode-row" role="radiogroup" aria-label="Modo">
+              {(
+                [
+                  ["dark", "Escuro", Moon],
+                  ["light", "Claro", Sun],
+                ] as const
+              ).map(([mode, label, ModeIcon]) => {
+                const on = (mode === "light") === isLight;
+                return (
+                  <button
+                    key={mode}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    tabIndex={tab}
+                    onClick={() => setTheme(mode)}
+                    className={`sm-mode focus-ring ${on ? "is-on" : ""}`}
+                  >
+                    <ModeIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="sm-theme-row" role="radiogroup" aria-label="Cor do site">
               {PALETTES.map((p) => {
-                const on = isLight && pal.id === p.id;
+                const on = pal.id === p.id;
+                const c = isLight ? p.accent : p.dark.accent;
                 return (
                   <button
                     key={p.id}
@@ -288,17 +298,16 @@ export function StaggeredMenu(): ReactNode {
                     role="radio"
                     aria-checked={on}
                     tabIndex={tab}
-                    onClick={() => {
-                      setPalette(p.id);
-                      setTheme("light");
-                    }}
+                    onClick={() => setPalette(p.id)}
                     className={`sm-swatch focus-ring ${on ? "is-on" : ""}`}
-                    title={`Claro · ${p.label}`}
+                    title={p.label}
                   >
                     <span
                       className="sm-swatch-dot"
                       aria-hidden="true"
-                      style={{ background: `linear-gradient(135deg, #ffffff 0 45%, ${p.accent} 45% 100%)` }}
+                      style={{
+                        background: `linear-gradient(135deg, ${isLight ? "#ffffff" : "#050505"} 0 45%, ${c} 45% 100%)`,
+                      }}
                     />
                     <span className="sm-swatch-label">{p.label}</span>
                   </button>

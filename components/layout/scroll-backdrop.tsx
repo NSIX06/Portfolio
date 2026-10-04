@@ -79,8 +79,8 @@ export function ScrollBackdrop(): ReactNode {
           resolution={0.35}
           maxFps={30}
           flowSpeed={[0, 0.06]}
-          colorLowA={light ? pal.shaderLow : [0.06, 0.008, 0.008]}
-          colorHighA={light ? pal.shaderHigh : [0.42, 0.06, 0.05]}
+          colorLowA={light ? pal.shaderLow : pal.dark.shaderLow}
+          colorHighA={light ? pal.shaderHigh : pal.dark.shaderHigh}
           fadeCx={0.5}
           fadeCy={0}
           fadeRx={light ? 2.2 : 1.5}
@@ -122,23 +122,22 @@ function Layer({
     >
       {kind === "dots" ? (
         <DotField
-          key={light ? pal.id : "dark"}
+          key={`${light ? "l" : "d"}-${pal.id}`}
           dotRadius={1.5}
           dotSpacing={18}
-          gradientFrom={light ? `rgba(${pal.rgb}, 0.32)` : "rgba(225, 29, 29, 0.38)"}
-          gradientTo={light ? `rgba(${pal.rgb}, 0.18)` : "rgba(140, 16, 16, 0.3)"}
-          glowColor={light ? `rgba(${pal.rgb}, 0.2)` : "rgba(225, 29, 29, 0.25)"}
+          gradientFrom={`rgba(${pal.rgb}, ${light ? 0.4 : 0.38})`}
+          gradientTo={`rgba(${pal.rgb}, ${light ? 0.22 : 0.2})`}
+          glowColor={`rgba(${pal.rgb}, 0.25)`}
         />
       ) : null}
       {kind === "grid" ? (
         <ShapeGrid
-          {...(light
-            ? { borderColor: `rgba(${pal.rgb}, 0.14)`, hoverColor: `rgba(${pal.rgb}, 0.16)` }
-            : {})}
+          borderColor={`rgba(${pal.rgb}, ${light ? 0.22 : 0.2})`}
+          hoverColor={`rgba(${pal.rgb}, ${light ? 0.24 : 0.32})`}
         />
       ) : null}
       {kind === "glitch" ? (
-        <LetterGlitch {...(light ? { colors: pal.glitch } : {})} />
+        <LetterGlitch colors={light ? pal.glitch : pal.dark.glitch} />
       ) : null}
     </div>
   );

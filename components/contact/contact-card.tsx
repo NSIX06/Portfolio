@@ -7,7 +7,7 @@ import { ContactCardCtas } from "./contact-card-ctas";
 import PulseHeart from "@/components/ui/pulse-heart";
 import { profile } from "@/lib/profile";
 import { FadeIn } from "@/components/ui/motion-primitives";
-import { ShaderFlow } from "../shaders/shader-flow";
+import { ContactShader } from "./contact-shader";
 
 const CARD_FADE_MASK =
   "radial-gradient(ellipse 90% 110% at 50% 50%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 40%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0.15) 100%)";
@@ -26,16 +26,7 @@ export function ContactCard(): ReactNode {
                 maskImage: CARD_FADE_MASK,
               }}
             >
-              <ShaderFlow
-                className="absolute inset-0 h-full w-full"
-                scale={3}
-                resolution={0.5}
-                maxFps={30}
-                iterations={10}
-                brightness={2.6}
-                colorLowA={[0.1, 0.02, 0.02]}
-                colorHighA={[0.62, 0.1, 0.08]}
-              />
+              <ContactShader />
             </div>
 
             <div className="relative grid gap-8 p-6 sm:gap-10 sm:p-7 md:grid-cols-[1.2fr_1fr] md:items-stretch md:gap-6 md:p-6">
