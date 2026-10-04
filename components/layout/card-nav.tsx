@@ -5,6 +5,7 @@ import { ArrowUpRight, FileDown } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import { NavThemeToggle } from "@/components/layout/nav";
+import { N6Logo } from "@/components/ui/n6-logo";
 import { CV_URL, NAV_GROUPS } from "@/lib/nav";
 import "./card-nav.css";
 
@@ -114,7 +115,7 @@ export function CardNav(): ReactNode {
           </button>
 
           <a href="#inicio" className="card-nav-logo focus-ring" onClick={() => open && toggle(false)}>
-            <span className="text-foreground">Felipe</span> <span className="text-accent">Bugalho</span>
+            <N6Logo size={1.45} className="n6-logo--solid" />
           </a>
 
           <div className="card-nav-actions">

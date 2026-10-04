@@ -74,9 +74,6 @@ export const baseMetadata: Metadata = {
     images: [siteConfig.ogImage],
     creator: siteConfig.creator,
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
   manifest: "/site.webmanifest",
 };
 
