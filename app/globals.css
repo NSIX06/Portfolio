@@ -559,21 +559,21 @@ html:not(.dark) .backdrop-layer > * {
   margin-left: 0.02em;
 }
 .n6-logo__dot {
-  color: var(--accent);
+  color: var(--foreground);
   margin-left: 0.03em;
 }
 .preloader .n6-logo__n {
   color: #fff;
 }
-/* No carregamento: 6 cheio e o ponto vazado, que vai sendo preenchido junto com a barra */
+/* No carregamento: 6 cheio e o ponto branco vazado, que vai sendo preenchido junto com a barra */
 .preloader .n6-logo__six {
   color: var(--accent);
   -webkit-text-stroke: 0;
 }
 .preloader .n6-logo__dot {
   color: transparent;
-  -webkit-text-stroke: 0.035em var(--accent);
-  background: linear-gradient(var(--accent), var(--accent)) left bottom / 100% 0% no-repeat;
+  -webkit-text-stroke: 0.035em #fff;
+  background: linear-gradient(#fff, #fff) left bottom / 100% 0% no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   animation: n6-fill 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards;
