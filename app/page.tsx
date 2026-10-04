@@ -9,6 +9,7 @@ import { TechStack } from "@/components/stack/tech-stack";
 import { Timeline } from "@/components/trajectory/timeline";
 import { TechMarquee } from "@/components/trajectory/tech-marquee";
 import { FadeIn } from "@/components/ui/motion-primitives";
+import { WordMarquee } from "@/components/ui/word-marquee";
 import { icon } from "@/lib/icons";
 import { createMetadata, siteConfig } from "@/lib/metadata";
 import { METHODOLOGIES, METHODOLOGIES_INTRO, SKILL_CATEGORIES } from "@/lib/skills";
@@ -129,6 +130,8 @@ export default function HomePage(): ReactNode {
           <Timeline items={timeline} />
         </div>
       </section>
+
+      <WordMarquee />
 
       <div id="projetos" data-bg="grid" className="scroll-mt-24 pb-16 sm:pb-24">
         <Projects withHeadline />

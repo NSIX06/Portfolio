@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { HeroCtas } from "./hero-ctas";
-import { FadeIn, ScaleUnblur } from "@/components/ui/motion-primitives";
+import { FadeIn, MaskLine, ScaleUnblur } from "@/components/ui/motion-primitives";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import TextType from "@/components/effects/TextType";
@@ -14,8 +14,9 @@ export function Hero(): ReactNode {
     <section className="relative w-full">
       <div className="mx-auto w-full max-w-275 px-6 pt-44 pb-24 sm:px-10 sm:pt-56 sm:pb-32">
         <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-8">
-          <FadeIn className="flex flex-col gap-4">
-            <p className="section-label">
+          <div className="flex flex-col gap-4">
+            <FadeIn delay={0}>
+<p className="section-label">
               <span aria-hidden="true">{"// "}</span>
               <TextType
                 as="span"
@@ -28,26 +29,34 @@ export function Hero(): ReactNode {
                 srText={ROLES.join(", ")}
               />
             </p>
+            </FadeIn>
             <h1 className="font-serif text-[2.9rem] leading-[0.95] font-extrabold tracking-tight sm:text-[3.6rem] lg:text-[4.1rem]">
-              <span className="text-foreground block">Luiz</span>
-              <span className="text-foreground block whitespace-nowrap">Felipe P.</span>
-              <span className="text-accent block">Bugalho</span>
+              <MaskLine delay={0.05} className="text-foreground">Luiz</MaskLine>
+              <MaskLine delay={0.15} className="text-foreground whitespace-nowrap">Felipe P.</MaskLine>
+              <MaskLine delay={0.25} className="text-accent">Bugalho</MaskLine>
             </h1>
 
-            <p className="text-foreground/65 max-w-[36ch] text-[19px] leading-[1.45] tracking-tight sm:text-[21px]">
+            <FadeIn delay={0.35}>
+<p className="text-foreground/65 max-w-[36ch] text-[19px] leading-[1.45] tracking-tight sm:text-[21px]">
               Sistemas internos, automação de processos e integrações, da análise de requisitos à entrega.
             </p>
+            </FadeIn>
 
-            <p className="border-accent/35 bg-accent/8 flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-2xl border px-4 py-3">
+            <FadeIn delay={0.45}>
+<p className="border-accent/35 bg-accent/8 flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-2xl border px-4 py-3">
               <span className="text-accent font-mono text-[11px] font-bold tracking-[0.2em] uppercase">Atualmente</span>
               <span className="text-foreground text-[15px] font-semibold tracking-tight sm:text-[16px]">
                 Profissional Autônomo — Desenvolvedor Web Freelancer
               </span>
             </p>
+            </FadeIn>
 
-            <HeroCtas />
+            <FadeIn delay={0.55}>
+<HeroCtas />
+            </FadeIn>
 
-            <ul
+            <FadeIn delay={0.65}>
+<ul
               className="mt-1 flex flex-wrap gap-2"
               aria-label="Disponibilidade"
             >
@@ -67,9 +76,10 @@ export function Hero(): ReactNode {
                 Rondonópolis - MT · remoto
               </li>
             </ul>
-          </FadeIn>
+            </FadeIn>
+          </div>
 
-          <ScaleUnblur className="flex justify-stretch md:justify-end">
+          <ScaleUnblur delay={0.2} className="flex justify-stretch md:justify-end">
             <div className="border-foreground/8 bg-background relative aspect-square w-full overflow-hidden rounded-4xl border p-1.5 shadow-sm md:max-w-105">
               <div className="relative h-full w-full overflow-hidden rounded-[1.6rem]">
                 <Image

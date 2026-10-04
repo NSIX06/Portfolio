@@ -7,7 +7,7 @@ import { Nav } from "@/components/layout/nav";
 import { StaggeredMenu } from "@/components/layout/staggered-menu";
 
 type MenuKind = "card" | "staggered" | "pill";
-const DEFAULT: MenuKind = "card";
+const DEFAULT: MenuKind = "staggered";
 
 /** Lê ?menu=card|staggered|pill da URL (para comparar os menus no preview). */
 function readMenu(): MenuKind {

@@ -1,4 +1,5 @@
 import { SiteMenu } from "@/components/layout/site-menu";
+import { Preloader } from "@/components/layout/preloader";
 import { PageBackdrop } from "@/components/layout/page-backdrop";
 import { ScrollBackdrop } from "@/components/layout/scroll-backdrop";
 import { Providers } from "@/components/layout/providers";
@@ -112,6 +113,7 @@ export default function RootLayout({
               fill="currentColor"
             />
           </svg>
+          <Preloader />
           <SkipToContent />
           <ScrollBackdrop />
           <PageBackdrop />

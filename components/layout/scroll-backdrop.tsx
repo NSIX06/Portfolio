@@ -65,7 +65,7 @@ export function ScrollBackdrop(): ReactNode {
   return (
     <div aria-hidden="true" data-backdrop={active} className="pointer-events-none fixed inset-0 -z-20 overflow-hidden">
       {/* Base: o degradê vermelho e preto do topo, agora no corpo inteiro */}
-      <div className="absolute inset-0 opacity-60 dark:opacity-100">
+      <div className="absolute inset-0 opacity-50 dark:opacity-75">
         <ShaderFlow
           className="absolute inset-0 h-full w-full"
           brightness={1.7}
