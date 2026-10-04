@@ -15,12 +15,6 @@ const CURSOR_TARGETS = [
 
 /** Efeitos globais: cursor em mira e brilho vermelho que segue o mouse nos cards. */
 export function SiteEffects(): ReactNode {
-  // Paleta do cursor no tema claro, escolhida pelo endereço: ?cursor=azul|ciano|roxo|verde|vermelho
-  useEffect(() => {
-    const v = new URLSearchParams(window.location.search).get("cursor");
-    if (v) document.documentElement.dataset.cursor = v;
-  }, []);
-
   useEffect(() => {
     const onMove = (e: PointerEvent): void => {
       const el = (e.target as Element | null)?.closest?.(

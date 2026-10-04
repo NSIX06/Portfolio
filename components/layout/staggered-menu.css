@@ -409,6 +409,58 @@ html:not(.dark) .sm-backdrop {
   background: rgba(10, 10, 10, 0.35);
 }
 
+/* ---------- Escolha de tema ---------- */
+.sm-themes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.sm-theme-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+.sm-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.2rem;
+  border-radius: 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  background: color-mix(in srgb, var(--foreground) 3%, transparent);
+  transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+.sm-swatch:hover {
+  transform: translateY(-2px);
+}
+.sm-swatch.is-on {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+.sm-swatch-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.sm-swatch-dot--dark {
+  background: linear-gradient(135deg, #050505 0 55%, #e11d1d 55% 100%);
+  color: #fff;
+}
+.sm-swatch-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--foreground) 70%, transparent);
+  white-space: nowrap;
+}
+
 @media (max-width: 640px) {
   .sm-prelayers,
   .staggered-menu-panel {

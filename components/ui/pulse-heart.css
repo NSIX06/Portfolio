@@ -27,7 +27,7 @@
   will-change: transform;
 }
 .pulse-heart:hover .pulse-heart__pill {
-  border-color: rgba(225, 29, 29, 0.5);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
 }
 
 .pulse-heart__heart {

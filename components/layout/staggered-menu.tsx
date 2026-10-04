@@ -1,16 +1,18 @@
 "use client";
 
 import { gsap } from "gsap";
-import { ArrowRight, Download, FileText, Github, Instagram, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Download, FileText, Github, Instagram, Linkedin, Mail, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import { NavThemeToggle } from "@/components/layout/nav";
 import { N6Logo } from "@/components/ui/n6-logo";
+import { PALETTES, setPalette, usePalette } from "@/lib/palette";
 import { CV_URL } from "@/lib/nav";
 import { profile } from "@/lib/profile";
 import "./staggered-menu.css";
 
-const LAYERS = ["#2a0707", "#e11d1d"];
+const DARK_LAYERS: [string, string] = ["#2a0707", "#e11d1d"];
 
 const ITEMS = [
   { label: "Início", href: "#inicio" },
@@ -67,6 +69,10 @@ export function StaggeredMenu(): ReactNode {
   const [open, setOpen] = useState(false);
   const [lines, setLines] = useState<string[]>(["Menu", "Fechar"]);
   const active = useActiveItem();
+  const { resolvedTheme, setTheme } = useTheme();
+  const isLight = resolvedTheme === "light";
+  const pal = usePalette();
+  const LAYERS = isLight ? pal.layers : DARK_LAYERS;
   const panelRef = useRef<HTMLElement>(null);
   const layersRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
@@ -184,8 +190,8 @@ export function StaggeredMenu(): ReactNode {
     <div className="staggered-menu-wrapper" data-open={open || undefined}>
       <div ref={backdropRef} className="sm-backdrop" aria-hidden="true" />
       <div ref={layersRef} className="sm-prelayers" aria-hidden="true">
-        {LAYERS.map((c) => (
-          <div key={c} className="sm-prelayer" style={{ background: c }} />
+        {LAYERS.map((c, i) => (
+          <div key={i} className="sm-prelayer" style={{ background: c }} />
         ))}
       </div>
 
@@ -255,6 +261,51 @@ export function StaggeredMenu(): ReactNode {
               );
             })}
           </ul>
+
+          <div className="sm-themes" data-sm-reveal>
+            <p className="sm-group-label">Aparência</p>
+            <div className="sm-theme-row" role="radiogroup" aria-label="Tema do site">
+              <button
+                type="button"
+                role="radio"
+                aria-checked={!isLight}
+                tabIndex={tab}
+                onClick={() => setTheme("dark")}
+                className={`sm-swatch focus-ring ${!isLight ? "is-on" : ""}`}
+                title="Escuro"
+              >
+                <span className="sm-swatch-dot sm-swatch-dot--dark" aria-hidden="true">
+                  <Moon className="h-3 w-3" />
+                </span>
+                <span className="sm-swatch-label">Escuro</span>
+              </button>
+              {PALETTES.map((p) => {
+                const on = isLight && pal.id === p.id;
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    tabIndex={tab}
+                    onClick={() => {
+                      setPalette(p.id);
+                      setTheme("light");
+                    }}
+                    className={`sm-swatch focus-ring ${on ? "is-on" : ""}`}
+                    title={`Claro · ${p.label}`}
+                  >
+                    <span
+                      className="sm-swatch-dot"
+                      aria-hidden="true"
+                      style={{ background: `linear-gradient(135deg, #ffffff 0 45%, ${p.accent} 45% 100%)` }}
+                    />
+                    <span className="sm-swatch-label">{p.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           <div className="sm-status" data-sm-reveal>
             <span className="sm-status-dot" aria-hidden="true" />

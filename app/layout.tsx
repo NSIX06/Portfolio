@@ -1,5 +1,6 @@
 import { SiteMenu } from "@/components/layout/site-menu";
 import { Preloader } from "@/components/layout/preloader";
+import { PALETTE_BOOT } from "@/lib/palette";
 import { PageBackdrop } from "@/components/layout/page-backdrop";
 import { ScrollBackdrop } from "@/components/layout/scroll-backdrop";
 import { Providers } from "@/components/layout/providers";
@@ -81,6 +82,8 @@ export default function RootLayout({
       <body
         className={`bg-background text-foreground min-h-screen font-sans antialiased`}
       >
+        {/* Aplica a paleta salva antes da pintura (evita piscar a cor padrão) */}
+        <script dangerouslySetInnerHTML={{ __html: PALETTE_BOOT }} />
         <Providers>
           <div className="site-frame site-frame--top" aria-hidden="true" />
           <div className="site-frame site-frame--left" aria-hidden="true" />

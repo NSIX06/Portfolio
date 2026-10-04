@@ -134,7 +134,7 @@ export default function TargetCursor({
 
     paint(0)
     const themeObserver = new MutationObserver(() => paint(0.35))
-    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-palette'] })
 
     window.addEventListener('mousemove', onMove, { passive: true })
     window.addEventListener('mouseover', onOver, { passive: true })

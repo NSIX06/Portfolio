@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
+
+import { usePalette, type Palette } from "@/lib/palette";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { ShaderFlow } from "@/components/shaders/shader-flow";
@@ -29,6 +31,7 @@ export function ScrollBackdrop(): ReactNode {
   const [mounted, setMounted] = useState<BackdropKind[]>([]);
   // Tema claro: mesmo fluxo animado, com cores claras (rosado sobre branco) em vez do vermelho escuro.
   const light = useTheme().resolvedTheme === "light";
+  const pal = usePalette();
 
   useEffect(() => {
     let raf = 0;
@@ -76,8 +79,8 @@ export function ScrollBackdrop(): ReactNode {
           resolution={0.35}
           maxFps={30}
           flowSpeed={[0, 0.06]}
-          colorLowA={light ? [0.995, 0.975, 0.975] : [0.06, 0.008, 0.008]}
-          colorHighA={light ? [0.98, 0.78, 0.78] : [0.42, 0.06, 0.05]}
+          colorLowA={light ? pal.shaderLow : [0.06, 0.008, 0.008]}
+          colorHighA={light ? pal.shaderHigh : [0.42, 0.06, 0.05]}
           fadeCx={0.5}
           fadeCy={0}
           fadeRx={1.5}
@@ -88,7 +91,7 @@ export function ScrollBackdrop(): ReactNode {
 
       {KINDS.map((k) =>
         mounted.includes(k) ? (
-          <Layer key={k} kind={k} on={active === k} light={light} />
+          <Layer key={k} kind={k} on={active === k} light={light} pal={pal} />
         ) : null
       )}
     </div>
@@ -96,7 +99,17 @@ export function ScrollBackdrop(): ReactNode {
 }
 
 /** Camada de fundo: entra com opacidade 0 e sobe no quadro seguinte (fade-in de verdade). */
-function Layer({ kind, on, light }: { kind: BackdropKind; on: boolean; light: boolean }): ReactNode {
+function Layer({
+  kind,
+  on,
+  light,
+  pal,
+}: {
+  kind: BackdropKind;
+  on: boolean;
+  light: boolean;
+  pal: Palette;
+}): ReactNode {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const id = requestAnimationFrame(() => requestAnimationFrame(() => setReady(true)));
@@ -109,22 +122,23 @@ function Layer({ kind, on, light }: { kind: BackdropKind; on: boolean; light: bo
     >
       {kind === "dots" ? (
         <DotField
+          key={light ? pal.id : "dark"}
           dotRadius={1.5}
           dotSpacing={18}
-          gradientFrom="rgba(225, 29, 29, 0.38)"
-          gradientTo="rgba(140, 16, 16, 0.3)"
-          glowColor="rgba(225, 29, 29, 0.25)"
+          gradientFrom={light ? `rgba(${pal.rgb}, 0.32)` : "rgba(225, 29, 29, 0.38)"}
+          gradientTo={light ? `rgba(${pal.rgb}, 0.18)` : "rgba(140, 16, 16, 0.3)"}
+          glowColor={light ? `rgba(${pal.rgb}, 0.2)` : "rgba(225, 29, 29, 0.25)"}
         />
       ) : null}
       {kind === "grid" ? (
         <ShapeGrid
           {...(light
-            ? { borderColor: "rgba(225, 29, 29, 0.14)", hoverColor: "rgba(225, 29, 29, 0.16)" }
+            ? { borderColor: `rgba(${pal.rgb}, 0.14)`, hoverColor: `rgba(${pal.rgb}, 0.16)` }
             : {})}
         />
       ) : null}
       {kind === "glitch" ? (
-        <LetterGlitch {...(light ? { colors: ["#f6e4e4", "#f1d2d2", "#ecbcbc", "#e6a5a5"] } : {})} />
+        <LetterGlitch {...(light ? { colors: pal.glitch } : {})} />
       ) : null}
     </div>
   );
