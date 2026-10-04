@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { ShaderFlow } from "@/components/shaders/shader-flow";
@@ -26,6 +27,8 @@ const FADE_MS = 900;
 export function ScrollBackdrop(): ReactNode {
   const [active, setActive] = useState<BackdropKind>("flow");
   const [mounted, setMounted] = useState<BackdropKind[]>([]);
+  // Tema claro: mesmo fluxo animado, com cores claras (rosado sobre branco) em vez do vermelho escuro.
+  const light = useTheme().resolvedTheme === "light";
 
   useEffect(() => {
     let raf = 0;
@@ -65,16 +68,16 @@ export function ScrollBackdrop(): ReactNode {
   return (
     <div aria-hidden="true" data-backdrop={active} className="pointer-events-none fixed inset-0 -z-20 overflow-hidden">
       {/* Base: o degradê vermelho e preto do topo, agora no corpo inteiro */}
-      <div className="absolute inset-0 opacity-50 dark:opacity-75">
+      <div className="absolute inset-0 opacity-90 dark:opacity-75">
         <ShaderFlow
           className="absolute inset-0 h-full w-full"
-          brightness={1.7}
+          brightness={light ? 1 : 1.7}
           iterations={8}
           resolution={0.35}
           maxFps={30}
           flowSpeed={[0, 0.06]}
-          colorLowA={[0.06, 0.008, 0.008]}
-          colorHighA={[0.42, 0.06, 0.05]}
+          colorLowA={light ? [0.995, 0.975, 0.975] : [0.06, 0.008, 0.008]}
+          colorHighA={light ? [0.98, 0.78, 0.78] : [0.42, 0.06, 0.05]}
           fadeCx={0.5}
           fadeCy={0}
           fadeRx={1.5}
@@ -85,7 +88,7 @@ export function ScrollBackdrop(): ReactNode {
 
       {KINDS.map((k) =>
         mounted.includes(k) ? (
-          <Layer key={k} kind={k} on={active === k} />
+          <Layer key={k} kind={k} on={active === k} light={light} />
         ) : null
       )}
     </div>
@@ -93,7 +96,7 @@ export function ScrollBackdrop(): ReactNode {
 }
 
 /** Camada de fundo: entra com opacidade 0 e sobe no quadro seguinte (fade-in de verdade). */
-function Layer({ kind, on }: { kind: BackdropKind; on: boolean }): ReactNode {
+function Layer({ kind, on, light }: { kind: BackdropKind; on: boolean; light: boolean }): ReactNode {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const id = requestAnimationFrame(() => requestAnimationFrame(() => setReady(true)));
@@ -113,8 +116,16 @@ function Layer({ kind, on }: { kind: BackdropKind; on: boolean }): ReactNode {
           glowColor="rgba(225, 29, 29, 0.25)"
         />
       ) : null}
-      {kind === "grid" ? <ShapeGrid /> : null}
-      {kind === "glitch" ? <LetterGlitch /> : null}
+      {kind === "grid" ? (
+        <ShapeGrid
+          {...(light
+            ? { borderColor: "rgba(225, 29, 29, 0.14)", hoverColor: "rgba(225, 29, 29, 0.16)" }
+            : {})}
+        />
+      ) : null}
+      {kind === "glitch" ? (
+        <LetterGlitch {...(light ? { colors: ["#f6e4e4", "#f1d2d2", "#ecbcbc", "#e6a5a5"] } : {})} />
+      ) : null}
     </div>
   );
 }

@@ -40,6 +40,20 @@ export default function TargetCursor({
     ]
     let activeTarget = null
     let spin
+    // Cores vêm do tema (variáveis --cursor / --cursor-target no CSS): mudam junto com o tema.
+    const themeColors = () => {
+      const cs = getComputedStyle(document.documentElement)
+      return {
+        base: cs.getPropertyValue('--cursor').trim() || color,
+        target: cs.getPropertyValue('--cursor-target').trim() || colorOnTarget,
+      }
+    }
+    const paint = (duration = 0.2) => {
+      const { base, target } = themeColors()
+      const c = activeTarget ? target : base
+      gsap.to(corners, { borderColor: c, duration })
+      gsap.to(dot, { backgroundColor: c, duration })
+    }
     const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 }
 
     document.documentElement.classList.add('has-target-cursor')
@@ -102,9 +116,7 @@ export default function TargetCursor({
     const setTarget = (target) => {
       if (target === activeTarget) return
       activeTarget = target
-      const c = target ? colorOnTarget : color
-      gsap.to(corners, { borderColor: c, duration: 0.2 })
-      gsap.to(dot, { backgroundColor: c, duration: 0.2 })
+      paint()
       if (target) {
         spin?.kill()
         gsap.to(cursor, { rotation: 0, duration: 0.3, ease: 'power3.out' })
@@ -120,6 +132,10 @@ export default function TargetCursor({
       setTarget(el?.closest?.(targetSelector) ?? null)
     }
 
+    paint(0)
+    const themeObserver = new MutationObserver(() => paint(0.35))
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+
     window.addEventListener('mousemove', onMove, { passive: true })
     window.addEventListener('mouseover', onOver, { passive: true })
     window.addEventListener('mousedown', onDown)
@@ -130,6 +146,7 @@ export default function TargetCursor({
     return () => {
       gsap.ticker.remove(ticker)
       spin?.kill()
+      themeObserver.disconnect()
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseover', onOver)
       window.removeEventListener('mousedown', onDown)
@@ -145,12 +162,12 @@ export default function TargetCursor({
   return createPortal(
     <>
       <div ref={cursorRef} className="target-cursor-wrapper" aria-hidden="true">
-        <div className="target-cursor-corner corner-tl" style={{ borderColor: color }} />
-        <div className="target-cursor-corner corner-tr" style={{ borderColor: color }} />
-        <div className="target-cursor-corner corner-br" style={{ borderColor: color }} />
-        <div className="target-cursor-corner corner-bl" style={{ borderColor: color }} />
+        <div className="target-cursor-corner corner-tl" style={{ borderColor: 'var(--cursor)' }} />
+        <div className="target-cursor-corner corner-tr" style={{ borderColor: 'var(--cursor)' }} />
+        <div className="target-cursor-corner corner-br" style={{ borderColor: 'var(--cursor)' }} />
+        <div className="target-cursor-corner corner-bl" style={{ borderColor: 'var(--cursor)' }} />
       </div>
-      <div ref={dotRef} className="target-cursor-dot-solo" aria-hidden="true" style={{ backgroundColor: color }} />
+      <div ref={dotRef} className="target-cursor-dot-solo" aria-hidden="true" style={{ backgroundColor: 'var(--cursor)' }} />
     </>,
     document.body
   )

@@ -6,7 +6,7 @@
   height: 0;
   pointer-events: none;
   z-index: 10000;
-  filter: drop-shadow(0 0 6px rgba(225, 29, 29, 0.35));
+  filter: drop-shadow(0 0 1.5px var(--cursor-ring, transparent)) drop-shadow(0 0 6px color-mix(in srgb, var(--cursor-target) 35%, transparent));
 }
 
 /* Ponto separado da mira: segue o mouse quase sem atraso */
@@ -19,7 +19,7 @@
   border-radius: 50%;
   pointer-events: none;
   z-index: 10001;
-  box-shadow: 0 0 10px rgba(225, 29, 29, 0.6);
+  box-shadow: 0 0 0 2px var(--cursor-ring, transparent), 0 0 10px color-mix(in srgb, var(--cursor-target) 55%, transparent);
   will-change: transform;
 }
 
