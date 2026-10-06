@@ -1,0 +1,220 @@
+import { Knowledge } from "@/components/about/knowledge";
+import { Methodologies } from "@/components/about/methodologies";
+import { PassionCorner } from "@/components/about/passion-corner";
+import { Stats } from "@/components/about/stats";
+import { ContactCard } from "@/components/contact/contact-card";
+import { Hero } from "@/components/hero/hero";
+import { Projects } from "@/components/projects/projects";
+import { TechStack } from "@/components/stack/tech-stack";
+import { Timeline } from "@/components/trajectory/timeline";
+import { TechMarquee } from "@/components/trajectory/tech-marquee";
+import { FadeIn } from "@/components/ui/motion-primitives";
+import { WordMarquee } from "@/components/ui/word-marquee";
+import { icon } from "@/lib/icons";
+import { createMetadata, siteConfig } from "@/lib/metadata";
+import { METHODOLOGIES, METHODOLOGIES_INTRO, SKILL_CATEGORIES } from "@/lib/skills";
+import { LANGUAGES, TECHNOLOGIES } from "@/lib/tech-stack";
+import { MILESTONES } from "@/lib/trajectory";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+
+export const metadata: Metadata = createMetadata({
+  title: "Início",
+  description: siteConfig.description,
+  path: "/",
+});
+
+const withIcon = <T extends { icon: string }>({ icon: name, ...rest }: T): Omit<T, "icon"> & { iconData: ReturnType<typeof icon> } => ({
+  ...rest,
+  iconData: icon(name),
+});
+
+/**
+ * Landing page única: cada seção marca com `data-bg` qual versão de fundo acende
+ * atrás dela (flow = degradê do shader, grid = Shape Grid, glitch = Letter Glitch, dots = degradê + DotField).
+ */
+export default function HomePage(): ReactNode {
+  const timeline = MILESTONES.map((m) => ({ ...m, iconData: icon(m.icon) }));
+  const knowledge = SKILL_CATEGORIES.map(({ icon: catIcon, items, ...c }) => ({
+    ...c,
+    iconData: icon(catIcon),
+    items: items.map((it) => ({ name: it.name, iconData: it.icon ? icon(it.icon) : undefined })),
+  }));
+  const methodologies = METHODOLOGIES.map(withIcon);
+
+  return (
+    <main id="main-content" className="flex flex-1 flex-col">
+      <div id="inicio" data-bg="flow">
+        <Hero />
+        <TechMarquee />
+      </div>
+
+      <section id="sobre" data-bg="flow" aria-labelledby="sobre-title" className="scroll-mt-24 pt-24 sm:pt-32">
+        {/* Números primeiro, depois o título e o texto (layout de referência do Felipe) */}
+        <div className="mx-auto w-full max-w-275 px-6 sm:px-10">
+          <FadeIn delay={0.05}>
+            <Stats />
+          </FadeIn>
+        </div>
+
+        <div className="mx-auto w-full max-w-275 px-6 pt-20 sm:px-10 sm:pt-24">
+          <SectionHead
+            size="md"
+            label="// 01 — sobre"
+            id="sobre-title"
+            sub="Soluções que transformam requisitos de negócio em software."
+          >
+            Quem eu <span className="text-outline">sou</span> e <span className="text-accent">como trabalho</span>
+          </SectionHead>
+        </div>
+
+        <div className="mx-auto w-full max-w-275 px-6 pt-10 pb-16 sm:px-10 sm:pt-12 sm:pb-24">
+          <FadeIn delay={0.1}>
+            <div className="border-foreground/5 bg-foreground/1.5 dark:bg-foreground/3 relative overflow-hidden rounded-4xl border px-6 py-10 sm:px-12 sm:py-14">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-24 -bottom-24 h-72 w-72 rounded-full opacity-20 blur-3xl"
+                style={{ background: "var(--accent)" }}
+              />
+              <div className="relative mx-auto max-w-[46rem]">
+                <div className="text-foreground/75 space-y-6 text-[17px] leading-[1.7] tracking-tight sm:text-[18px]">
+                  <p className="text-foreground/85 text-[19px] leading-[1.6] sm:text-[21px]">
+                    Sou <strong className="text-foreground font-semibold">Desenvolvedor Full Stack e Técnico em Informática</strong>, com experiência na criação de{" "}
+                    <strong className="text-foreground font-semibold">sistemas internos</strong> para o{" "}
+                    <strong className="text-accent font-semibold">agronegócio</strong>, com foco em automação de processos, integração de
+                    sistemas e soluções orientadas a resultados.
+                  </p>
+                  <p>
+                    Minha experiência combina desenvolvimento de software com{" "}
+                    <strong className="text-foreground font-semibold">conhecimento de processos corporativos</strong>: fui usuário-chave do{" "}
+                    <strong className="text-foreground font-semibold">TOTVS Protheus</strong> no Planejamento e Controle de Manutenção (PCM) da <strong className="text-foreground font-semibold">TMG</strong>, onde também criei
+                    ferramentas internas. Isso me ajuda a transformar necessidades operacionais em ferramentas digitais
+                    mais eficientes.
+                  </p>
+                  <p>
+                    Atualmente atuo como <strong className="text-foreground font-semibold">profissional autônomo</strong>, desenvolvendo soluções web sob medida e
+                    prestando suporte técnico em informática.
+                  </p>
+                  <p>
+                    Sou graduando em <strong className="text-foreground font-semibold">Análise e Desenvolvimento de Sistemas</strong> pela UniSENAI MT e busco
+                    constantemente aprimorar meus conhecimentos em{" "}
+                    <strong className="text-foreground font-semibold">desenvolvimento web, backend, bancos de dados, cloud, automação e Inteligência Artificial</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Trajetória: abas Profissional/Acadêmica + linha do tempo expansível */}
+      <section
+        id="trajetoria"
+        aria-labelledby="trajetoria-title"
+        data-bg="flow"
+        className="relative w-full scroll-mt-24 pt-8 pb-16 sm:pb-24"
+      >
+        <FadeIn className="mx-auto flex w-full max-w-275 flex-col items-center gap-4 px-6 text-center sm:px-10">
+          <p className="section-label">{"// 02 — trajetória"}</p>
+          <h2
+            id="trajetoria-title"
+            className="text-foreground font-serif text-[2.4rem] leading-[1.05] font-extrabold tracking-tight md:text-[3rem] lg:text-[3.5rem]"
+          >
+            A <span className="text-outline">estrada</span> até <span className="text-accent">aqui</span>
+          </h2>
+          <p className="text-foreground/65 max-w-[36ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
+            Carreira e formação em ordem cronológica. Clique em um card para ver os detalhes.
+          </p>
+        </FadeIn>
+        <div className="mt-6 sm:mt-10">
+          <Timeline items={timeline} />
+        </div>
+      </section>
+
+      <WordMarquee />
+
+      <div id="projetos" data-bg="grid" className="scroll-mt-24 pb-16 sm:pb-24">
+        <Projects withHeadline />
+      </div>
+
+      <div data-bg="glitch" className="flex flex-col gap-0">
+        <div className="pt-8 pb-16 sm:pb-24">
+          <TechStack languages={LANGUAGES.map(withIcon)} technologies={TECHNOLOGIES.map(withIcon)} />
+        </div>
+
+        <section
+          id="habilidades"
+          aria-labelledby="habilidades-title"
+          className="mx-auto w-full max-w-275 scroll-mt-24 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
+        >
+          <SectionHead label="// 05 — habilidades" id="habilidades-title" sub="Linguagens, frameworks, sistemas corporativos e infraestrutura, organizados por área.">
+            <span className="text-outline">Habilidades</span> & <span className="text-accent">Conhecimentos</span>
+          </SectionHead>
+          <div className="mt-10">
+            <Knowledge categories={knowledge} />
+          </div>
+        </section>
+
+        <section
+          id="metodologias"
+          aria-labelledby="metodologias-title"
+          className="mx-auto w-full max-w-275 scroll-mt-24 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
+        >
+          <SectionHead label="// 06 — metodologias" id="metodologias-title" sub="Como organizo o trabalho do backlog à entrega.">
+            <span className="text-outline">Metodologias</span> <span className="text-accent">ágeis</span>
+          </SectionHead>
+          <div className="mt-10">
+            <Methodologies items={methodologies} intro={METHODOLOGIES_INTRO} />
+          </div>
+        </section>
+      </div>
+
+      <section
+        id="vitrine"
+        data-bg="flow"
+        aria-labelledby="vitrine-title"
+        className="mx-auto w-full max-w-275 scroll-mt-24 px-6 pt-8 pb-16 sm:px-10 sm:pb-24"
+      >
+        <SectionHead label="// 07 — vitrine" id="vitrine-title" sub="Certificações, competências e idiomas em um só lugar.">
+          Meu <span className="text-outline">canto</span> de <span className="text-accent">paixões</span>
+        </SectionHead>
+        <div className="mt-10">
+          <PassionCorner />
+        </div>
+      </section>
+
+      <div id="contato" data-bg="dots" className="scroll-mt-24 pb-4">
+        <ContactCard />
+      </div>
+    </main>
+  );
+}
+
+function SectionHead({
+  label,
+  id,
+  sub,
+  size = "lg",
+  children,
+}: {
+  label: string;
+  id: string;
+  sub: string;
+  size?: "md" | "lg";
+  children: ReactNode;
+}): ReactNode {
+  return (
+    <FadeIn className="flex flex-col items-center gap-4 text-center">
+      <p className="section-label">{label}</p>
+      <h2
+        id={id}
+        className={`text-foreground font-serif leading-[1.05] font-extrabold tracking-tight ${size === "md" ? "text-[1.55rem] min-[400px]:text-[1.8rem] sm:text-[2.2rem] lg:text-[2.6rem]" : "text-[1.55rem] min-[400px]:text-[1.85rem] sm:text-[2.4rem] md:text-[3rem] lg:text-[3.5rem]"}`}
+      >
+        {children}
+      </h2>
+      <p className="text-foreground/65 max-w-[40ch] text-[18px] leading-[1.45] tracking-tight sm:text-[20px]">
+        {sub}
+      </p>
+    </FadeIn>
+  );
+}

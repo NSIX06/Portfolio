@@ -1,0 +1,610 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* Cursor no tema claro: acompanha a paleta (ver data-palette abaixo) */
+  --cursor: #e11d1d;
+  --cursor-target: #991b1b;
+  --cursor-ring: #ffffff;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --border: #e5e5e5;
+  --ring: #e11d1d;
+  --frame: #ffffff;
+  /* Cores da identidade NSIX06 (portfólio antigo) */
+  --accent: #e11d1d;
+  --accent-2: #b8860b;
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-label), ui-monospace, monospace;
+  --font-serif: var(--font-display), system-ui, sans-serif;
+}
+
+.dark {
+  --cursor: #f0ede8;
+  --cursor-target: #e11d1d;
+  --cursor-ring: transparent;
+  --background: #050505;
+  --foreground: #fafafa;
+  --muted: #171717;
+  --muted-foreground: #a3a3a3;
+  --border: #262626;
+  --ring: #e11d1d;
+  --frame: #0a0a0a;
+  --accent: #e11d1d;
+  --accent-2: #ffd100;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* As animações do site rodam mesmo com "reduzir movimento" (decisão do dono do site:
+   no Windows essa opção liga sozinha ao desativar "Efeitos de animação"). */
+
+body {
+  background-color: var(--background);
+  background-image: radial-gradient(circle at 50% -20%, color-mix(in srgb, var(--foreground) 6%, transparent) 0%, transparent 60%);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1rem;
+  background: var(--background);
+  border: 2px solid var(--ring);
+  border-radius: 0.375rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+.skip-to-content:focus {
+  left: 1rem;
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html[data-theme-anim="1"]::view-transition-old(root) {
+  z-index: 0;
+}
+
+html[data-theme-anim="1"]::view-transition-new(root) {
+  z-index: 1;
+  animation: theme-reveal 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0px at var(--theme-cx) var(--theme-cy));
+  }
+  to {
+    clip-path: circle(var(--theme-r) at var(--theme-cx) var(--theme-cy));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-anim="1"]::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+.site-frame {
+  display: block;
+  position: absolute;
+  z-index: 9999;
+  pointer-events: none;
+  background-color: var(--frame);
+}
+
+.site-frame--top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+.site-frame--left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 10px;
+}
+
+.site-frame--right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+}
+
+.site-corner {
+  display: block;
+  position: absolute;
+  z-index: 9998;
+  pointer-events: none;
+  color: var(--frame);
+}
+
+.site-corner--top-left {
+  transform: rotate(90deg);
+  top: 10px;
+  left: 10px;
+}
+
+.site-corner--top-right {
+  top: 10px;
+  right: 10px;
+  transform: rotate(180deg);
+}
+
+@media (max-width: 850px) {
+  .site-frame,
+  .site-corner {
+    display: none;
+  }
+}
+
+.project-card {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  transition:
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow:
+    0 10px 20px -8px rgb(0 0 0 / 0.12),
+    0 4px 8px -4px rgb(0 0 0 / 0.08);
+}
+
+.dark .project-card {
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+}
+
+.dark .project-card:hover {
+  box-shadow:
+    0 10px 24px -8px rgb(0 0 0 / 0.6),
+    0 4px 8px -4px rgb(0 0 0 / 0.4);
+}
+
+.project-card__image {
+  overflow: hidden;
+}
+
+.project-card__image-inner {
+  position: absolute;
+  inset: 0;
+  transform: scale(1);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.project-card:hover .project-card__image-inner {
+  transform: scale(1.06);
+}
+
+/* ── Identidade NSIX06 ─────────────────────────────────── */
+
+/* Rótulo de seção "// 01 — trajetória" */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Destaque em vermelho dentro de títulos */
+.text-accent-mark {
+  color: var(--accent);
+}
+
+/* Brilho vermelho que segue o mouse (--mx/--my definidos no pointermove) */
+.glow-hover {
+  position: relative;
+}
+.glow-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 16%, transparent),
+    transparent 45%
+  );
+}
+.glow-hover:hover::after {
+  opacity: 1;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+
+/* Marcador da linha do tempo aceso quando a linha vermelha chega nele */
+.timeline-dot.is-on {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent),
+    0 0 24px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* Faixa de tecnologias em loop */
+.tech-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.tech-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: tech-marquee 45s linear infinite;
+}
+.tech-marquee:hover .tech-marquee__track {
+  animation-play-state: paused;
+}
+.tech-marquee__group {
+  display: flex;
+  flex-shrink: 0;
+}
+.tech-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-left: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 75%, transparent);
+  white-space: nowrap;
+}
+@keyframes tech-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+
+/* Card de projeto sem imagem: emoji flutuando sobre pontilhado vermelho (primeira versão) */
+.project-emoji {
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    radial-gradient(circle at 80% 90%, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 55%),
+    radial-gradient(color-mix(in srgb, var(--foreground) 14%, transparent) 1px, transparent 1px) 0 0 / 18px 18px,
+    var(--background);
+}
+.project-emoji__glyph {
+  animation: project-float 4s ease-in-out infinite;
+  filter: drop-shadow(0 12px 24px rgb(0 0 0 / 0.35));
+}
+@keyframes project-float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+/* ---------- Landing page: degradê vermelho/preto + fundos por seção ---------- */
+.backdrop-gradient {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 0% 100%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 100% 60%, color-mix(in srgb, color-mix(in srgb, var(--accent) 55%, #000) 22%, transparent), transparent 70%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--background) 25%, transparent) 0%, color-mix(in srgb, var(--background) 65%, transparent) 100%);
+}
+.backdrop-layer--glitch > * {
+  opacity: 0.45;
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 25%, black 85%);
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 25%, black 85%);
+}
+/* Tema claro: fundos mais leves, mesmas animações */
+html:not(.dark) .backdrop-layer > * {
+  opacity: 0.7;
+}
+html:not(.dark) .backdrop-layer--glitch > * {
+  opacity: 0.55;
+}
+html:not(.dark) .backdrop-gradient {
+  /* Mesma ideia do escuro (brilhos da cor de destaque + vinheta), invertida para o claro */
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 0% 100%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 100% 60%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, color-mix(in srgb, var(--background) 70%, transparent) 100%);
+}
+.backdrop-layer--dots > * {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 35%);
+  mask-image: linear-gradient(to bottom, transparent, black 35%);
+}
+/* Cartões de cursos em destaque na linha do tempo */
+.course-card {
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    var(--background);
+}
+/* Chamada para todos os repositórios */
+.repo-banner {
+  background:
+    radial-gradient(90% 140% at 0% 50%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    radial-gradient(60% 120% at 100% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+    var(--background);
+}
+.repo-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(color-mix(in srgb, var(--foreground) 14%, transparent) 1px, transparent 1px);
+  background-size: 16px 16px;
+  mask-image: linear-gradient(to right, transparent 30%, black);
+  pointer-events: none;
+}
+/* Barra de progresso do carrossel de certificações (comanda a rotação) */
+.cert-progress {
+  width: 0;
+  animation-name: cert-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes cert-progress {
+  to { width: 100%; }
+}
+
+/* ---------- Tela de carregamento ---------- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.preloader.is-leaving {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.preloader.is-leaving .preloader-inner {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.preloader-name {
+  font-family: var(--font-serif);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  letter-spacing: -0.03em;
+  color: #fff;
+  animation: preloader-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.preloader-bar {
+  width: 160px;
+  height: 2px;
+  background: #222;
+  overflow: hidden;
+}
+.preloader-bar > span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  animation: preloader-bar 1.1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.preloader-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #666;
+}
+@keyframes preloader-bar {
+  to {
+    width: 100%;
+  }
+}
+@keyframes preloader-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* ---------- Faixas de texto em movimento ---------- */
+.word-marquee-wrap {
+  position: relative;
+  height: 9.5rem;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.word-marquee {
+  position: absolute;
+  left: -5%;
+  width: 110%;
+  padding: 1.05rem 0;
+  background: var(--accent);
+  color: #000;
+  transform: rotate(-2.5deg);
+  box-shadow: 0 20px 50px -20px color-mix(in srgb, var(--accent) 55%, transparent);
+  overflow: hidden;
+}
+.word-marquee--dark {
+  background: #000;
+  color: #fff;
+  transform: rotate(2.5deg);
+  border-block: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: none;
+}
+.word-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: word-marquee 38s linear infinite;
+}
+.word-marquee--dark .word-marquee__track {
+  animation-direction: reverse;
+  animation-duration: 46s;
+}
+.word-marquee__group {
+  display: flex;
+  flex: none;
+}
+.word-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding-right: 1.4rem;
+  font-family: var(--font-serif);
+  font-weight: 800;
+  font-size: clamp(1.15rem, 2.4vw, 1.7rem);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.word-marquee__sep {
+  opacity: 0.45;
+}
+.word-marquee--dark .word-marquee__sep {
+  color: var(--accent);
+  opacity: 1;
+}
+@keyframes word-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- Letras vazadas (contorno) — referência "DESIGN IMPACTANTE" ---------- */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--foreground);
+  background: linear-gradient(var(--foreground), var(--foreground)) left / 0% 100% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-size 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.text-outline--accent {
+  -webkit-text-stroke-color: var(--accent);
+  background-image: linear-gradient(var(--accent), var(--accent));
+}
+.text-outline:hover,
+.group:hover .text-outline {
+  background-size: 100% 100%;
+}
+@media (max-width: 640px) {
+  .text-outline {
+    -webkit-text-stroke-width: 1px;
+  }
+}
+.word-marquee--dark .word-marquee__item:nth-child(even) {
+  color: transparent;
+  -webkit-text-stroke: 1px #fff;
+}
+.word-marquee:not(.word-marquee--dark) .word-marquee__item:nth-child(even) {
+  color: transparent;
+  -webkit-text-stroke: 1.2px #000;
+}
+
+/* ---------- Logo N6. ---------- */
+.n6-logo {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-serif);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.n6-logo__n {
+  color: var(--foreground);
+}
+.n6-logo__six {
+  color: transparent;
+  -webkit-text-stroke: 0.045em var(--accent);
+  margin-left: 0.02em;
+}
+/* Padrão: ponto vazado — contorno na cor do texto e miolo na cor do fundo (preto no escuro, claro no claro) */
+.n6-logo__dot {
+  color: var(--background);
+  -webkit-text-stroke: max(1.5px, 0.045em) var(--foreground);
+  paint-order: stroke fill;
+  margin-left: 0.03em;
+}
+.preloader .n6-logo__n {
+  color: #fff;
+}
+/* No carregamento: 6 cheio e o ponto vazado (padrão da logo) */
+.preloader .n6-logo__six {
+  color: var(--accent);
+  -webkit-text-stroke: 0;
+}
+.preloader .n6-logo__dot {
+  -webkit-text-stroke-color: #fff;
+}
+
+/* Em tamanho pequeno o 6 vazado some: versão cheia */
+.n6-logo--solid .n6-logo__six {
+  color: var(--accent);
+  -webkit-text-stroke: 0;
+}
+
+/* ---------- Paletas do tema claro (cursor e destaques acompanham) ---------- */
+html:not(.dark)[data-palette="rubi"] { --background: #fdf6f6; --accent: #e11d1d; --ring: #e11d1d; --cursor: #e11d1d; --cursor-target: #991b1b; }
+html:not(.dark)[data-palette="oceano"] { --background: #f5f8ff; --accent: #2563eb; --ring: #2563eb; --cursor: #2563eb; --cursor-target: #1e40af; }
+/* Paletas no tema escuro: mesma estética, outra cor (Rubi = original) */
+html.dark[data-palette="rubi"] { --accent: #e11d1d; --ring: #e11d1d; --cursor-target: #e11d1d; }
+html.dark[data-palette="oceano"] { --accent: #3b82f6; --ring: #3b82f6; --cursor-target: #3b82f6; }

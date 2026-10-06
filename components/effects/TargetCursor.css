@@ -1,0 +1,72 @@
+.target-cursor-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 10000;
+  filter: drop-shadow(0 0 1.5px var(--cursor-ring, transparent)) drop-shadow(0 0 6px color-mix(in srgb, var(--cursor-target) 35%, transparent));
+}
+
+/* Ponto separado da mira: segue o mouse quase sem atraso */
+.target-cursor-dot-solo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10001;
+  box-shadow: 0 0 0 2px var(--cursor-ring, transparent), 0 0 10px color-mix(in srgb, var(--cursor-target) 55%, transparent);
+  will-change: transform;
+}
+
+.target-cursor-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+.target-cursor-corner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border: 2px solid;
+  border-radius: 2px;
+  will-change: transform;
+}
+.corner-tl {
+  transform: translate(-150%, -150%);
+  border-right: none;
+  border-bottom: none;
+}
+.corner-tr {
+  transform: translate(50%, -150%);
+  border-left: none;
+  border-bottom: none;
+}
+.corner-br {
+  transform: translate(50%, 50%);
+  border-left: none;
+  border-top: none;
+}
+.corner-bl {
+  transform: translate(-150%, 50%);
+  border-right: none;
+  border-top: none;
+}
+
+/* O cursor do sistema só some enquanto o efeito está ativo (desktop, sem movimento reduzido). */
+html.has-target-cursor,
+html.has-target-cursor * {
+  cursor: none !important;
+}
