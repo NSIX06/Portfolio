@@ -577,9 +577,9 @@ html:not(.dark) .backdrop-gradient {
   -webkit-text-stroke: 0.045em var(--accent);
   margin-left: 0.02em;
 }
-/* Padrão: ponto vazado — contorno claro com o miolo preto */
+/* Padrão: ponto vazado — contorno na cor do texto e miolo na cor do fundo (preto no escuro, claro no claro) */
 .n6-logo__dot {
-  color: #000;
+  color: var(--background);
   -webkit-text-stroke: max(1.5px, 0.045em) var(--foreground);
   paint-order: stroke fill;
   margin-left: 0.03em;
