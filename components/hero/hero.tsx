@@ -1,7 +1,6 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { HeroCtas } from "./hero-ctas";
-import { FadeIn, MaskLine, ScaleUnblur } from "@/components/ui/motion-primitives";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import TextType from "@/components/effects/TextType";
@@ -9,13 +8,16 @@ import TextType from "@/components/effects/TextType";
 // O título já diz "Desenvolvedor Full Stack": a linha digitada mostra o resto do perfil.
 const ROLES = ["Desenvolvedor Full Stack", "Técnico em Informática", "Graduando em ADS"];
 
+/** Atraso de entrada de cada item do topo (somado ao fim da tela de carregamento). */
+const d = (s: number): CSSProperties => ({ "--d": `${s}s` }) as CSSProperties;
+
 export function Hero(): ReactNode {
   return (
     <section className="relative w-full">
       <div className="mx-auto w-full max-w-275 px-6 pt-28 pb-16 sm:px-10 sm:pt-32 sm:pb-20">
         <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-8">
           <div className="flex flex-col gap-4">
-            <FadeIn delay={0}>
+            <div className="hero-fade" style={d(0)}>
 <p className="section-label">
               <span aria-hidden="true">{"// "}</span>
               <TextType
@@ -29,33 +31,39 @@ export function Hero(): ReactNode {
                 srText={ROLES.join(", ")}
               />
             </p>
-            </FadeIn>
+            </div>
             <h1 className="font-serif text-[2.9rem] leading-[0.95] font-extrabold tracking-tight sm:text-[3.6rem] lg:text-[4.1rem]">
-              <MaskLine delay={0.05} className="text-foreground">Luiz</MaskLine>
-              <MaskLine delay={0.15} className="text-outline whitespace-nowrap">Felipe P.</MaskLine>
-              <MaskLine delay={0.25} className="text-accent">Bugalho</MaskLine>
+              <span className="hero-line text-foreground" style={d(0.05)}>
+                <span>Luiz</span>
+              </span>
+              <span className="hero-line" style={d(0.15)}>
+                <span className="text-outline whitespace-nowrap">Felipe P.</span>
+              </span>
+              <span className="hero-line text-accent" style={d(0.25)}>
+                <span>Bugalho</span>
+              </span>
             </h1>
 
-            <FadeIn delay={0.35}>
+            <div className="hero-fade" style={d(0.35)}>
 <p className="text-foreground/65 max-w-[36ch] text-[19px] leading-[1.45] tracking-tight sm:text-[21px]">
               Sistemas internos, automação de processos e integrações, da análise de requisitos à entrega.
             </p>
-            </FadeIn>
+            </div>
 
-            <FadeIn delay={0.45}>
+            <div className="hero-fade" style={d(0.45)}>
 <p className="border-accent/35 bg-accent/8 flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-2xl border px-4 py-3">
               <span className="text-accent font-mono text-[11px] font-bold tracking-[0.2em] uppercase">Atualmente</span>
               <span className="text-foreground text-[15px] font-semibold tracking-tight sm:text-[16px]">
                 Profissional Autônomo — Desenvolvedor Web Freelancer
               </span>
             </p>
-            </FadeIn>
+            </div>
 
-            <FadeIn delay={0.55}>
+            <div className="hero-fade" style={d(0.55)}>
 <HeroCtas />
-            </FadeIn>
+            </div>
 
-            <FadeIn delay={0.65}>
+            <div className="hero-fade" style={d(0.65)}>
 <ul
               className="mt-1 flex flex-wrap gap-2"
               aria-label="Disponibilidade"
@@ -76,23 +84,25 @@ export function Hero(): ReactNode {
                 Rondonópolis - MT · remoto
               </li>
             </ul>
-            </FadeIn>
+            </div>
           </div>
 
-          <ScaleUnblur delay={0.2} className="flex justify-stretch md:justify-end">
+          <div className="hero-photo flex justify-stretch md:justify-end">
             <div className="border-foreground/8 bg-background relative aspect-square w-full overflow-hidden rounded-4xl border p-1.5 shadow-sm md:max-w-105">
               <div className="relative h-full w-full overflow-hidden rounded-[1.6rem]">
                 <Image
                   src="/felipe_cor.webp"
                   alt="Foto de Felipe Bugalho"
                   fill
-                  priority
-                  sizes="(min-width: 768px) 420px, 100vw"
+                  preload
+                  sizes="(min-width: 768px) 420px, calc(100vw - 48px)"
+                  quality={70}
+                  fetchPriority="high"
                   className="object-cover"
                 />
               </div>
             </div>
-          </ScaleUnblur>
+          </div>
         </div>
       </div>
     </section>

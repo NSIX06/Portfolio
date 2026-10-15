@@ -119,5 +119,5 @@ export function usePalette(): Palette {
   return PALETTES.find((p) => p.id === id) ?? PALETTES[0]!;
 }
 
-/** Script que roda antes da pintura e aplica a paleta salva (evita piscar a cor errada). */
-export const PALETTE_BOOT = `try{var p=localStorage.getItem("${KEY}");if(p==="rubi"||p==="oceano")document.documentElement.dataset.palette=p}catch(e){}`;
+/** Script que roda antes da pintura: aplica a paleta salva e pula a tela de carregamento em visitas repetidas. */
+export const PALETTE_BOOT = `try{var p=localStorage.getItem("${KEY}");if(p==="rubi"||p==="oceano")document.documentElement.dataset.palette=p}catch(e){}try{if(sessionStorage.getItem("fb-preloaded"))document.documentElement.classList.add("pl-skip");else sessionStorage.setItem("fb-preloaded","1")}catch(e){}`;

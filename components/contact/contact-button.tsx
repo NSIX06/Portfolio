@@ -50,7 +50,7 @@ export function ContactButton(): ReactNode {
         onMouseLeave={() => setOpen(false)}
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
-        aria-label={copied ? "E-mail copiado" : `Copiar e-mail ${EMAIL}`}
+        aria-label={copied ? "Copiado! E-mail copiado" : `Contato — copiar o e-mail ${EMAIL}`}
         className="focus-ring bg-foreground text-background relative inline-flex h-11 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl px-5 text-sm font-medium"
       >
         <AnimatePresence initial={false} mode="popLayout">

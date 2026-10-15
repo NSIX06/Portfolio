@@ -1,6 +1,8 @@
 "use client";
 
-import { Icon, type IconifyIcon } from "@iconify/react";
+import type { IconSrc } from "@/lib/icons";
+
+import { IconImg } from "@/components/ui/icon-img";
 import { ArrowUpRight, MapPin, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState, type ReactNode } from "react";
@@ -8,7 +10,7 @@ import { useRef, useState, type ReactNode } from "react";
 import { CONTEXT_LABEL, CONTEXT_RANK, type StackItem } from "@/lib/tech-stack";
 import { useModalLock } from "@/lib/use-modal-lock";
 
-export type TechStackItem = Omit<StackItem, "icon"> & { iconData: IconifyIcon };
+export type TechStackItem = Omit<StackItem, "icon"> & { iconData: IconSrc };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const MAX_DOTS = 5;
@@ -83,7 +85,7 @@ export function TechStack({
                   />
                 ) : null}
                 <span className="relative">
-                  {t.label} <span className="opacity-70">({t.items.length})</span>
+                  {t.label} <span className="font-normal tabular-nums">({t.items.length})</span>
                 </span>
               </button>
             );
@@ -163,7 +165,7 @@ function StackCard({ item, onOpen }: { item: TechStackItem; onOpen: () => void }
       </span>
       <span className="flex items-center gap-3">
         <span className="border-foreground/8 bg-foreground/4 inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[-6deg]">
-          <Icon icon={item.iconData} className="text-accent h-6 w-6" aria-hidden="true" />
+          <IconImg icon={item.iconData} className="text-accent h-6 w-6" />
         </span>
         <span className="flex flex-col">
           <span className="text-foreground text-[18px] font-semibold tracking-tight">{item.name}</span>
@@ -220,7 +222,7 @@ function StackModal({ item, onClose }: { item: TechStackItem; onClose: () => voi
         />
         <div className="border-foreground/8 relative flex items-center gap-4 border-b p-6">
           <span className="border-foreground/8 bg-foreground/4 inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border">
-            <Icon icon={item.iconData} className="text-accent h-7 w-7" aria-hidden="true" />
+            <IconImg icon={item.iconData} className="text-accent h-7 w-7" />
           </span>
           <div className="flex flex-col gap-1">
             <span className="bg-foreground/6 text-foreground/60 w-fit rounded-full px-2.5 py-0.5 font-mono text-[10px] tracking-[0.12em] uppercase">

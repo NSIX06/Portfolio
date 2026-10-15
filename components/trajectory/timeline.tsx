@@ -1,6 +1,8 @@
 "use client";
 
-import { Icon, type IconifyIcon } from "@iconify/react";
+import type { IconSrc } from "@/lib/icons";
+
+import { IconImg } from "@/components/ui/icon-img";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, Briefcase, GraduationCap, X } from "lucide-react";
@@ -9,8 +11,9 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import type { Milestone, MilestoneKind } from "@/lib/trajectory";
 import { useModalLock } from "@/lib/use-modal-lock";
+import { useNearViewport } from "@/lib/use-idle";
 
-export type TimelineItem = Milestone & { iconData: IconifyIcon };
+export type TimelineItem = Milestone & { iconData: IconSrc };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const KINDS: { id: MilestoneKind; label: string; Icon: typeof Briefcase }[] = [
@@ -28,6 +31,7 @@ export function Timeline({ items }: { items: TimelineItem[] }): ReactNode {
   const fillRef = useRef<HTMLDivElement>(null);
   const [kinds, setKinds] = useState<MilestoneKind[]>(["profissional", "academica"]);
   const [openId, setOpenId] = useState<string | null>(null);
+  const near = useNearViewport(rootRef, "600px");
 
   const visible = items.filter((i) => kinds.includes(i.kind));
   const visibleKey = visible.map((i) => i.id).join("|");
@@ -44,7 +48,8 @@ export function Timeline({ items }: { items: TimelineItem[] }): ReactNode {
   useEffect(() => {
     const root = rootRef.current;
     const fill = fillRef.current;
-    if (!root || !fill) return;
+    // Só monta o ScrollTrigger quando a seção chega perto da tela (evita medições no carregamento).
+    if (!root || !fill || !near) return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -70,7 +75,7 @@ export function Timeline({ items }: { items: TimelineItem[] }): ReactNode {
       window.clearTimeout(t);
       ctx.revert();
     };
-  }, [visibleKey]);
+  }, [visibleKey, near]);
 
   return (
     <div className="relative overflow-x-clip">
@@ -96,7 +101,7 @@ export function Timeline({ items }: { items: TimelineItem[] }): ReactNode {
               >
                 <KindIcon className="h-4 w-4" aria-hidden="true" />
                 {label}
-                <span className="opacity-70">({count})</span>
+                <span className="font-normal tabular-nums">({count})</span>
               </button>
             );
           })}
@@ -154,7 +159,7 @@ function TimelineEntry({
             isCourse ? "border-accent/50 text-accent" : "border-foreground/15 text-foreground/50"
           }`}
         >
-          <Icon icon={item.iconData} className="h-5 w-5" aria-hidden="true" />
+          <IconImg icon={item.iconData} className="h-5 w-5" />
         </span>
       </div>
 
@@ -260,7 +265,7 @@ function MilestoneModal({ item, onClose }: { item: TimelineItem; onClose: () => 
         />
         <div className="border-foreground/8 relative flex items-start gap-4 border-b p-6">
           <span className="border-foreground/8 bg-foreground/4 text-accent inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border">
-            <Icon icon={item.iconData} className="h-7 w-7" aria-hidden="true" />
+            <IconImg icon={item.iconData} className="h-7 w-7" />
           </span>
           <div className="flex min-w-0 flex-col gap-1.5">
             <span className="flex flex-wrap items-center gap-2">
@@ -342,7 +347,7 @@ function MilestoneModal({ item, onClose }: { item: TimelineItem; onClose: () => 
                     </span>
                     <span
                       className={`shrink-0 rounded-full px-2 py-0.5 font-mono text-[9px] tracking-[0.12em] uppercase ${
-                        c.inProgress ? "border-accent/50 text-accent border" : "bg-foreground/8 text-foreground/60"
+                        c.inProgress ? "border-accent/50 text-accent-ink border" : "bg-foreground/8 text-foreground/60"
                       }`}
                     >
                       {c.inProgress ? "Em andamento" : "Concluído"}

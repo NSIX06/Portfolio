@@ -1,14 +1,16 @@
 "use client";
 
-import { Icon, type IconifyIcon } from "@iconify/react";
+import type { IconSrc } from "@/lib/icons";
+
+import { IconImg } from "@/components/ui/icon-img";
 import { AnimatePresence, motion } from "motion/react";
 import { useState, type ReactNode } from "react";
 
 import type { SkillCategory, SkillColor } from "@/lib/skills";
 
 export type KnowledgeCategory = Omit<SkillCategory, "icon" | "items"> & {
-  iconData: IconifyIcon;
-  items: { name: string; iconData?: IconifyIcon | undefined }[];
+  iconData: IconSrc;
+  items: { name: string; iconData?: IconSrc | undefined }[];
 };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -33,7 +35,7 @@ export function Knowledge({ categories }: { categories: KnowledgeCategory[] }): 
     <div className="flex flex-col gap-8">
       <div role="group" aria-label="Filtrar categorias" className="flex flex-wrap justify-center gap-2">
         <FilterPill on={active === "todas"} onClick={() => setActive("todas")} color="var(--accent)">
-          Todas <span className="opacity-60">{total}</span>
+          Todas <span className="font-normal tabular-nums">{total}</span>
         </FilterPill>
         {categories.map((c) => (
           <FilterPill key={c.id} on={active === c.id} onClick={() => setActive(c.id)} color={DOT_COLORS[c.color]}>
@@ -71,7 +73,7 @@ export function Knowledge({ categories }: { categories: KnowledgeCategory[] }): 
                     background: `color-mix(in srgb, ${DOT_COLORS[c.color]} 10%, transparent)`,
                   }}
                 >
-                  <Icon icon={c.iconData} className="h-5 w-5" aria-hidden="true" />
+                  <IconImg icon={c.iconData} className="h-5 w-5" />
                 </span>
                 <h3 className="text-foreground text-[16px] font-semibold tracking-tight">{c.label}</h3>
                 <span className="text-foreground/40 ml-auto font-mono text-[11px]">
@@ -91,7 +93,7 @@ export function Knowledge({ categories }: { categories: KnowledgeCategory[] }): 
                     className="border-foreground/10 bg-foreground/3 text-foreground/85 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[13px] tracking-tight"
                   >
                     {item.iconData ? (
-                      <Icon icon={item.iconData} className="h-4 w-4" aria-hidden="true" />
+                      <IconImg icon={item.iconData} className="h-4 w-4" />
                     ) : (
                       <span
                         aria-hidden="true"

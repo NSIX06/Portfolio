@@ -52,7 +52,7 @@ export function Stats(): ReactNode {
         >
           <span aria-hidden="true" className="bg-accent absolute top-4 bottom-4 left-0 w-[3px] rounded-r-full" />
           <dt className="sr-only">{s.label}</dt>
-          <dd className="text-accent font-serif text-[2.4rem] leading-none font-extrabold tracking-tight">
+          <dd className="text-accent min-w-[2.6ch] text-center font-serif text-[2.4rem] leading-none font-extrabold tracking-tight tabular-nums">
             <CountUp value={s.value} />
             {s.suffix}
           </dd>

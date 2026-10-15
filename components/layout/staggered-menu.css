@@ -280,16 +280,29 @@
   font-size: 12.5px;
 }
 .sm-status-dot {
+  position: relative;
   width: 8px;
   height: 8px;
   border-radius: 999px;
   background: #22c55e;
-  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
-  animation: sm-pulse 2s ease-in-out infinite;
+}
+/* Pulso só com transform/opacity num pseudo-elemento (animação composta na GPU) */
+.sm-status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: rgba(34, 197, 94, 0.3);
+  animation: sm-pulse 2s ease-out infinite;
 }
 @keyframes sm-pulse {
-  50% {
-    box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.05);
+  from {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 0;
   }
 }
 .sm-status-text {
