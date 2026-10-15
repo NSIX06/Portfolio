@@ -1,12 +1,14 @@
 "use client";
 
-import { Icon, type IconifyIcon } from "@iconify/react";
+import type { IconSrc } from "@/lib/icons";
+
+import { IconImg } from "@/components/ui/icon-img";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import type { Methodology } from "@/lib/skills";
 
-export type MethodologyItem = Omit<Methodology, "icon"> & { iconData: IconifyIcon };
+export type MethodologyItem = Omit<Methodology, "icon"> & { iconData: IconSrc };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const COLUMNS = ["Backlog", "Em andamento", "Concluído"] as const;
@@ -29,7 +31,7 @@ export function Methodologies({ items, intro }: { items: MethodologyItem[]; intr
           >
             <div className="flex items-center gap-3">
               <span className="border-accent/35 bg-accent/10 text-accent inline-flex h-10 w-10 items-center justify-center rounded-xl border">
-                <Icon icon={m.iconData} className="h-5 w-5" aria-hidden="true" />
+                <IconImg icon={m.iconData} className="h-5 w-5" />
               </span>
               <h3 className="text-foreground font-serif text-[22px] font-bold tracking-tight">{m.name}</h3>
               <span className="border-accent-2/40 text-accent-2 ml-auto rounded-full border px-2.5 py-0.5 font-mono text-[10px] tracking-[0.14em] uppercase">

@@ -82,7 +82,7 @@ export function PassionCorner(): ReactNode {
                   />
                 ) : null}
                 <span className="relative">
-                  {t.label} <span className="opacity-70">({t.count})</span>
+                  {t.label} <span className="font-normal tabular-nums">({t.count})</span>
                 </span>
               </button>
             );
@@ -205,7 +205,7 @@ function CertificatesTab(): ReactNode {
                         </span>
                         <span
                           className={`mt-2 ml-4 inline-block rounded-full px-2.5 py-0.5 font-mono text-[10px] tracking-[0.12em] uppercase ${
-                            c.inProgress ? "border-accent/50 text-accent border" : "bg-foreground/10 text-foreground/70"
+                            c.inProgress ? "border-accent/50 text-accent-ink border" : "bg-foreground/10 text-foreground/70"
                           }`}
                         >
                           {c.inProgress ? "Em andamento" : "Concluído"}

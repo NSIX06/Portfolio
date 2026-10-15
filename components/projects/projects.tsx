@@ -201,7 +201,6 @@ function ProjectCard({
             <ProjectVisual
               project={project}
               sizes="(min-width: 1024px) 540px, (min-width: 768px) 45vw, 100vw"
-              priority={index < 2}
             />
           </div>
         </div>

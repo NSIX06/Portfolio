@@ -1,4 +1,4 @@
-import { Icon } from "@iconify/react";
+import { IconImg } from "@/components/ui/icon-img";
 import type { ReactNode } from "react";
 
 import { icon } from "@/lib/icons";
@@ -29,7 +29,7 @@ export function TechMarquee(): ReactNode {
     <ul className="tech-marquee__group" aria-hidden={hidden || undefined}>
       {items.map((t) => (
         <li key={t.label} className="tech-marquee__item">
-          <Icon icon={t.data} className="h-6 w-6" aria-hidden="true" />
+          <IconImg icon={t.data} className="h-6 w-6" />
           <span>{t.label}</span>
           <span className="text-accent ml-6 text-[10px]" aria-hidden="true">
             ✦

@@ -4,9 +4,13 @@ import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 
 import { usePalette, type Palette } from "@/lib/palette";
+import { useIdle } from "@/lib/use-idle";
 import { useEffect, useState, type ReactNode } from "react";
 
-import { ShaderFlow } from "@/components/shaders/shader-flow";
+// WebGL e canvas só depois que a página carregou e ficou ociosa (fora do caminho crítico).
+const ShaderFlow = dynamic(() => import("@/components/shaders/shader-flow").then((m) => m.ShaderFlow), {
+  ssr: false,
+});
 
 const DotField = dynamic(() => import("@/components/effects/DotField"), { ssr: false });
 const ShapeGrid = dynamic(() => import("@/components/backgrounds/shape-grid").then((m) => m.ShapeGrid), {
@@ -32,6 +36,7 @@ export function ScrollBackdrop(): ReactNode {
   // Tema claro: mesmo fluxo animado, com cores claras (rosado sobre branco) em vez do vermelho escuro.
   const light = useTheme().resolvedTheme === "light";
   const pal = usePalette();
+  const idle = useIdle();
 
   useEffect(() => {
     let raf = 0;
@@ -71,7 +76,8 @@ export function ScrollBackdrop(): ReactNode {
   return (
     <div aria-hidden="true" data-backdrop={active} className="pointer-events-none fixed inset-0 -z-20 overflow-hidden">
       {/* Base: o degradê vermelho e preto do topo, agora no corpo inteiro */}
-      <div className="absolute inset-0 opacity-90 dark:opacity-75">
+      <div className="backdrop-shader absolute inset-0 opacity-90 dark:opacity-75">
+        {idle ? (
         <ShaderFlow
           className="absolute inset-0 h-full w-full"
           brightness={light ? 1.05 : 1.7}
@@ -86,11 +92,12 @@ export function ScrollBackdrop(): ReactNode {
           fadeRx={light ? 2.2 : 1.5}
           fadeRy={light ? 1.5 : 0.85}
         />
+        ) : null}
       </div>
       <div className="backdrop-gradient absolute inset-0" />
 
       {KINDS.map((k) =>
-        mounted.includes(k) ? (
+        idle && mounted.includes(k) ? (
           <Layer key={k} kind={k} on={active === k} light={light} pal={pal} />
         ) : null
       )}

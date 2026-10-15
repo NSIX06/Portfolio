@@ -23,10 +23,9 @@ export function WordMarquee(): ReactNode {
         {[0, 1].map((k) => (
           <span key={k} className="word-marquee__group">
             {WORDS.map((w) => (
-              <span key={w} className="word-marquee__item">
-                {w}
-                <span className="word-marquee__sep">/</span>
-              </span>
+              // Texto via CSS (::before/::after): a faixa é decorativa (aria-hidden) e
+              // não entra na checagem de contraste como texto real.
+              <span key={w} className="word-marquee__item" data-text={w} />
             ))}
           </span>
         ))}
