@@ -20,8 +20,7 @@ const CURSOR_TARGETS = [
 export function SiteEffects(): ReactNode {
   // Libera as animações de rolagem quando a cortina de carregamento (só CSS) termina de subir.
   useEffect(() => {
-    const skip = document.documentElement.classList.contains("pl-skip");
-    const wait = skip ? 0 : Math.max(0, 1100 - performance.now());
+    const wait = Math.max(0, 1100 - performance.now());
     const id = window.setTimeout(markSiteLoaded, wait);
     return () => window.clearTimeout(id);
   }, []);

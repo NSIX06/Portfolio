@@ -120,4 +120,4 @@ export function usePalette(): Palette {
 }
 
 /** Script que roda antes da pintura: aplica a paleta salva e pula a tela de carregamento em visitas repetidas. */
-export const PALETTE_BOOT = `try{var p=localStorage.getItem("${KEY}");if(p==="rubi"||p==="oceano")document.documentElement.dataset.palette=p}catch(e){}try{if(sessionStorage.getItem("fb-preloaded"))document.documentElement.classList.add("pl-skip");else sessionStorage.setItem("fb-preloaded","1")}catch(e){}`;
+export const PALETTE_BOOT = `try{var p=localStorage.getItem("${KEY}");if(p==="rubi"||p==="oceano")document.documentElement.dataset.palette=p}catch(e){}`;

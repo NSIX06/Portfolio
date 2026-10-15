@@ -398,16 +398,10 @@ html:not(.dark) .backdrop-gradient {
   to { width: 100%; }
 }
 
-/* ---------- Tela de carregamento (só CSS) ---------- */
+/* ---------- Tela de carregamento (só CSS): aparece em todo acesso e recarga ---------- */
 :root {
   /* Quando a cortina sai; as entradas do topo começam nesse instante */
   --enter-delay: 0.85s;
-}
-html.pl-skip {
-  --enter-delay: 0s;
-}
-html.pl-skip .preloader {
-  display: none;
 }
 .preloader {
   position: fixed;
