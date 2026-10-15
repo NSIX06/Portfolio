@@ -460,7 +460,6 @@ html:not(.dark) .backdrop-gradient {
 @keyframes preloader-out {
   to {
     transform: translateY(-100%);
-    visibility: hidden;
   }
 }
 @keyframes preloader-inner-out {
@@ -483,24 +482,16 @@ html:not(.dark) .backdrop-gradient {
 .hero-fade {
   animation: hero-fade 1s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--enter-delay) + var(--d, 0s)) both;
 }
-.hero-photo {
-  animation: hero-photo 1.2s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--enter-delay) + 0.15s) both;
-}
 @keyframes hero-line {
   from {
     transform: translateY(110%) rotate(3deg);
   }
 }
+/* Sem opacity: os blocos já estão pintados sob a cortina (contam para o LCP na hora)
+   e só assentam com um leve deslize quando ela sobe. A foto não anima: a cortina a revela. */
 @keyframes hero-fade {
   from {
-    opacity: 0;
     transform: translateY(28px);
-  }
-}
-/* A foto (candidata a LCP) não começa invisível: só cresce e assenta */
-@keyframes hero-photo {
-  from {
-    transform: translateY(24px) scale(0.92);
   }
 }
 
