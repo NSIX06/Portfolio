@@ -499,8 +499,36 @@ html:not(.dark) .sm-backdrop {
 }
 
 @media (max-width: 640px) {
+  /* No celular o menu ocupa só parte da tela: a página continua visível (e clicável para fechar) à esquerda */
   .sm-prelayers,
   .staggered-menu-panel {
+    width: max(66vw, 250px);
+  }
+  /* A barra fixa (tema + Fechar) ocupa o topo do painel estreito: o logo do painel sai */
+  .sm-panel-head .sm-head-logo,
+  .sm-panel-head .sm-kicker {
+    display: none;
+  }
+  .sm-panel-body {
+    padding-inline: 0.9rem;
+  }
+  .sm-panel-foot {
+    padding-inline: 0.9rem;
+  }
+  .sm-status {
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+  }
+  .sm-status-dot {
+    flex-shrink: 0;
+  }
+  .sm-status-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+  }
+  .sm-status-meta {
+    margin-left: calc(8px + 0.6rem);
     width: 100%;
   }
   .sm-logo {
